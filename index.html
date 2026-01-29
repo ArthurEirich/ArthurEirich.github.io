@@ -4,47 +4,126 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Eirich IT-Service & Softwareentwicklung</title>
-  <meta name="description" content="Individualsoftware, Webentwicklung und IT-Service – pragmatische Lösungen für Privat & Unternehmen." />
+  <meta name="description" content="Individualsoftware, Webentwicklung und IT-Service in Würzburg & Umgebung (ca. 20 km) – pragmatische Lösungen, remote oder vor Ort." />
+  <meta name="robots" content="index,follow" />
+
+  <meta property="og:title" content="Eirich IT-Service & Softwareentwicklung" />
+  <meta property="og:description" content="Individualsoftware, Webentwicklung und IT-Service – Würzburg & Umgebung (ca. 20 km), remote oder vor Ort." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://eiricha.com/" />
+
   <style>
-    body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;margin:0;background:#0b1220;color:#e8edf7}
-    main{max-width:900px;margin:0 auto;padding:48px 20px}
-    .card{background:#0f1a2e;border:1px solid rgba(232,237,247,.12);border-radius:16px;padding:18px;margin-top:16px}
-    a{color:#7dd3fc;text-decoration:none}
-    a:hover{text-decoration:underline}
-    .muted{color:#b6c2df}
-    h1{margin:0 0 10px;font-size:34px}
+    :root{
+      --bg:#0b1220; --card:#0f1a2e; --text:#e8edf7; --muted:#b6c2df;
+      --line:rgba(232,237,247,.12); --accent:#7dd3fc; --accent2:#a78bfa;
+      --radius:16px; --max:980px;
+    }
+    *{box-sizing:border-box}
+    body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:var(--bg);color:var(--text)}
+    a{color:var(--accent);text-decoration:none} a:hover{text-decoration:underline}
+    .wrap{max-width:var(--max);margin:0 auto;padding:42px 18px}
+    .top{display:flex;flex-direction:column;gap:10px}
+    h1{margin:0;font-size:34px;letter-spacing:-.3px}
+    .sub{color:var(--muted);line-height:1.5}
+    .row{display:flex;gap:12px;flex-wrap:wrap;margin-top:14px}
+    .btn{display:inline-flex;align-items:center;gap:10px;padding:11px 14px;border-radius:14px;border:1px solid var(--line);background:rgba(232,237,247,.06);color:var(--text)}
+    .btn.primary{border-color:transparent;background:linear-gradient(90deg, rgba(125,211,252,.95), rgba(167,139,250,.95));color:#07101f;font-weight:700}
+    .grid{display:grid;grid-template-columns:repeat(12,1fr);gap:14px;margin-top:22px}
+    .card{grid-column:span 12;background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:16px}
+    .kpi{grid-column:span 4}
+    .kpi strong{display:block;font-size:16px;margin-bottom:6px}
+    .kpi span{color:var(--muted);font-size:13px;line-height:1.45}
+    @media (max-width:900px){.kpi{grid-column:span 6}}
+    @media (max-width:600px){.kpi{grid-column:span 12}}
+    h2{margin:0 0 10px;font-size:18px}
+    p,li{color:var(--muted);line-height:1.6;font-size:14px}
+    .muted{color:var(--muted)}
+    .footer{margin-top:22px;border-top:1px solid var(--line);padding-top:14px;font-size:12px;color:var(--muted)}
+    .anchor{scroll-margin-top:80px}
   </style>
 </head>
+
 <body>
-  <main>
-    <h1>Eirich IT-Service & Softwareentwicklung</h1>
-    <p class="muted">Individualsoftware • Webentwicklung • IT-Service (remote oder vor Ort)</p>
+  <main class="wrap">
+    <section class="top">
+      <h1>Eirich IT-Service & Softwareentwicklung</h1>
+      <div class="sub">Individualsoftware • Webentwicklung • IT-Service — Würzburg & Umgebung (ca. 20 km, Vor-Ort-Pauschale nach Entfernung), außerdem remote.</div>
 
-    <div class="card">
-      <p><b>Leistungen</b><br>
-        Maßgeschneiderte Softwarelösungen, schlanke Webseiten/Landingpages und IT-Unterstützung (WLAN-Router, Druckereinrichtung, Heimnetzwerk etc.)
-      </p>
-      <p><b>Kontakt</b><br>
-        Telefon: <a href="tel:+4917632894468">+4917632894468</a><br>
-        E-Mail: <a href="mailto:arthur.eirich.88@gmail.com">arthur.eirich.88@gmail.com</a>
-      </p>
-    </div>
+      <div class="row">
+        <a class="btn primary" href="tel:+4917632894468">📞 0176 32894468</a>
+        <a class="btn" href="mailto:arthur.eirich.88@gmail.com">✉️ arthur.eirich.88@gmail.com</a>
+        <a class="btn" href="#impressum">ℹ️ Impressum</a>
+        <a class="btn" href="#datenschutz">🔒 Datenschutz</a>
+      </div>
 
-    <div class="card">
-      <p><b>Impressum</b><br>
-        Arthur Eirich<br>
-        Bukarester Straße 12<br>
-        97084 Würzburg<br>
-        E-Mail: arthur.eirich.88@gmail.com
-      </p>
-      <p class="muted">Kleinunternehmer nach §19 UStG</p>
-    </div>
+      <div class="grid">
+        <div class="card kpi">
+          <strong>Individualsoftware</strong>
+          <span>Maßgeschneiderte Tools, Automatisierung, kleine bis mittlere Anwendungen – passend zu deinem Prozess.</span>
+        </div>
+        <div class="card kpi">
+          <strong>Webseiten</strong>
+          <span>Schlanke, schnelle Landingpages/Business-Seiten — sauber, mobilfreundlich, leicht zu pflegen.</span>
+        </div>
+        <div class="card kpi">
+          <strong>IT-Service</strong>
+          <span>Pragmatische Hilfe bei PC/Netzwerk/WLAN/VPN/Backup/Troubleshooting — wenn’s schnell laufen muss.</span>
+        </div>
+      </div>
+    </section>
 
-    <div class="card">
-      <p><b>Datenschutz</b><br>
-        Diese Seite nutzt kein Tracking. Beim Aufruf werden durch den Hosting-Anbieter technische Daten (Server-Logs) verarbeitet.
+    <section class="card anchor" id="leistungen">
+      <h2>Leistungen</h2>
+      <ul>
+        <li>Beratung & Umsetzung: Individualsoftware, Integrationen, Datenimporte/-exporte</li>
+        <li>Webentwicklung: Landingpages, kleine Firmenwebsites</li>
+        <li>IT-Service: Einrichtung/Optimierung, Netzwerk/WLAN, Backup-Strategie</li>
+      </ul>
+      <p class="muted">Kurz & pragmatisch: Erst Ziel klären, dann eine saubere Minimal-Lösung, die erweiterbar bleibt.</p>
+    </section>
+
+    <section class="card anchor" id="kontakt">
+      <h2>Kontakt</h2>
+      <p style="margin:0">
+        Telefon: <a href="tel:+4917632894468">0176 32894468</a><br />
+        E-Mail: <a href="mailto:arthur.eirich.88@gmail.com">arthur.eirich.88@gmail.com</a><br />
+        Region: Würzburg & Umgebung (ca. 20 km) + remote
       </p>
-    </div>
+    </section>
+
+    <section class="card anchor" id="impressum">
+      <h2>Impressum</h2>
+      <p style="margin:0">
+        <b>Diensteanbieter</b><br />
+        Arthur Eirich<br />
+        Bukarester Straße 12<br />
+        97084 Würzburg<br /><br />
+
+        <b>Kontakt</b><br />
+        Telefon: 0176 32894468<br />
+        E-Mail: arthur.eirich.88@gmail.com<br /><br />
+
+        <b>Umsatzsteuer</b><br />
+        <!-- Optional, falls du Kleinunternehmer nach §19 UStG bist: -->
+        <!-- Gemäß § 19 UStG wird keine Umsatzsteuer berechnet (Kleinunternehmerregelung). -->
+      </p>
+    </section>
+
+    <section class="card anchor" id="datenschutz">
+      <h2>Datenschutz</h2>
+      <p style="margin:0">
+        Diese Website nutzt kein Tracking und keine Marketing-Cookies.<br /><br />
+        Beim Aufruf werden durch den Hosting-Anbieter technisch notwendige Daten (z.B. IP-Adresse, Zeitpunkt, angeforderte Seite)
+        in Server-Logs verarbeitet, um Betrieb und Sicherheit der Website zu gewährleisten.<br /><br />
+        Kontaktaufnahme per E-Mail/Telefon: Die übermittelten Daten werden zur Bearbeitung der Anfrage verarbeitet.
+      </p>
+    </section>
+
+    <footer class="footer">
+      © <span id="y"></span> Eirich IT-Service & Softwareentwicklung • <a href="#impressum">Impressum</a> • <a href="#datenschutz">Datenschutz</a>
+    </footer>
   </main>
+
+  <script>document.getElementById("y").textContent = new Date().getFullYear();</script>
 </body>
 </html>
