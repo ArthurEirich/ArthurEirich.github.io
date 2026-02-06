@@ -36,7 +36,6 @@
 }
 </script>
 
-
   <style>
     :root{
       --bg:#0b1220; --card:#0f1a2e; --text:#e8edf7; --muted:#b6c2df;
@@ -47,10 +46,10 @@
     body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:var(--bg);color:var(--text)}
     a{color:var(--accent);text-decoration:none} a:hover{text-decoration:underline}
     .wrap{max-width:var(--max);margin:0 auto;padding:42px 18px}
-    .top{display:flex;flex-direction:column;gap:10px}
+    .top{display:flex;flex-direction:column;gap:10px;align-items:center;text-align:center}
     h1{margin:0;font-size:34px;letter-spacing:-.3px}
     .sub{color:var(--muted);line-height:1.5}
-    .row{display:flex;gap:12px;flex-wrap:wrap;margin-top:14px}
+    .row{display:flex;gap:12px;flex-wrap:wrap;margin-top:14px;justify-content:center}
     .btn{display:inline-flex;align-items:center;gap:10px;padding:11px 14px;border-radius:14px;border:1px solid var(--line);background:rgba(232,237,247,.06);color:var(--text)}
     .btn.primary{border-color:transparent;background:linear-gradient(90deg, rgba(125,211,252,.95), rgba(167,139,250,.95));color:#07101f;font-weight:700}
     .grid{display:grid;grid-template-columns:repeat(12,1fr);gap:14px;margin-top:22px}
@@ -58,26 +57,64 @@
     .kpi{grid-column:span 4}
     .kpi strong{display:block;font-size:16px;margin-bottom:6px}
     .kpi span{color:var(--muted);font-size:13px;line-height:1.45}
-    .card:not(.kpi){margin-top: 14px;}
+    .card:not(.kpi){margin-top:14px}
     @media (max-width:900px){.kpi{grid-column:span 6}}
-    @media (max-width:600px){.kpi{grid-column:span 12}}
+    @media (max-width:600px){.kpi{grid-column:span 12} .price-grid{grid-template-columns:1fr !important} .zone-grid{grid-template-columns:1fr 1fr !important}}
     h2{margin:0 0 10px;font-size:18px}
     p,li{color:var(--muted);line-height:1.6;font-size:14px}
     .muted{color:var(--muted)}
     .footer{margin-top:22px;border-top:1px solid var(--line);padding-top:14px;font-size:12px;color:var(--muted)}
     .anchor{scroll-margin-top:80px}
+
+    /* Preise */
+    .price-grid{
+      display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:16px;
+    }
+    .price-card{
+      background:rgba(232,237,247,.04);border:1px solid var(--line);border-radius:var(--radius);
+      padding:20px;display:flex;flex-direction:column;gap:8px;
+    }
+    .price-card h3{margin:0;font-size:16px;color:var(--text)}
+    .price-card .price{font-size:22px;font-weight:700;color:var(--accent);margin:4px 0}
+    .price-card .price-note{font-size:12px;color:var(--muted)}
+    .price-card .price-desc{font-size:13px;color:var(--muted);line-height:1.5}
+    .price-card.highlight{border-color:var(--accent2);background:rgba(167,139,250,.06)}
+
+    /* Zonen */
+    .zone-grid{
+      display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-top:14px;
+    }
+    .zone{
+      background:rgba(232,237,247,.04);border:1px solid var(--line);border-radius:12px;
+      padding:14px;text-align:center;
+    }
+    .zone .dist{font-size:13px;color:var(--muted);margin-bottom:4px}
+    .zone .zprice{font-size:18px;font-weight:700;color:var(--accent)}
+
+    .info-box{
+      margin-top:16px;padding:14px;border-radius:12px;
+      background:rgba(125,211,252,.06);border:1px solid rgba(125,211,252,.15);
+      font-size:13px;color:var(--muted);line-height:1.5;
+    }
+    .info-box strong{color:var(--text)}
   </style>
 </head>
 
 <body>
   <main class="wrap">
+
+    <!-- ─── Hero ─── -->
     <section class="top">
       <h1>Eirich IT-Service & Softwareentwicklung</h1>
-      <div class="sub">Individualsoftware • Webentwicklung • IT-Service — Würzburg & Umgebung (ca. 20 km, Vor-Ort-Pauschale nach Entfernung), außerdem remote.</div>
+      <div class="sub">Individualsoftware • Webentwicklung • IT-Service — Würzburg & Umgebung (ca. 20 km, Anfahrtspauschale nach Entfernung), außerdem remote.</div>
 
       <div class="row">
         <a class="btn primary" href="tel:+4917632894468">📞 0176 32894468</a>
-        <a class="btn" href="mailto:arthur.eirich.88@gmail.com">✉️ arthur.eirich.88@gmail.com</a>
+        <a class="btn" href="mailto:arthur.eirich.88@gmail.com?subject=Anfrage%20über%20eiricha.com"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M22 4L12 13 2 4"/></svg> E-Mail</a>
+        <a class="btn" href="https://wa.me/4917632894468" target="_blank" rel="noopener"><svg width="20" height="20" viewBox="0 0 24 24" fill="#25D366"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg> WhatsApp</a>
+      </div>
+      <div class="row">
+        <a class="btn" href="#preise">💰 Preise</a>
         <a class="btn" href="#impressum">ℹ️ Impressum</a>
         <a class="btn" href="#datenschutz">🔒 Datenschutz</a>
       </div>
@@ -93,21 +130,108 @@
         </div>
         <div class="card kpi">
           <strong>IT-Service</strong>
-          <span>Pragmatische Hilfe bei PC/Netzwerk/WLAN/VPN/Backup/Troubleshooting — wenn’s schnell laufen muss.</span>
+          <span>Pragmatische Hilfe bei PC, Netzwerk, WLAN, Backup & mehr — wenn's schnell laufen muss.</span>
         </div>
       </div>
     </section>
 
+    <!-- ─── Leistungen ─── -->
     <section class="card anchor" id="leistungen">
       <h2>Leistungen</h2>
       <ul>
-        <li>Beratung & Umsetzung: Individualsoftware, Integrationen, Datenimporte/-exporte</li>
-        <li>Webentwicklung: Landingpages, kleine Firmenwebsites</li>
-        <li>IT-Service: Einrichtung/Optimierung, Netzwerk/WLAN, Backup-Strategie</li>
+        <li><strong>📱 Mobiltelefon / Tablet:</strong> Ersteinrichtung, Bereinigung, Backup, Profil anlegen, Datentransfer, App-Installation</li>
+        <li><strong>🖥️ PC / Notebook:</strong> Setup, Softwareinstallation, Systembereinigung, Troubleshooting, Betriebssystem-Neuinstallation</li>
+        <li><strong>📡 WLAN / Router / Netzwerk:</strong> Einrichtung, Optimierung, Reichweite verbessern, VPN-Setup, Gastnetzwerk</li>
+        <li><strong>💾 Backup & Datensicherung:</strong> Backup-Strategie erarbeiten, Einrichtung (lokal/Cloud), Restore-Test</li>
+        <li><strong>🌐 Webseite / Landingpage:</strong> One-Pager, Business-Seiten (3–5 Seiten), Basis-SEO, Google Maps, Kontaktformular, Impressum/Datenschutz</li>
+        <li><strong>⚙️ Individualsoftware:</strong> Automatisierung, Integrationen, Datenimporte/-exporte, maßgeschneiderte Tools</li>
       </ul>
       <p class="muted">Kurz & pragmatisch: Erst Ziel klären, dann eine saubere Minimal-Lösung, die erweiterbar bleibt.</p>
     </section>
 
+    <!-- ─── Preise ─── -->
+    <section class="card anchor" id="preise">
+      <h2>Preise</h2>
+      <p style="margin:0 0 4px">Transparente Abrechnung — Remote in 15-Min-Schritten, vor Ort ab 1 Std. Preis je nach Umfang. 15 Min Erstgespräch kostenlos (Telefon/WhatsApp).</p>
+
+      <div class="price-grid">
+
+        <!-- Mobiltelefon -->
+        <div class="price-card">
+          <h3>📱 Mobiltelefon / Tablet</h3>
+          <div class="price">ab 59 €</div>
+          <div class="price-desc">Ersteinrichtung, Bereinigung, Backup, Profil anlegen, Datentransfer, App-Installation — die typischen Handy-Nervensachen erledigt.</div>
+        </div>
+
+        <!-- IT-Service -->
+        <div class="price-card">
+          <h3>🖥️ PC-/Notebook-Setup & Reparatur (Software)</h3>
+          <div class="price">ab 79 €</div>
+          <div class="price-desc">Remote oder kleinere Software-Themen. Vor Ort nach Aufwand (Mindestdauer 1 Std).</div>
+        </div>
+
+        <div class="price-card">
+          <h3>📡 WLAN / Router / Netzwerk</h3>
+          <div class="price">ab 99 €</div>
+          <div class="price-desc">Einrichtung, Optimierung, typische WLAN-Probleme — schnell und unkompliziert.</div>
+        </div>
+
+        <div class="price-card">
+          <h3>💾 Backup & Datensicherung</h3>
+          <div class="price">ab 129 €</div>
+          <div class="price-desc">Backup-Strategie + Einrichtung + kurzer Restore-Test, damit deine Daten sicher sind.</div>
+        </div>
+
+        <!-- Web -->
+        <div class="price-card highlight">
+          <h3>🌐 Webseite / Landingpage</h3>
+          <div class="price">ab 499 €</div>
+          <div class="price-desc">One-Pager Basis, mobiloptimiert, Kontaktformular, Impressum/Datenschutz-Grundgerüst. Business-Pakete (3–5 Seiten, SEO, Google Maps) auf Anfrage.</div>
+        </div>
+
+        <!-- Individualsoftware -->
+        <div class="price-card highlight">
+          <h3>⚙️ Individualsoftware / Automatisierung</h3>
+          <div class="price">ab 990 €</div>
+          <div class="price-desc">Kleines Automations-/Tool-Projekt (je nach Umfang 990–3.500 €). Angebot nach kurzem Erstgespräch. Wartung/Support optional.</div>
+        </div>
+
+      </div>
+
+      <!-- Anfahrtspauschale -->
+      <h2 style="margin-top:24px">Anfahrtspauschale</h2>
+      <p style="margin:0 0 4px">Einmalige Pauschale pro Einsatz im Raum Würzburg. Parkkosten ggf. zusätzlich.</p>
+
+      <div class="zone-grid">
+        <div class="zone">
+          <div class="dist">bis 5 km</div>
+          <div class="zprice">10 €</div>
+        </div>
+        <div class="zone">
+          <div class="dist">5–10 km</div>
+          <div class="zprice">15 €</div>
+        </div>
+        <div class="zone">
+          <div class="dist">10–15 km</div>
+          <div class="zprice">20 €</div>
+        </div>
+        <div class="zone">
+          <div class="dist">15–20 km</div>
+          <div class="zprice">25 €</div>
+        </div>
+        <div class="zone">
+          <div class="dist">20–25 km</div>
+          <div class="zprice">30 €</div>
+        </div>
+      </div>
+
+      <div class="info-box">
+        <strong>Hinweis:</strong> Alle Preise sind Endpreise. Gemäß § 19 UStG wird keine Umsatzsteuer berechnet (Kleinunternehmerregelung). Genauer Preis je nach Umfang — gerne im kostenlosen Erstgespräch klären.
+      </div>
+
+    </section>
+
+    <!-- ─── Kontakt ─── -->
     <section class="card anchor" id="kontakt">
       <h2>Kontakt</h2>
       <p style="margin:0">
@@ -117,6 +241,7 @@
       </p>
     </section>
 
+    <!-- ─── Impressum ─── -->
     <section class="card anchor" id="impressum">
       <h2>Impressum</h2>
       <p style="margin:0">
@@ -130,11 +255,11 @@
         E-Mail: arthur.eirich.88@gmail.com<br /><br />
 
         <b>Umsatzsteuer</b><br />
-        <!-- Optional, falls du Kleinunternehmer nach §19 UStG bist: -->
-        <!-- Gemäß § 19 UStG wird keine Umsatzsteuer berechnet (Kleinunternehmerregelung). -->
+        Gemäß § 19 UStG wird keine Umsatzsteuer berechnet (Kleinunternehmerregelung).
       </p>
     </section>
 
+    <!-- ─── Datenschutz ─── -->
     <section class="card anchor" id="datenschutz">
       <h2>Datenschutz</h2>
       <p style="margin:0">
