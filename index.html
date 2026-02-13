@@ -1,361 +1,288 @@
 <!doctype html>
 <html lang="de">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Eirich IT-Service & Softwareentwicklung</title>
-  <meta name="description" content="Individualsoftware, Webentwicklung und IT-Service in Würzburg & Umgebung (ca. 20 km) – pragmatische Lösungen, remote oder vor Ort." />
-  <meta name="robots" content="index,follow" />
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>Eirich IT-Service & Softwareentwicklung</title>
+    <meta name="description"
+          content="Individualsoftware, Webentwicklung und IT-Service in Würzburg & Umgebung (ca. 20 km) – pragmatische Lösungen, remote oder vor Ort."/>
+    <meta name="robots" content="index,follow"/>
 
-  <meta property="og:title" content="Eirich IT-Service & Softwareentwicklung" />
-  <meta property="og:description" content="Individualsoftware, Webentwicklung und IT-Service – Würzburg & Umgebung (ca. 20 km), remote oder vor Ort." />
-  <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://eiricha.com/" />
+    <meta property="og:title" content="Eirich IT-Service & Softwareentwicklung"/>
+    <meta property="og:description"
+          content="Individualsoftware, Webentwicklung und IT-Service – Würzburg & Umgebung (ca. 20 km), remote oder vor Ort."/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:url" content="https://eiricha.com/"/>
 
-  <script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "LocalBusiness",
-  "name": "Eirich IT-Service & Softwareentwicklung",
-  "url": "https://eiricha.com/",
-  "telephone": "+4917632894468",
-  "email": "arthur.eirich.88@gmail.com",
-  "address": {
-    "@type": "PostalAddress",
-    "streetAddress": "Bukarester Straße 12",
-    "postalCode": "97084",
-    "addressLocality": "Würzburg",
-    "addressCountry": "DE"
-  },
-  "areaServed": "Würzburg und Umgebung (ca. 20 km)",
-  "serviceType": [
-    "IT-Service",
-    "Webentwicklung",
-    "Individualsoftware"
-  ]
-}
-</script>
+    <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "LocalBusiness",
+            "name": "Eirich IT-Service & Softwareentwicklung",
+            "url": "https://eiricha.com/",
+            "telephone": "+4917632894468",
+            "email": "arthur.eirich.88@gmail.com",
+            "address": {
+                "@type": "PostalAddress",
+                "streetAddress": "Bukarester Straße 12",
+                "postalCode": "97084",
+                "addressLocality": "Würzburg",
+                "addressCountry": "DE"
+            },
+            "areaServed": [
+                "Würzburg",
+                "Ochsenfurt",
+                "Gerbrunn",
+                "Veitshöchheim",
+                "Randersacker",
+                "Höchberg",
+                "Zell am Main",
+                "Kitzingen"
+            ],
+            "sameAs": [
+                "https://www.instagram.com/"
+            ],
+            "makesOffer": [
+                "IT-Service",
+                "Webentwicklung",
+                "Individualsoftware"
+            ]
+        }
+    </script>
 
-  <style>
-    :root{
-      --bg:#0b1220; --card:#0f1a2e; --text:#e8edf7; --muted:#b6c2df;
-      --line:rgba(232,237,247,.12); --accent:#7dd3fc; --accent2:#a78bfa;
-      --radius:16px; --max:980px;
-    }
-    *{box-sizing:border-box}
-    body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:var(--bg);color:var(--text)}
-    a{color:var(--accent);text-decoration:none} a:hover{text-decoration:underline}
-    .wrap{max-width:var(--max);margin:0 auto;padding:42px 18px}
-    .top{display:flex;flex-direction:column;gap:10px;align-items:center;text-align:center}
-    h1{margin:0;font-size:34px;letter-spacing:-.3px}
-    .sub{color:var(--muted);line-height:1.5}
-    .row{display:flex;gap:12px;flex-wrap:wrap;margin-top:14px;justify-content:center}
-
-    /* NUR Kontaktknöpfe (erste Reihe) responsive machen */
-    @media (max-width:720px){
-      .row.row-contacts{width:100%}
-      .row.row-contacts .btn{
-        flex:1 1 calc(50% - 12px);
-        justify-content:center;
-        text-align:center;
-      }
-    }
-    @media (max-width:420px){
-      .row.row-contacts .btn{flex-basis:100%}
-    }
-
-    .btn{display:inline-flex;align-items:center;gap:10px;padding:11px 14px;border-radius:14px;border:1px solid var(--line);background:rgba(232,237,247,.06);color:var(--text)}
-    .btn.primary{border-color:transparent;background:linear-gradient(90deg, rgba(125,211,252,.95), rgba(167,139,250,.95));color:#07101f;font-weight:700}
-    .grid{display:grid;grid-template-columns:repeat(12,1fr);gap:14px;margin-top:22px}
-    .card{grid-column:span 12;background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:16px}
-    .kpi{grid-column:span 4}
-    .kpi strong{display:block;font-size:16px;margin-bottom:6px}
-    .kpi span{color:var(--muted);font-size:13px;line-height:1.45}
-    .card:not(.kpi){margin-top:14px}
-    @media (max-width:900px){.kpi{grid-column:span 6}}
-    @media (max-width:600px){.kpi{grid-column:span 12} .price-grid{grid-template-columns:1fr !important} .zone-grid{grid-template-columns:1fr 1fr !important}}
-    h2{margin:0 0 10px;font-size:18px}
-    p,li{color:var(--muted);line-height:1.6;font-size:14px}
-    .muted{color:var(--muted)}
-    .footer{margin-top:22px;border-top:1px solid var(--line);padding-top:14px;font-size:12px;color:var(--muted)}
-    .anchor{scroll-margin-top:80px}
-
-    /* Preise */
-    .price-grid{
-      display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:16px;
-    }
-    .price-card{
-      background:rgba(232,237,247,.04);border:1px solid var(--line);border-radius:var(--radius);
-      padding:20px;display:flex;flex-direction:column;gap:8px;
-    }
-    .price-card h3{margin:0;font-size:16px;color:var(--text)}
-    .price-card .price{font-size:22px;font-weight:700;color:var(--accent);margin:4px 0}
-    .price-card .price-note{font-size:12px;color:var(--muted)}
-    .price-card .price-desc{font-size:13px;color:var(--muted);line-height:1.5}
-    .price-card.highlight{border-color:var(--accent2);background:rgba(167,139,250,.06)}
-
-    /* Zonen */
-    .zone-grid{
-      display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-top:14px;
-    }
-    .zone{
-      background:rgba(232,237,247,.04);border:1px solid var(--line);border-radius:12px;
-      padding:14px;text-align:center;
-    }
-    .zone .dist{font-size:13px;color:var(--muted);margin-bottom:4px}
-    .zone .zprice{font-size:18px;font-weight:700;color:var(--accent)}
-
-    .info-box{
-      margin-top:16px;padding:14px;border-radius:12px;
-      background:rgba(125,211,252,.06);border:1px solid rgba(125,211,252,.15);
-      font-size:13px;color:var(--muted);line-height:1.5;
-    }
-    .info-box strong{color:var(--text)}
-
-	  .about{
-  display:grid;
-  grid-template-columns: 170px 1fr;
-  gap:16px;
-  align-items:start;
-}
-
-.about-photo{
-  width:170px;
-  aspect-ratio: 1 / 1;
-  border-radius:14px;
-  overflow:hidden;
-  border:1px solid var(--line);
-  background:rgba(232,237,247,.04);
-}
-
-.about-photo img{
-  width:100%;
-  height:100%;
-  object-fit:cover;
-  display:block;
-}
-
-@media (max-width:600px){
-  .about{ grid-template-columns:1fr; }
-  .about-photo{ width:140px; margin:0 auto; }
-}
-  </style>
+    <link rel="stylesheet" href="styles.css"/>
 </head>
 
 <body>
-  <main class="wrap">
+<main class="wrap">
 
     <!-- ─── Hero ─── -->
     <section class="top">
-      <h1>Eirich IT-Service & Softwareentwicklung</h1>
-      <div class="sub">Individualsoftware • Webentwicklung • IT-Service — Würzburg & Umgebung (ca. 20 km, Anfahrtspauschale nach Entfernung), außerdem remote.</div>
+        <h1>Eirich IT-Service & Softwareentwicklung</h1>
+        <div class="sub">Individualsoftware • Webentwicklung • IT-Service</div>
+        <div class="sub">Würzburg & Umgebung (ca. 20 km, Anfahrtspauschale nach Entfernung), außerdem remote.</div>
 
-      <div class="row row-contacts">
-        <a class="btn primary" href="tel:+4917632894468">📞 0176 32894468</a>
-        <a class="btn" href="mailto:arthur.eirich.88@gmail.com?subject=Anfrage%20über%20eiricha.com">
-  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-       stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
-    <rect x="2" y="4" width="20" height="16" rx="2"></rect>
-    <path d="M22 4L12 13 2 4"></path>
-  </svg>
-  E-Mail
-</a>
-        <a class="btn" href="https://wa.me/4917632894468" target="_blank" rel="noopener"><svg width="20" height="20" viewBox="0 0 24 24" fill="#25D366"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg> WhatsApp</a>
-        <a class="btn" href="https://g.page/r/CYdxRCf5q676EAE/review" target="_blank" rel="noopener"><svg width="20" height="20" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M21.805 10.023H12v3.977h5.626c-.242 1.293-1.002 2.388-2.131 3.12v2.594h3.449c2.018-1.859 3.184-4.6 3.184-7.86 0-.632-.057-1.243-.162-1.831z" fill="#4285F4"/><path d="M12 22c2.7 0 4.964-.895 6.617-2.423l-3.449-2.678c-.896.601-2.044.955-3.168.955-2.437 0-4.502-1.645-5.24-3.855H3.197v2.763C4.843 19.933 8.198 22 12 22z" fill="#34A853"/><path d="M6.76 13.999A5.985 5.985 0 0 1 6.4 12c0-.694.12-1.368.36-1.999V7.238H3.197A9.99 9.99 0 0 0 2 12c0 1.614.387 3.14 1.197 4.762L6.76 13.999z" fill="#FBBC05"/><path d="M12 6.145c1.374 0 2.607.473 3.576 1.401l2.68-2.68C16.96 3.297 14.697 2.4 12 2.4 8.198 2.4 4.843 4.467 3.197 7.238L6.76 10c.738-2.21 2.803-3.855 5.24-3.855z" fill="#EA4335"/></svg> Google Bewertung</a>
-      </div>
-      <div class="row">
-        <a class="btn" href="#preise">💰 Preise</a>
-        <a class="btn" href="#impressum">ℹ️ Impressum</a>
-        <a class="btn" href="#datenschutz">🔒 Datenschutz</a>
-      </div>
+        <div class="row row-contacts">
+            <a class="btn primary" href="tel:+4917632894468">📞 0176 32894468</a>
 
-      <div class="grid">
-        <div class="card kpi">
-          <strong>Individualsoftware</strong>
-          <span>Maßgeschneiderte Tools, Automatisierung, kleine bis mittlere Anwendungen – passend zu deinem Prozess.</span>
+            <a class="btn" href="mailto:arthur.eirich.88@gmail.com?subject=Anfrage%20über%20eiricha.com">
+                <svg height="20px" width="20px" version="1.1" id="_x36_" xmlns="http://www.w3.org/2000/svg"
+                     xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512 512" xml:space="preserve"
+                     fill="#000000" stroke="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                    <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                    <g id="SVGRepo_iconCarrier"> <g> <linearGradient id="SVGID_1_" gradientUnits="userSpaceOnUse"
+                                                                     x1="256.0002" y1="347.8895" x2="256.0002"
+                                                                     y2="-8.003553e-011"> <stop offset="0"
+                                                                                                style="stop-color:#DA9621"></stop>
+                        <stop offset="0.7685" style="stop-color:#EAA12F"></stop> </linearGradient>
+                        <path style="fill:url(#SVGID_1_);"
+                              d="M511.972,170.467v11.507c-0.6,0.427-1.372,0.937-2.143,1.448l-19.117,13.041 c-1.285,0.853-2.828,1.875-4.371,2.984c-7.973,5.283-18.345,12.358-25.203,16.876L293.376,329.769l-5.315,3.58l-15.602,10.569 c-1.972,1.278-4.286,2.301-6.858,2.983c-1.029,0.34-2.229,0.511-3.343,0.681c-0.172,0.085-0.343,0.085-0.428,0.085 c-1.972,0.256-3.943,0.256-5.83,0.171c-1.886,0.085-3.857,0.085-5.829-0.171c-1.285-0.171-2.572-0.427-3.772-0.767 c-2.572-0.681-4.886-1.705-6.858-2.983l-7.029-4.774l-8.572-5.795L50.862,216.324c-1.886-1.279-4.029-2.728-6.429-4.262 c-6-4.006-13.03-8.779-18.774-12.614c-1.543-1.109-3.086-2.131-4.372-2.984L2.171,183.423c-0.771-0.511-1.543-1.022-2.143-1.448 v-11.507c0-1.96,0.257-3.494,0.686-4.943c0-0.084,0.086-0.084,0.086-0.084c0.429-0.341,0.857-0.597,1.371-0.939l6.172-4.262 l12.944-8.779c8.143-5.454,21.431-14.489,29.574-19.859L239.541,4.007c4.544-2.898,10.544-4.262,16.459-3.921 c0.6,0,1.114-0.085,1.715-0.085h0.086c5.315,0,10.63,1.365,14.659,4.007l188.679,127.594c6.772,4.432,17.059,11.421,25.031,16.792 c1.629,1.107,3.172,2.131,4.543,3.067l12.944,8.779l6.172,4.262c0.514,0.341,0.943,0.597,1.371,0.939 C511.715,166.888,511.972,168.507,511.972,170.467z"></path>
+                        <linearGradient id="SVGID_2_" gradientUnits="userSpaceOnUse" x1="256.0005" y1="398.9169"
+                                        x2="256.0005" y2="51.0644"> <stop offset="0" style="stop-color:#DA9621"></stop>
+                            <stop offset="0.7685" style="stop-color:#EAA12F"></stop> </linearGradient>
+                        <path style="fill:url(#SVGID_2_);"
+                              d="M512,221.49v11.441c-0.625,0.443-1.429,0.976-2.141,1.508l-19.179,13.037 c-8.116,5.41-21.407,14.455-29.524,19.866L272.502,394.875c-2.051,1.33-4.371,2.305-6.868,3.015 c-3.032,0.887-6.422,1.153-9.633,0.975c-3.211,0.178-6.601-0.089-9.633-0.975c-2.498-0.71-4.817-1.685-6.868-3.015L50.845,267.341 c-8.117-5.411-21.408-14.456-29.524-19.866L2.142,234.439c-0.712-0.533-1.516-1.065-2.141-1.508V221.49 c0-1.951,0.268-3.548,0.714-4.966c0-0.089,0.089-0.089,0.089-0.089c0.446-0.355,0.892-0.622,1.337-0.977l6.245-4.257l12.934-8.78 c8.116-5.41,21.407-14.455,29.524-19.866L239.499,55.023c4.549-2.927,10.614-4.258,16.501-3.903 c5.887-0.355,12.042,0.975,16.501,3.903l188.655,127.532c8.117,5.411,21.408,14.456,29.524,19.866l12.934,8.78l6.245,4.257 c0.445,0.355,0.891,0.621,1.337,0.977C511.732,217.853,512,219.539,512,221.49z"></path>
+                        <path style="fill:#CC8529;"
+                              d="M262.258,314.513v35.968h-1.029l-11.487,0.767H0.028V173.792c0-1.96,0.257-3.58,0.686-4.944 c0-0.085,0.086-0.085,0.086-0.085c0.943-2.983,2.829-4.688,5.315-5.114l10.716,6.307l5.057,2.983l23.06,13.553l1.2,0.681 l14.659,8.609l166.819,98.359l0.343,0.171l33.089,19.433L262.258,314.513z"></path>
+                        <g> <path style="fill:#F6B75A;"
+                                  d="M266.715,336.247c0,0.085-1.714,1.279-4.457,3.239c-1.715,1.108-3.858,2.558-6.258,4.262 c-1.2,0.767-2.486,1.619-3.857,2.557l-1.972,1.363l-3.772,2.557l-1.629,1.023l-26.66,17.984c-2.829,1.875-5.658,3.835-8.229,5.626 c-4.886,3.324-8.916,6.051-10.287,6.903c-1.972,1.449-10.201,6.99-18.345,12.529l-44.577,30.088l-0.172,0.171l-0.085,0.085 L27.031,498.447c-1.886,1.279-3.943,2.642-5.915,4.006c-1.115,0.767-2.229,1.449-3.343,2.216H8.515 c-4.972,0-7.801-1.108-8.401-2.983c0-0.085,0-0.085,0-0.085c0-0.341-0.086-0.597,0-1.023c-0.086-0.512-0.086-1.023-0.086-1.62 V173.792c0-1.96,0.257-3.58,0.686-4.944c0-0.085,0.086-0.085,0.086-0.085c0.943-2.983,2.829-4.688,5.315-5.114 c0.771-0.256,1.457-0.256,2.229-0.171c1.886,0.085,4.029,0.938,6.344,2.472l30.346,20.456l1.114,0.767l13.116,8.864 c0.257,0.171,0.514,0.341,0.771,0.512c8.058,5.455,20.745,14.064,28.632,19.348l153.446,103.729 c0.172,0.085,0.343,0.171,0.429,0.256c0.257,0.171,0.514,0.341,0.771,0.512c2.057,1.363,4.029,2.728,5.829,3.92 c3.001,1.96,5.401,3.665,6.858,4.688c0.857,0.512,1.458,0.852,1.543,0.937c0.343,0.255,2.486,1.705,4.715,3.324 c0.086,0,0.086,0.085,0.171,0.085C264.744,334.968,266.715,336.161,266.715,336.247z"></path>
+                            <g> <path style="fill:#F0A642;"
+                                      d="M511.865,171.974c0.074,1,0.134,2.92,0.134,4.267v320.232c0,1.347,0,2.708,0,3.025 c0,0.317-0.089,1.248-0.089,1.419c0,0.171,0,0.311,0,0.666c0,0,0,0.02,0,0.044c0,0.024-0.783,0.723-1.74,1.551 c-0.957,0.829-7.747,1.507-9.094,1.507h-4.378c-1.347,0-3.365-0.612-4.486-1.359l-5.204-3.489 c-1.12-0.748-2.95-1.976-4.066-2.731L332.776,395.641c-1.116-0.754-2.942-1.988-4.058-2.742l-14.324-9.753 c-1.112-0.76-2.935-1.999-4.05-2.754l-14.412-9.754c-1.113-0.758-2.938-1.994-4.055-2.747l-24.216-16.33 c-1.117-0.753-2.944-1.984-4.062-2.736l-1.734-1.167c-1.117-0.752-2.95-1.976-4.072-2.72c0,0-0.635-0.421-1.795-1.219 c-6.155-4.257-10.704-7.362-10.704-7.451c0-0.089,1.963-1.329,4.282-2.926c2.318-1.597,2.885-1.986,2.885-1.986 c1.111-0.762,2.161-1.484,2.332-1.607c0.172-0.122,2.109-1.383,3.214-2.152c0,0,5.125-3.567,10.657-7.204 c0.268-0.178,0.268-0.178,0.268-0.178c0.294-0.195,0.595-0.394,0.668-0.443c0.073-0.049,0.954-0.617,1.74-1.153 c0.785-0.536,2.341-1.592,3.457-2.346l146.508-98.984c1.116-0.754,2.941-1.989,4.056-2.745l25.377-17.123 c1.117-0.753,2.944-1.985,4.06-2.739l40.451-27.324c1.116-0.754,3-1.892,4.187-2.529c0,0,1.065-0.637,2.169-0.881 c1.104-0.244,3.079-0.189,4.389,0.123l3.792,2.662C510.562,167.836,511.791,170.974,511.865,171.974z"></path> </g> </g>
+                        <path style="fill:#CC8529;"
+                              d="M511.999,458.657v40.265c0,0.62,0,1.153-0.089,1.685c0.089,0.355,0,0.621,0,0.976c0,0,0,0,0,0.089 c-0.625,1.862-3.48,3.014-8.385,3.014H46.383l90.001-80.084l0.089-0.089l112.657-100.216l10.972-9.668l2.942-2.661l9.723,5.677 L511.999,458.657z"></path>
+                        <path style="fill:#F6AF47;"
+                              d="M511.999,497.414v1.508c0,0.62,0,1.153-0.089,1.685c0.089,0.355,0,0.621,0,0.976c0,0,0,0,0,0.089 c-0.625,1.862-3.48,3.014-8.385,3.014H8.474c-4.905,0-7.76-1.152-8.385-3.014c0-0.089,0-0.089,0-0.089c0-0.355-0.089-0.621,0-0.976 C0,500.075,0,499.542,0,498.922v-1.508c0.803-1.064,1.963-2.128,3.479-3.193L241.549,320.57c0.089,0,0.089-0.088,0.179-0.176 c0.268-0.178,0.536-0.355,0.803-0.532c4.905-3.46,9.901-5.855,13.469-6.74c1.249,0.354,2.586,0.797,4.104,1.507 c2.854,1.153,6.154,3.016,9.365,5.233c0.356,0.265,0.624,0.443,0.981,0.708l238.069,173.651 C510.035,495.374,511.195,496.438,511.999,497.414z"></path> </g> </g></svg>
+                E-Mail
+            </a>
+
+            <a class="btn" href="https://wa.me/4917632894468" target="_blank" rel="noopener">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="#25D366" aria-hidden="true" focusable="false">
+                    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"></path>
+                </svg>
+                WhatsApp
+            </a>
+
+            <a class="btn" href="https://g.page/r/CYdxRCf5q676EAE/review" target="_blank" rel="noopener">
+                <svg width="20" height="20" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21.805 10.023H12v3.977h5.626c-.242 1.293-1.002 2.388-2.131 3.12v2.594h3.449c2.018-1.859 3.184-4.6 3.184-7.86 0-.632-.057-1.243-.162-1.831z"
+                          fill="#4285F4"></path>
+                    <path d="M12 22c2.7 0 4.964-.895 6.617-2.423l-3.449-2.678c-.896.601-2.044.955-3.168.955-2.437 0-4.502-1.645-5.24-3.855H3.197v2.763C4.843 19.933 8.198 22 12 22z"
+                          fill="#34A853"></path>
+                    <path d="M6.76 13.999A5.985 5.985 0 0 1 6.4 12c0-.694.12-1.368.36-1.999V7.238H3.197A9.99 9.99 0 0 0 2 12c0 1.614.387 3.14 1.197 4.762L6.76 13.999z"
+                          fill="#FBBC05"></path>
+                    <path d="M12 6.145c1.374 0 2.607.473 3.576 1.401l2.68-2.68C16.96 3.297 14.697 2.4 12 2.4 8.198 2.4 4.843 4.467 3.197 7.238L6.76 10c.738-2.21 2.803-3.855 5.24-3.855z"
+                          fill="#EA4335"></path>
+                </svg>
+                Google Bewertung
+            </a>
         </div>
-        <div class="card kpi">
-          <strong>Webseiten</strong>
-          <span>Schlanke, schnelle Landingpages/Business-Seiten — sauber, mobilfreundlich, leicht zu pflegen.</span>
+
+        <div class="row">
+            <a class="btn" href="#preise">💰 Preise</a>
+            <a class="btn" href="#impressum">ℹ️ Impressum</a>
+            <a class="btn" href="#datenschutz">🔒 Datenschutz</a>
         </div>
-        <div class="card kpi">
-          <strong>IT-Service</strong>
-          <span>Pragmatische Hilfe bei PC, Netzwerk, WLAN, Backup & mehr — wenn's schnell laufen muss.</span>
+
+        <div class="grid">
+            <div class="card kpi">
+                <strong>Individuell</strong>
+                <span>Keine Standardlösungen – ich schaue mir zuerst dein Problem an.</span>
+            </div>
+            <div class="card kpi">
+                <strong>Pragmatisch</strong>
+                <span>Sauber, verständlich, ohne unnötige Komplexität.</span>
+            </div>
+            <div class="card kpi">
+                <strong>Transparent</strong>
+                <span>Klare Kommunikation und vorherige Abstimmung der Kosten.</span>
+            </div>
         </div>
-      </div>
     </section>
 
     <!-- ─── Leistungen ─── -->
     <section class="card anchor" id="leistungen">
-      <h2>Leistungen</h2>
-      <ul>
-        <li><strong>📱 Mobiltelefon / Tablet:</strong> Ersteinrichtung, Bereinigung, Backup, Profil anlegen, Datentransfer, App-Installation</li>
-        <li><strong>🖥️ PC / Notebook:</strong> Setup, Softwareinstallation, Systembereinigung, Troubleshooting, Betriebssystem-Neuinstallation</li>
-        <li><strong>📡 WLAN / Router / Netzwerk:</strong> Einrichtung, Optimierung, Reichweite verbessern, VPN-Setup, Gastnetzwerk</li>
-        <li><strong>💾 Backup & Datensicherung:</strong> Backup-Strategie erarbeiten, Einrichtung (lokal/Cloud), Restore-Test</li>
-        <li><strong>🌐 Webseite / Landingpage:</strong> One-Pager, Business-Seiten (3–5 Seiten), Basis-SEO, Google Maps, Kontaktformular, Impressum/Datenschutz</li>
-        <li><strong>⚙️ Individualsoftware:</strong> Automatisierung, Integrationen, Datenimporte/-exporte, maßgeschneiderte Tools</li>
-      </ul>
-      <p class="muted">Kurz & pragmatisch: Erst Ziel klären, dann eine saubere Minimal-Lösung, die erweiterbar bleibt.</p>
+        <h2>Leistungen</h2>
+
+        <div class="two-col">
+            <div>
+                <h3>IT-Service (Privat & Kleinunternehmen)</h3>
+                <ul>
+                    <li>PC-/Notebook-Setup & Reparatur (Software)</li>
+                    <li>WLAN/Router/Netzwerk</li>
+                    <li>Backup & Datensicherung</li>
+                </ul>
+            </div>
+
+            <div>
+                <h3>Web & Software</h3>
+                <ul>
+                    <li>Webseiten / Landingpages</li>
+                    <li>Individualsoftware / Automatisierung</li>
+                    <li>Beratung & Umsetzung</li>
+                </ul>
+            </div>
+        </div>
     </section>
 
-	  <section class="card anchor" id="ueber-mich">
-  <h2>Über mich</h2>
+    <!-- ─── Über mich ─── -->
+    <section class="card anchor" id="ueber-mich">
+        <h2>Über mich</h2>
 
-  <div class="about">
-    <div class="about-photo">
-      <!-- Quadratisches Foto: z.B. /assets/arthur.jpg -->
-      <img src="assets/arthur.jpg" alt="Arthur Eirich" loading="lazy" />
-    </div>
+        <div class="about">
+            <div class="about-photo">
+                <img src="./assets/arthur.jpg" alt="Arthur Eirich" loading="lazy"/>
+            </div>
 
-    <div class="about-text">
-      <p style="margin:0">
-        Ich bin <strong>Arthur Eirich</strong> – <strong>Senior Software Engineer</strong> (Schwerpunkt Backend),
-        mit Blick fürs Frontend, wenn’s für Nutzer und Business zählt. Ich helfe Privatkunden und kleinen Unternehmen
-        rund um Würzburg dabei, Technik wieder zuverlässig zum Laufen zu bringen – und Prozesse mit kleinen Tools
-        oder Webseiten spürbar zu vereinfachen.
-      </p>
+            <div>
+                <p style="margin:0 0 10px">
+                    Ich bin Arthur Eirich – Senior Software Engineer (Schwerpunkt Backend), mit Blick fürs Frontend,
+                    wenn’s für Nutzer
+                    und Business zählt. Ich helfe Privatkunden und kleinen Unternehmen rund um Würzburg dabei, Technik
+                    wieder zuverlässig
+                    zum Laufen zu bringen – und Prozesse mit kleinen Tools oder Webseiten spürbar zu vereinfachen.
+                </p>
 
-      <p class="muted" style="margin:10px 0 0">
-        Mein Stil: erst sauber analysieren, dann eine klare Empfehlung – und erst dann umsetzen.
-        Transparent, pragmatisch und ohne Overengineering.
-      </p>
+                <p style="margin:0 0 10px">
+                    Mein Stil: erst sauber analysieren, dann eine klare Empfehlung – und erst dann umsetzen.
+                    Transparent, pragmatisch
+                    und ohne Overengineering.
+                </p>
 
-      <ul class="muted" style="margin:12px 0 0; padding-left:18px">
-        <li>Würzburg + Umgebung (ca. 20 km) oder remote</li>
-        <li>Fokus: IT-Service, Webseiten/Landingpages, Automatisierung & Individualsoftware</li>
-        <li>Kleinunternehmer (§19 UStG) – Endpreise, keine USt.-Ausweisung</li>
-      </ul>
-    </div>
-  </div>
-</section>
+                <ul style="margin:0; padding-left:18px">
+                    <li>Würzburg + Umgebung (ca. 20 km) oder remote</li>
+                    <li>Fokus: IT-Service, Webseiten/Landingpages, Automatisierung &amp; Individualsoftware</li>
+                    <li>Kleinunternehmer (§19 UStG) – Endpreise, keine USt.-Ausweisung</li>
+                </ul>
+            </div>
+        </div>
+    </section>
 
     <!-- ─── Preise ─── -->
     <section class="card anchor" id="preise">
-      <h2>Preise</h2>
-      <p style="margin:0 0 4px">Transparente Abrechnung — Remote in 15-Min-Schritten, vor Ort ab 1 Std. Preis je nach Umfang. 15 Min Erstgespräch kostenlos (Telefon/WhatsApp).</p>
+        <h2>Preise</h2>
+        <p style="margin:0 0 4px">Transparente Abrechnung — Remote in 15-Min-Schritten, vor Ort ab 1 Std. Preis je nach
+            Umfang. 15 Min Erstgespräch kostenlos (Telefon/WhatsApp).</p>
 
-      <div class="price-grid">
+        <div class="price-grid">
 
-        <!-- Mobiltelefon -->
-        <div class="price-card">
-          <h3>📱 Mobiltelefon / Tablet</h3>
-          <div class="price">ab 59 €</div>
-          <div class="price-desc">Ersteinrichtung, Bereinigung, Backup, Profil anlegen, Datentransfer, App-Installation — die typischen Handy-Nervensachen erledigt.</div>
+            <!-- Mobiltelefon -->
+            <div class="price-card">
+                <h3>📱 Mobiltelefon / Tablet</h3>
+                <div class="price">ab 59 €</div>
+                <div class="price-desc">Ersteinrichtung, Bereinigung, Backup, Profil anlegen, Datentransfer,
+                    App-Installation — die typischen Handy-Nervensachen erledigt.
+                </div>
+            </div>
+
+            <!-- IT-Service -->
+            <div class="price-card">
+                <h3>🖥️ PC-/Notebook-Setup & Reparatur (Software)</h3>
+                <div class="price">ab 79 €</div>
+                <div class="price-desc">Remote oder kleinere Software-Themen. Vor Ort nach Aufwand (Mindestdauer 1
+                    Std).
+                </div>
+            </div>
+
+            <div class="price-card">
+                <h3>📡 WLAN / Router / Netzwerk</h3>
+                <div class="price">ab 99 €</div>
+                <div class="price-desc">Einrichtung, Optimierung, typische WLAN-Probleme — schnell und unkompliziert.
+                </div>
+            </div>
+
+            <div class="price-card">
+                <h3>💾 Backup & Datensicherung</h3>
+                <div class="price">ab 129 €</div>
+                <div class="price-desc">Backup-Strategie + Einrichtung + kurzer Restore-Test, damit deine Daten sicher
+                    sind.
+                </div>
+            </div>
+
+            <!-- Web -->
+            <div class="price-card highlight">
+                <h3>🌐 Webseite / Landingpage</h3>
+                <div class="price">ab 499 €</div>
+                <div class="price-desc">One-Pager Basis, mobiloptimiert, Kontaktformular,
+                    Impressum/Datenschutz-Grundgerüst. Business-Pakete (3–5 Seiten, SEO, Google Maps) auf Anfrage.
+                </div>
+            </div>
+
+            <!-- Individualsoftware -->
+            <div class="price-card highlight">
+                <h3>⚙️ Individualsoftware / Automatisierung</h3>
+                <div class="price">ab 990 €</div>
+                <div class="price-desc">Kleines Automations-/Tool-Projekt (je nach Umfang 990–3.500 €). Angebot nach
+                    kurzem Erstgespräch. Wartung/Support optional.
+                </div>
+            </div>
+
         </div>
 
-        <!-- IT-Service -->
-        <div class="price-card">
-          <h3>🖥️ PC-/Notebook-Setup & Reparatur (Software)</h3>
-          <div class="price">ab 79 €</div>
-          <div class="price-desc">Remote oder kleinere Software-Themen. Vor Ort nach Aufwand (Mindestdauer 1 Std).</div>
-        </div>
+        <!-- ─── Impressum ─── -->
+        <section class="card anchor" id="impressum">
+            <h2>Impressum</h2>
+            <p><strong>Arthur Eirich</strong><br> Bukarester Straße 12<br> 97084 Würzburg</p>
+            <p>Telefon: <a href="tel:+4917632894468">+49 176 32894468</a><br>
+                E-Mail: <a href="mailto:arthur.eirich.88@gmail.com">arthur.eirich.88@gmail.com</a></p>
+            <p>Kleinunternehmer nach §19 UStG.</p>
+        </section>
 
-        <div class="price-card">
-          <h3>📡 WLAN / Router / Netzwerk</h3>
-          <div class="price">ab 99 €</div>
-          <div class="price-desc">Einrichtung, Optimierung, typische WLAN-Probleme — schnell und unkompliziert.</div>
-        </div>
+        <!-- ─── Datenschutz ─── -->
+        <section class="card anchor" id="datenschutz">
+            <h2>Datenschutz</h2>
+            <p class="hint">
+                Diese Seite nutzt keine Cookies und kein Tracking. Wenn du mich kontaktierst (Telefon, E-Mail,
+                WhatsApp),
+                werden deine Daten nur zur Bearbeitung der Anfrage verarbeitet.
+            </p>
+        </section>
 
-        <div class="price-card">
-          <h3>💾 Backup & Datensicherung</h3>
-          <div class="price">ab 129 €</div>
-          <div class="price-desc">Backup-Strategie + Einrichtung + kurzer Restore-Test, damit deine Daten sicher sind.</div>
-        </div>
+        <footer class="footer">
+            © <span id="y"></span> Eirich IT-Service & Softwareentwicklung • <a href="#impressum">Impressum</a> • <a
+                href="#datenschutz">Datenschutz</a>
+        </footer>
+</main>
 
-        <!-- Web -->
-        <div class="price-card highlight">
-          <h3>🌐 Webseite / Landingpage</h3>
-          <div class="price">ab 499 €</div>
-          <div class="price-desc">One-Pager Basis, mobiloptimiert, Kontaktformular, Impressum/Datenschutz-Grundgerüst. Business-Pakete (3–5 Seiten, SEO, Google Maps) auf Anfrage.</div>
-        </div>
-
-        <!-- Individualsoftware -->
-        <div class="price-card highlight">
-          <h3>⚙️ Individualsoftware / Automatisierung</h3>
-          <div class="price">ab 990 €</div>
-          <div class="price-desc">Kleines Automations-/Tool-Projekt (je nach Umfang 990–3.500 €). Angebot nach kurzem Erstgespräch. Wartung/Support optional.</div>
-        </div>
-
-      </div>
-
-      <!-- Anfahrtspauschale -->
-      <h2 style="margin-top:24px">Anfahrtspauschale</h2>
-      <p style="margin:0 0 4px">Einmalige Pauschale pro Einsatz im Raum Würzburg. Parkkosten ggf. zusätzlich.</p>
-
-      <div class="zone-grid">
-        <div class="zone">
-          <div class="dist">bis 5 km</div>
-          <div class="zprice">10 €</div>
-        </div>
-        <div class="zone">
-          <div class="dist">5–10 km</div>
-          <div class="zprice">15 €</div>
-        </div>
-        <div class="zone">
-          <div class="dist">10–15 km</div>
-          <div class="zprice">20 €</div>
-        </div>
-        <div class="zone">
-          <div class="dist">15–20 km</div>
-          <div class="zprice">25 €</div>
-        </div>
-        <div class="zone">
-          <div class="dist">20–25 km</div>
-          <div class="zprice">30 €</div>
-        </div>
-      </div>
-
-      <div class="info-box">
-        <strong>Hinweis:</strong> Alle Preise sind Endpreise. Gemäß § 19 UStG wird keine Umsatzsteuer berechnet (Kleinunternehmerregelung). Genauer Preis je nach Umfang — gerne im kostenlosen Erstgespräch klären.
-      </div>
-
-    </section>
-
-    <!-- ─── Kontakt ─── -->
-    <section class="card anchor" id="kontakt">
-      <h2>Kontakt</h2>
-      <p style="margin:0">
-        Telefon: <a href="tel:+4917632894468">0176 32894468</a><br />
-        E-Mail: <a href="mailto:arthur.eirich.88@gmail.com">arthur.eirich.88@gmail.com</a><br />
-        Region: Würzburg & Umgebung (ca. 20 km) + remote
-      </p>
-    </section>
-
-    <!-- ─── Impressum ─── -->
-    <section class="card anchor" id="impressum">
-      <h2>Impressum</h2>
-      <p style="margin:0">
-        <b>Diensteanbieter</b><br />
-        Arthur Eirich<br />
-        Bukarester Straße 12<br />
-        97084 Würzburg<br /><br />
-
-        <b>Kontakt</b><br />
-        Telefon: 0176 32894468<br />
-        E-Mail: arthur.eirich.88@gmail.com<br /><br />
-
-        <b>Umsatzsteuer</b><br />
-        Gemäß § 19 UStG wird keine Umsatzsteuer berechnet (Kleinunternehmerregelung).
-      </p>
-    </section>
-
-    <!-- ─── Datenschutz ─── -->
-    <section class="card anchor" id="datenschutz">
-      <h2>Datenschutz</h2>
-      <p style="margin:0">
-        Diese Website nutzt kein Tracking und keine Marketing-Cookies.<br /><br />
-        Beim Aufruf werden durch den Hosting-Anbieter technisch notwendige Daten (z.B. IP-Adresse, Zeitpunkt, angeforderte Seite)
-        in Server-Logs verarbeitet, um Betrieb und Sicherheit der Website zu gewährleisten.<br /><br />
-        Kontaktaufnahme per E-Mail/Telefon: Die übermittelten Daten werden zur Bearbeitung der Anfrage verarbeitet.
-      </p>
-    </section>
-
-    <footer class="footer">
-      © <span id="y"></span> Eirich IT-Service & Softwareentwicklung • <a href="#impressum">Impressum</a> • <a href="#datenschutz">Datenschutz</a>
-    </footer>
-  </main>
-
-  <script>document.getElementById("y").textContent = new Date().getFullYear();</script>
+<script src="script.js" defer></script>
 </body>
 </html>
