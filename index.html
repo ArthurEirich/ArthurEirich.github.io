@@ -111,6 +111,34 @@
       font-size:13px;color:var(--muted);line-height:1.5;
     }
     .info-box strong{color:var(--text)}
+
+	  .about{
+  display:grid;
+  grid-template-columns: 170px 1fr;
+  gap:16px;
+  align-items:start;
+}
+
+.about-photo{
+  width:170px;
+  aspect-ratio: 1 / 1;
+  border-radius:14px;
+  overflow:hidden;
+  border:1px solid var(--line);
+  background:rgba(232,237,247,.04);
+}
+
+.about-photo img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  display:block;
+}
+
+@media (max-width:600px){
+  .about{ grid-template-columns:1fr; }
+  .about-photo{ width:140px; margin:0 auto; }
+}
   </style>
 </head>
 
@@ -214,6 +242,37 @@
       </ul>
       <p class="muted">Kurz & pragmatisch: Erst Ziel klären, dann eine saubere Minimal-Lösung, die erweiterbar bleibt.</p>
     </section>
+
+	  <section class="card anchor" id="ueber-mich">
+  <h2>Über mich</h2>
+
+  <div class="about">
+    <div class="about-photo">
+      <!-- Quadratisches Foto: z.B. /assets/arthur.jpg -->
+      <img src="assets/arthur.jpg" alt="Arthur Eirich" loading="lazy" />
+    </div>
+
+    <div class="about-text">
+      <p style="margin:0">
+        Ich bin <strong>Arthur Eirich</strong> – <strong>Senior Software Engineer</strong> (Schwerpunkt Backend),
+        mit Blick fürs Frontend, wenn’s für Nutzer und Business zählt. Ich helfe Privatkunden und kleinen Unternehmen
+        rund um Würzburg dabei, Technik wieder zuverlässig zum Laufen zu bringen – und Prozesse mit kleinen Tools
+        oder Webseiten spürbar zu vereinfachen.
+      </p>
+
+      <p class="muted" style="margin:10px 0 0">
+        Mein Stil: erst sauber analysieren, dann eine klare Empfehlung – und erst dann umsetzen.
+        Transparent, pragmatisch und ohne Overengineering.
+      </p>
+
+      <ul class="muted" style="margin:12px 0 0; padding-left:18px">
+        <li>Würzburg + Umgebung (ca. 20 km) oder remote</li>
+        <li>Fokus: IT-Service, Webseiten/Landingpages, Automatisierung & Individualsoftware</li>
+        <li>Kleinunternehmer (§19 UStG) – Endpreise, keine USt.-Ausweisung</li>
+      </ul>
+    </div>
+  </div>
+</section>
 
     <!-- ─── Preise ─── -->
     <section class="card anchor" id="preise">
