@@ -310,3 +310,26 @@ p, li {
 .info-box strong {
     color: var(--text)
 }
+
+/* Two-column layout (Leistungen/Datenschutz) */
+.two-col{
+    display:grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap:14px;
+}
+@media (max-width: 720px){
+    .two-col{ grid-template-columns: 1fr; }
+}
+.two-col h3{
+    margin: 0 0 8px;
+    font-size: 16px;
+    color: var(--text);
+}
+
+/* Datenschutz Hinweis */
+.hint{
+    background: rgba(232, 237, 247, .04);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 12px 14px;
+}
