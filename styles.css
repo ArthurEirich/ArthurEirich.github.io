@@ -229,6 +229,52 @@ p, li {
     margin-top: 16px;
 }
 
+/* Stundensätze (Privat/Geschäft) */
+.rate-grid{
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+    gap:14px;
+    margin-top:14px;
+    margin-bottom:16px;
+}
+
+.rate-card{
+    background: rgba(232, 237, 247, .04);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 16px;
+    text-align:left;
+}
+
+.rate-card.note{
+    grid-column: 1 / -1; /* über beide Spalten */
+}
+
+.rate-kicker{
+    font-size: 13px;
+    color: var(--muted);
+    margin-bottom: 6px;
+}
+
+.rate-value{
+    font-size: 22px;
+    font-weight: 800;
+    color: var(--accent);
+    letter-spacing: -0.2px;
+    margin-bottom: 6px;
+}
+
+.rate-sub{
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.5;
+}
+
+@media (max-width: 720px){
+    .rate-grid{ grid-template-columns: 1fr; }
+    .rate-card.note{ grid-column: auto; }
+}
+
 .price-card {
     background: rgba(232, 237, 247, .04);
     border: 1px solid var(--line);
