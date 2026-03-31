@@ -36,6 +36,40 @@ a:hover {
     padding: 42px 18px
 }
 
+/* ✅ Logo + H1 in einer Zeile (als Gruppe zentriert) */
+.brand {
+    display: flex;
+    align-items: center;
+    justify-content: center;  /* wichtig: nicht flex-start */
+    gap: 16px;
+    margin: 0 0 10px;
+    text-align: left;         /* Logo + H1 links im Block, Block selbst ist zentriert */
+    width: 100%;
+}
+
+/* ✅ Logo 300x300 */
+.brand-logo {
+    width: 300px;
+    height: 300px;
+    display: block;
+    flex: 0 0 auto;
+    object-fit: contain;
+}
+
+/* Mobile: untereinander, damit nichts gequetscht wird */
+@media (max-width: 700px) {
+    .brand {
+        flex-direction: column;
+        gap: 10px;
+        text-align: center;
+    }
+
+    .brand-logo {
+        width: 72px;
+        height: 72px;
+    }
+}
+
 .top {
     display: flex;
     flex-direction: column;
@@ -102,7 +136,7 @@ h1 {
 
 .grid {
     display: grid;
-    grid-template-columns:repeat(12, 1fr);
+    grid-template-columns: repeat(12, 1fr);
     gap: 14px;
     margin-top: 22px
 }
@@ -147,11 +181,11 @@ h1 {
     }
 
     .price-grid {
-        grid-template-columns:1fr !important
+        grid-template-columns: 1fr !important
     }
 
     .zone-grid {
-        grid-template-columns:1fr 1fr !important
+        grid-template-columns: 1fr 1fr !important
     }
 }
 
@@ -182,41 +216,41 @@ p, li {
     scroll-margin-top: 80px
 }
 
-.about{
-    display:grid;
+.about {
+    display: grid;
     grid-template-columns: 170px 1fr;
-    gap:16px;
-    align-items:stretch; /* wichtig: gleiche Höhe wie Text */
+    gap: 16px;
+    align-items: stretch; /* wichtig: gleiche Höhe wie Text */
 }
 
-.about-photo{
-    width:170px;
-    height:100%;         /* wichtig: bis zur letzten Textzeile strecken */
-    border-radius:14px;
-    overflow:hidden;
-    border:1px solid var(--line);
-    background:rgba(232,237,247,.04);
+.about-photo {
+    width: 170px;
+    height: 100%;         /* wichtig: bis zur letzten Textzeile strecken */
+    border-radius: 14px;
+    overflow: hidden;
+    border: 1px solid var(--line);
+    background: rgba(232, 237, 247, .04);
 }
 
-.about-photo img{
-    width:100%;
-    height:100%;
-    object-fit:cover;
+.about-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
     object-position: 50% 12%; /* Kopf weiter nach oben -> weniger abgeschnitten */
-    display:block;
+    display: block;
 }
 
 /* Mobile: wieder quadratisch + zentriert */
-@media (max-width:600px){
-    .about{ grid-template-columns:1fr; }
-    .about-photo{
-        width:140px;
-        height:auto;
+@media (max-width: 600px) {
+    .about { grid-template-columns: 1fr; }
+    .about-photo {
+        width: 140px;
+        height: auto;
         aspect-ratio: 1 / 1;
-        margin:0 auto;
+        margin: 0 auto;
     }
-    .about-photo img{
-        height:100%;
+    .about-photo img {
+        height: 100%;
         object-position: 50% 12%;
     }
 }
@@ -224,39 +258,39 @@ p, li {
 /* Preise */
 .price-grid {
     display: grid;
-    grid-template-columns:repeat(3, 1fr);
+    grid-template-columns: repeat(3, 1fr);
     gap: 14px;
     margin-top: 16px;
 }
 
 /* Stundensätze (Privat/Geschäft) */
-.rate-grid{
-    display:grid;
+.rate-grid {
+    display: grid;
     grid-template-columns: 1fr 1fr;
-    gap:14px;
-    margin-top:14px;
-    margin-bottom:16px;
+    gap: 14px;
+    margin-top: 14px;
+    margin-bottom: 16px;
 }
 
-.rate-card{
+.rate-card {
     background: rgba(232, 237, 247, .04);
     border: 1px solid var(--line);
     border-radius: var(--radius);
     padding: 16px;
-    text-align:left;
+    text-align: left;
 }
 
-.rate-card.note{
+.rate-card.note {
     grid-column: 1 / -1; /* über beide Spalten */
 }
 
-.rate-kicker{
+.rate-kicker {
     font-size: 13px;
     color: var(--muted);
     margin-bottom: 6px;
 }
 
-.rate-value{
+.rate-value {
     font-size: 22px;
     font-weight: 800;
     color: var(--accent);
@@ -264,15 +298,15 @@ p, li {
     margin-bottom: 6px;
 }
 
-.rate-sub{
+.rate-sub {
     font-size: 13px;
     color: var(--muted);
     line-height: 1.5;
 }
 
-@media (max-width: 720px){
-    .rate-grid{ grid-template-columns: 1fr; }
-    .rate-card.note{ grid-column: auto; }
+@media (max-width: 720px) {
+    .rate-grid { grid-template-columns: 1fr; }
+    .rate-card.note { grid-column: auto; }
 }
 
 .price-card {
@@ -317,7 +351,7 @@ p, li {
 /* Zonen */
 .zone-grid {
     display: grid;
-    grid-template-columns:repeat(5, 1fr);
+    grid-template-columns: repeat(5, 1fr);
     gap: 10px;
     margin-top: 14px;
 }
@@ -358,22 +392,24 @@ p, li {
 }
 
 /* Two-column layout (Leistungen/Datenschutz) */
-.two-col{
-    display:grid;
+.two-col {
+    display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap:14px;
+    gap: 14px;
 }
-@media (max-width: 720px){
-    .two-col{ grid-template-columns: 1fr; }
+
+@media (max-width: 720px) {
+    .two-col { grid-template-columns: 1fr; }
 }
-.two-col h3{
+
+.two-col h3 {
     margin: 0 0 8px;
     font-size: 16px;
     color: var(--text);
 }
 
 /* Datenschutz Hinweis */
-.hint{
+.hint {
     background: rgba(232, 237, 247, .04);
     border: 1px solid var(--line);
     border-radius: 12px;
