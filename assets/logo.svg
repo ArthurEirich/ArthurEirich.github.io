@@ -1,0 +1,185 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800" width="800" height="800">
+  <defs>
+    <!-- Background gradient matching Instagram posts -->
+    <radialGradient id="bgGrad" cx="50%" cy="45%" r="70%">
+      <stop offset="0%" stop-color="#0F1B30"/>
+      <stop offset="100%" stop-color="#0B1220"/>
+    </radialGradient>
+    
+    <!-- Accent gradient light blue to purple -->
+    <linearGradient id="accentGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#7DD3FC"/>
+      <stop offset="100%" stop-color="#A78BFA"/>
+    </linearGradient>
+    
+    <!-- Icon gradient -->
+    <linearGradient id="iconGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#7DD3FC"/>
+      <stop offset="50%" stop-color="#93BBFD"/>
+      <stop offset="100%" stop-color="#A78BFA"/>
+    </linearGradient>
+    
+    <!-- Subtle glow -->
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="8" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    
+    <filter id="softGlow">
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <!-- Circuit board pattern for tech feel -->
+    <pattern id="circuitPattern" x="0" y="0" width="60" height="60" patternUnits="userSpaceOnUse">
+      <line x1="0" y1="30" x2="20" y2="30" stroke="#1A2744" stroke-width="1" opacity="0.4"/>
+      <line x1="30" y1="0" x2="30" y2="20" stroke="#1A2744" stroke-width="1" opacity="0.4"/>
+      <circle cx="30" cy="30" r="2" fill="#1A2744" opacity="0.3"/>
+      <line x1="40" y1="30" x2="60" y2="30" stroke="#1A2744" stroke-width="1" opacity="0.3"/>
+      <line x1="30" y1="40" x2="30" y2="60" stroke="#1A2744" stroke-width="1" opacity="0.3"/>
+    </pattern>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="800" height="800" fill="url(#bgGrad)" rx="40"/>
+  
+  <!-- Subtle circuit pattern overlay -->
+  <rect width="800" height="800" fill="url(#circuitPattern)" rx="40" opacity="0.5"/>
+  
+  <!-- Subtle radial highlight -->
+  <circle cx="400" cy="320" r="250" fill="#1A2744" opacity="0.3"/>
+  
+  <!-- ============ MAIN ICON: Monitor with wrench/gear ============ -->
+  
+  <!-- Monitor body - rounded rectangle -->
+  <g transform="translate(400, 280)" filter="url(#softGlow)">
+    <!-- Monitor outer frame -->
+    <rect x="-130" y="-100" width="260" height="175" rx="16" ry="16" 
+          fill="none" stroke="url(#iconGrad)" stroke-width="5"/>
+    
+    <!-- Monitor screen -->
+    <rect x="-115" y="-85" width="230" height="140" rx="8" ry="8" 
+          fill="#0B1220" stroke="url(#iconGrad)" stroke-width="1.5" opacity="0.6"/>
+    
+    <!-- Screen content: code lines -->
+    <g opacity="0.7">
+      <!-- Line 1: colored bracket -->
+      <text x="-95" y="-50" font-family="monospace" font-size="18" fill="#7DD3FC">&lt;</text>
+      <rect x="-78" y="-60" width="65" height="12" rx="2" fill="#7DD3FC" opacity="0.5"/>
+      <text x="-8" y="-50" font-family="monospace" font-size="18" fill="#7DD3FC">/&gt;</text>
+      
+      <!-- Line 2 -->
+      <rect x="-75" y="-38" width="90" height="10" rx="2" fill="#A78BFA" opacity="0.35"/>
+      
+      <!-- Line 3 -->
+      <rect x="-75" y="-22" width="55" height="10" rx="2" fill="#7DD3FC" opacity="0.3"/>
+      
+      <!-- Cursor blinking -->
+      <rect x="-14" y="-22" width="2" height="12" fill="#7DD3FC" opacity="0.9">
+        <animate attributeName="opacity" values="0.9;0.2;0.9" dur="1.2s" repeatCount="indefinite"/>
+      </rect>
+    </g>
+    
+    <!-- WiFi signal icon on screen (right side) -->
+    <g transform="translate(55, -35)" opacity="0.6">
+      <path d="M0,18 L0,18" stroke="#A78BFA" stroke-width="3" stroke-linecap="round"/>
+      <path d="M-8,12 A12,12 0 0,1 8,12" fill="none" stroke="#A78BFA" stroke-width="2.5" stroke-linecap="round"/>
+      <path d="M-16,5 A22,22 0 0,1 16,5" fill="none" stroke="#A78BFA" stroke-width="2.5" stroke-linecap="round"/>
+      <path d="M-24,-3 A32,32 0 0,1 24,-3" fill="none" stroke="#A78BFA" stroke-width="2" stroke-linecap="round" opacity="0.6"/>
+      <circle cx="0" cy="18" r="3" fill="#A78BFA"/>
+    </g>
+    
+    <!-- Monitor stand -->
+    <rect x="-25" y="80" width="50" height="12" rx="3" fill="url(#iconGrad)" opacity="0.8"/>
+    <rect x="-8" y="75" width="16" height="12" rx="2" fill="url(#iconGrad)" opacity="0.7"/>
+    
+    <!-- Monitor base -->
+    <rect x="-45" y="92" width="90" height="8" rx="4" fill="url(#iconGrad)" opacity="0.6"/>
+  </g>
+  
+  <!-- Gear icon inside monitor screen - bottom right, moved up -->
+  <g transform="translate(485, 308)">
+    <path d="M-3,-20 L3,-20 L3.5,-16 L-3.5,-16 Z" fill="url(#iconGrad)" opacity="0.7" transform="rotate(0)"/>
+    <path d="M-3,-20 L3,-20 L3.5,-16 L-3.5,-16 Z" fill="url(#iconGrad)" opacity="0.7" transform="rotate(45)"/>
+    <path d="M-3,-20 L3,-20 L3.5,-16 L-3.5,-16 Z" fill="url(#iconGrad)" opacity="0.7" transform="rotate(90)"/>
+    <path d="M-3,-20 L3,-20 L3.5,-16 L-3.5,-16 Z" fill="url(#iconGrad)" opacity="0.7" transform="rotate(135)"/>
+    <path d="M-3,-20 L3,-20 L3.5,-16 L-3.5,-16 Z" fill="url(#iconGrad)" opacity="0.7" transform="rotate(180)"/>
+    <path d="M-3,-20 L3,-20 L3.5,-16 L-3.5,-16 Z" fill="url(#iconGrad)" opacity="0.7" transform="rotate(225)"/>
+    <path d="M-3,-20 L3,-20 L3.5,-16 L-3.5,-16 Z" fill="url(#iconGrad)" opacity="0.7" transform="rotate(270)"/>
+    <path d="M-3,-20 L3,-20 L3.5,-16 L-3.5,-16 Z" fill="url(#iconGrad)" opacity="0.7" transform="rotate(315)"/>
+    <circle cx="0" cy="0" r="14" fill="url(#iconGrad)" opacity="0.7"/>
+    <circle cx="0" cy="0" r="5.5" fill="#0B1220"/>
+  </g>
+
+  <!-- Toolbox (Werkzeugkasten) inside monitor screen - bottom left -->
+  <g transform="translate(315, 312)" opacity="0.7">
+    <!-- Box body - wider, more rectangular -->
+    <rect x="-17" y="-6" width="34" height="16" rx="2" fill="url(#iconGrad)"/>
+    <!-- Box lid - flat, distinct from body -->
+    <rect x="-19" y="-10" width="38" height="5" rx="1.5" fill="url(#iconGrad)"/>
+    <!-- Lid line to separate from body -->
+    <line x1="-19" y1="-5" x2="19" y2="-5" stroke="#0B1220" stroke-width="1.5" opacity="0.5"/>
+    <!-- Handle - clearly a rigid semicircle handle -->
+    <rect x="-6" y="-18" width="12" height="9" rx="2" fill="none" stroke="url(#iconGrad)" stroke-width="2.5"/>
+    <!-- Center latch -->
+    <rect x="-2.5" y="-8" width="5" height="3" rx="0.5" fill="#0B1220" opacity="0.7"/>
+    <!-- Side clasps -->
+    <rect x="-14" y="-8" width="3" height="3" rx="0.5" fill="#0B1220" opacity="0.5"/>
+    <rect x="11" y="-8" width="3" height="3" rx="0.5" fill="#0B1220" opacity="0.5"/>
+  </g>
+  
+  <!-- Small floating elements for tech feel -->
+  <g opacity="0.4">
+    <!-- Binary digits -->
+    <text x="160" y="200" font-family="monospace" font-size="14" fill="#7DD3FC" opacity="0.3">01</text>
+    <text x="600" y="180" font-family="monospace" font-size="12" fill="#A78BFA" opacity="0.25">10</text>
+    <text x="640" y="240" font-family="monospace" font-size="11" fill="#7DD3FC" opacity="0.2">01</text>
+    <text x="140" y="350" font-family="monospace" font-size="13" fill="#A78BFA" opacity="0.2">11</text>
+  </g>
+  
+  <!-- Connection dots/nodes -->
+  <g opacity="0.35">
+    <circle cx="180" cy="260" r="3" fill="#7DD3FC"/>
+    <circle cx="620" cy="300" r="3" fill="#A78BFA"/>
+    <circle cx="200" cy="400" r="2.5" fill="#A78BFA"/>
+    <circle cx="600" cy="200" r="2.5" fill="#7DD3FC"/>
+    <!-- Connecting lines -->
+    <line x1="180" y1="260" x2="270" y2="280" stroke="#7DD3FC" stroke-width="0.8" opacity="0.5"/>
+    <line x1="530" y1="280" x2="620" y2="300" stroke="#A78BFA" stroke-width="0.8" opacity="0.5"/>
+  </g>
+  
+  <!-- ============ TEXT ============ -->
+  
+  <!-- Company name: "Eirich" -->
+  <text x="400" y="490" text-anchor="middle" 
+        font-family="'Segoe UI', 'Helvetica Neue', Arial, sans-serif" 
+        font-size="72" font-weight="700" letter-spacing="3" fill="white">
+    Eirich
+  </text>
+  
+  <!-- "IT-Service" in gradient colors -->
+  <text x="400" y="555" text-anchor="middle" 
+        font-family="'Segoe UI', 'Helvetica Neue', Arial, sans-serif" 
+        font-size="48" font-weight="600" letter-spacing="6" fill="url(#accentGrad)">
+    IT-Service
+  </text>
+  
+  <!-- Divider line -->
+  <line x1="280" y1="575" x2="520" y2="575" stroke="url(#accentGrad)" stroke-width="1.5" opacity="0.4"/>
+  
+  <!-- Tagline -->
+  <text x="400" y="610" text-anchor="middle" 
+        font-family="'Segoe UI', 'Helvetica Neue', Arial, sans-serif" 
+        font-size="20" font-weight="400" letter-spacing="4" fill="#94A3B8" opacity="0.8">
+    WÜRZBURG &amp; UMGEBUNG
+  </text>
+  
+  <!-- Bottom accent line -->
+  <rect x="350" y="650" width="100" height="3" rx="1.5" fill="url(#accentGrad)" opacity="0.5"/>
+</svg>
