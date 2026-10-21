@@ -29,3 +29,10 @@ if (form) {
         }
     });
 }
+
+document.querySelectorAll("[data-scroll-form]").forEach((link) => {
+    link.addEventListener("click", () => {
+        const field = document.querySelector("#contact-form input[name=name]");
+        if (field) setTimeout(() => field.focus({preventScroll: true}), 600);
+    });
+});
