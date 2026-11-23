@@ -670,7 +670,8 @@ p, li {
     background: var(--card);
 }
 
-.site-nav-bar .lang a {
+.site-nav-bar .lang a,
+.service-navigation .lang a {
     display: grid;
     min-width: 44px;
     min-height: 44px;
@@ -721,6 +722,14 @@ p, li {
     padding-top: 24px;
     line-height: 1.55;
     overflow-wrap: anywhere;
+}
+
+.service-navigation {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px 16px;
 }
 
 .breadcrumbs ol {
