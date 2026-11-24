@@ -4,7 +4,7 @@
         <loc>https://eiricha.com/</loc>
         <xhtml:link rel="alternate" hreflang="de-CH" href="https://eiricha.com/"/>
         <xhtml:link rel="alternate" hreflang="en" href="https://eiricha.com/en/"/>
-        <lastmod>2026-11-23</lastmod>
+        <lastmod>2026-11-24</lastmod>
     </url>
     <url>
         <loc>https://eiricha.com/en/</loc>
@@ -25,6 +25,18 @@
         <lastmod>2026-11-24</lastmod>
     </url>
     <url>
+        <loc>https://eiricha.com/mac-hilfe-zuerich/</loc>
+        <xhtml:link rel="alternate" hreflang="de-CH" href="https://eiricha.com/mac-hilfe-zuerich/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://eiricha.com/en/mac-apple-support-zurich/"/>
+        <lastmod>2026-11-24</lastmod>
+    </url>
+    <url>
+        <loc>https://eiricha.com/en/mac-apple-support-zurich/</loc>
+        <xhtml:link rel="alternate" hreflang="de-CH" href="https://eiricha.com/mac-hilfe-zuerich/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://eiricha.com/en/mac-apple-support-zurich/"/>
+        <lastmod>2026-11-24</lastmod>
+    </url>
+    <url>
         <loc>https://eiricha.com/wlan-hilfe-zuerich/</loc>
         <xhtml:link rel="alternate" hreflang="de-CH" href="https://eiricha.com/wlan-hilfe-zuerich/"/>
         <xhtml:link rel="alternate" hreflang="en" href="https://eiricha.com/en/wifi-support-zurich/"/>
@@ -34,6 +46,54 @@
         <loc>https://eiricha.com/en/wifi-support-zurich/</loc>
         <xhtml:link rel="alternate" hreflang="de-CH" href="https://eiricha.com/wlan-hilfe-zuerich/"/>
         <xhtml:link rel="alternate" hreflang="en" href="https://eiricha.com/en/wifi-support-zurich/"/>
+        <lastmod>2026-11-24</lastmod>
+    </url>
+    <url>
+        <loc>https://eiricha.com/handy-hilfe-zuerich/</loc>
+        <xhtml:link rel="alternate" hreflang="de-CH" href="https://eiricha.com/handy-hilfe-zuerich/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://eiricha.com/en/smartphone-tablet-support-zurich/"/>
+        <lastmod>2026-11-24</lastmod>
+    </url>
+    <url>
+        <loc>https://eiricha.com/en/smartphone-tablet-support-zurich/</loc>
+        <xhtml:link rel="alternate" hreflang="de-CH" href="https://eiricha.com/handy-hilfe-zuerich/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://eiricha.com/en/smartphone-tablet-support-zurich/"/>
+        <lastmod>2026-11-24</lastmod>
+    </url>
+    <url>
+        <loc>https://eiricha.com/datensicherung-zuerich/</loc>
+        <xhtml:link rel="alternate" hreflang="de-CH" href="https://eiricha.com/datensicherung-zuerich/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://eiricha.com/en/backup-data-protection-zurich/"/>
+        <lastmod>2026-11-24</lastmod>
+    </url>
+    <url>
+        <loc>https://eiricha.com/en/backup-data-protection-zurich/</loc>
+        <xhtml:link rel="alternate" hreflang="de-CH" href="https://eiricha.com/datensicherung-zuerich/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://eiricha.com/en/backup-data-protection-zurich/"/>
+        <lastmod>2026-11-24</lastmod>
+    </url>
+    <url>
+        <loc>https://eiricha.com/drucker-hilfe-zuerich/</loc>
+        <xhtml:link rel="alternate" hreflang="de-CH" href="https://eiricha.com/drucker-hilfe-zuerich/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://eiricha.com/en/printer-scanner-support-zurich/"/>
+        <lastmod>2026-11-24</lastmod>
+    </url>
+    <url>
+        <loc>https://eiricha.com/en/printer-scanner-support-zurich/</loc>
+        <xhtml:link rel="alternate" hreflang="de-CH" href="https://eiricha.com/drucker-hilfe-zuerich/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://eiricha.com/en/printer-scanner-support-zurich/"/>
+        <lastmod>2026-11-24</lastmod>
+    </url>
+    <url>
+        <loc>https://eiricha.com/computerhilfe-senioren-zuerich/</loc>
+        <xhtml:link rel="alternate" hreflang="de-CH" href="https://eiricha.com/computerhilfe-senioren-zuerich/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://eiricha.com/en/computer-help-seniors-zurich/"/>
+        <lastmod>2026-11-24</lastmod>
+    </url>
+    <url>
+        <loc>https://eiricha.com/en/computer-help-seniors-zurich/</loc>
+        <xhtml:link rel="alternate" hreflang="de-CH" href="https://eiricha.com/computerhilfe-senioren-zuerich/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://eiricha.com/en/computer-help-seniors-zurich/"/>
         <lastmod>2026-11-24</lastmod>
     </url>
     <url>
