@@ -3,8 +3,9 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>IT-Service Zürich und PC-Hilfe | Eirich</title>
-    <meta name="description" content="PC, Notebook, Handy oder Tablet einrichten, Softwarefehler eingrenzen und Backups aufsetzen. Persönliche IT-Hilfe in Zürich und Oerlikon oder per Fernwartung.">
+    <script>document.documentElement.classList.add("js-nav");</script>
+    <title>PC-Hilfe und Windows-Support in Zürich | Eirich</title>
+    <meta name="description" content="Windows einrichten, langsame Notebooks prüfen, Mailkonten und Daten umziehen. Persönliche PC-Hilfe in Zürich und Oerlikon oder per Fernwartung.">
     <meta name="theme-color" content="#0b1220">
     <link rel="canonical" href="https://eiricha.com/it-service-zuerich/">
     <link rel="alternate" hreflang="de-CH" href="https://eiricha.com/it-service-zuerich/">
@@ -16,8 +17,8 @@
     <meta property="og:url" content="https://eiricha.com/it-service-zuerich/">
     <meta property="og:locale" content="de_CH">
     <meta property="og:locale:alternate" content="en_GB">
-    <meta property="og:title" content="IT-Service Zürich und PC-Hilfe | Eirich">
-    <meta property="og:description" content="PC, Notebook, Handy oder Tablet einrichten, Softwarefehler eingrenzen und Backups aufsetzen. Persönliche IT-Hilfe in Zürich und Oerlikon oder per Fernwartung.">
+    <meta property="og:title" content="PC-Hilfe und Windows-Support in Zürich | Eirich">
+    <meta property="og:description" content="Windows einrichten, langsame Notebooks prüfen, Mailkonten und Daten umziehen. Persönliche PC-Hilfe in Zürich und Oerlikon oder per Fernwartung.">
     <meta property="og:image" content="https://eiricha.com/assets/og-image.jpg">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
@@ -30,8 +31,8 @@
                     "@type": "WebPage",
                     "@id": "https://eiricha.com/it-service-zuerich/#page",
                     "url": "https://eiricha.com/it-service-zuerich/",
-                    "name": "IT-Service Zürich und PC-Hilfe | Eirich",
-                    "description": "PC, Notebook, Handy oder Tablet einrichten, Softwarefehler eingrenzen und Backups aufsetzen. Persönliche IT-Hilfe in Zürich und Oerlikon oder per Fernwartung.",
+                    "name": "PC-Hilfe und Windows-Support in Zürich | Eirich",
+                    "description": "Windows einrichten, langsame Notebooks prüfen, Mailkonten und Daten umziehen. Persönliche PC-Hilfe in Zürich und Oerlikon oder per Fernwartung.",
                     "inLanguage": "de-CH",
                     "mainEntity": {
                         "@id": "https://eiricha.com/it-service-zuerich/#service"
@@ -44,17 +45,40 @@
                     "@type": "Service",
                     "@id": "https://eiricha.com/it-service-zuerich/#service",
                     "url": "https://eiricha.com/it-service-zuerich/",
-                    "name": "IT-Service Zürich",
-                    "description": "PC, Notebook, Handy oder Tablet einrichten, Softwarefehler eingrenzen und Backups aufsetzen. Persönliche IT-Hilfe in Zürich und Oerlikon oder per Fernwartung.",
+                    "name": "PC- & Windows-Hilfe",
+                    "description": "Windows einrichten, langsame Notebooks prüfen, Mailkonten und Daten umziehen. Persönliche PC-Hilfe in Zürich und Oerlikon oder per Fernwartung.",
                     "provider": {
                         "@id": "https://eiricha.com/#business",
+                        "@type": "LocalBusiness",
                         "name": "Eirich IT-Service & Softwareentwicklung",
                         "url": "https://eiricha.com/"
                     },
                     "areaServed": {
                         "@type": "City",
                         "name": "Zürich"
-                    }
+                    },
+                    "offers": [
+                        {
+                            "@type": "Offer",
+                            "name": "Privatkunden",
+                            "priceSpecification": {
+                                "@type": "UnitPriceSpecification",
+                                "price": 130,
+                                "priceCurrency": "CHF",
+                                "unitCode": "HUR"
+                            }
+                        },
+                        {
+                            "@type": "Offer",
+                            "name": "Geschäftskunden",
+                            "priceSpecification": {
+                                "@type": "UnitPriceSpecification",
+                                "price": 160,
+                                "priceCurrency": "CHF",
+                                "unitCode": "HUR"
+                            }
+                        }
+                    ]
                 },
                 {
                     "@type": "BreadcrumbList",
@@ -69,7 +93,7 @@
                         {
                             "@type": "ListItem",
                             "position": 2,
-                            "name": "IT-Service Zürich",
+                            "name": "PC- & Windows-Hilfe",
                             "item": "https://eiricha.com/it-service-zuerich/"
                         }
                     ]
@@ -82,20 +106,42 @@
     <a class="skip-link" href="#main-content">Zum Inhalt springen</a>
     <div class="wrap site-wrap">
         <header class="site-nav-bar">
-            <button class="btn nav-toggle" type="button" aria-expanded="false" aria-controls="main-navigation" hidden>Menü</button>
+            <button class="btn nav-toggle" type="button" aria-expanded="false" aria-controls="main-navigation">Menü</button>
             <nav id="main-navigation" class="site-nav" aria-label="Hauptnavigation">
                 <ul class="site-nav-list">
                     <li><a href="/">Startseite</a></li>
                     <li>
                         <details class="nav-services">
                             <summary>Leistungen</summary>
-                            <ul>
-                                <li><a href="/#leistungen">Übersicht</a></li>
-                                <li><a href="/it-service-zuerich/" aria-current="page">IT-Service Zürich</a></li>
-                                <li><a href="/wlan-hilfe-zuerich/">WLAN-Hilfe Zürich</a></li>
-                                <li><a href="/webseiten-zuerich/">Webseiten Zürich</a></li>
-                                <li><a href="/individualsoftware-zuerich/">Individualsoftware Zürich</a></li>
-                            </ul>
+                            <div class="nav-services-panel">
+                                <a href="/#leistungen">Alle Leistungen</a>
+                                <div class="nav-service-groups">
+                                    <div>
+                                        <strong>Computer &amp; Geräte</strong>
+                                        <ul>
+                                            <li><a href="/it-service-zuerich/" aria-current="page">PC- &amp; Windows-Hilfe</a></li>
+                                            <li><a href="/mac-hilfe-zuerich/">Mac &amp; Apple-Support</a></li>
+                                            <li><a href="/handy-hilfe-zuerich/">Smartphone &amp; Tablet</a></li>
+                                            <li><a href="/drucker-hilfe-zuerich/">Drucker &amp; Scanner</a></li>
+                                            <li><a href="/computerhilfe-senioren-zuerich/">Computerhilfe für Senioren</a></li>
+                                        </ul>
+                                    </div>
+                                    <div>
+                                        <strong>WLAN &amp; Datensicherung</strong>
+                                        <ul>
+                                            <li><a href="/wlan-hilfe-zuerich/">WLAN, Router &amp; Netzwerk</a></li>
+                                            <li><a href="/datensicherung-zuerich/">Backup &amp; Datensicherung</a></li>
+                                        </ul>
+                                    </div>
+                                    <div>
+                                        <strong>Web &amp; Software</strong>
+                                        <ul>
+                                            <li><a href="/webseiten-zuerich/">Webseiten &amp; Landingpages</a></li>
+                                            <li><a href="/individualsoftware-zuerich/">Individualsoftware &amp; Automatisierung</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
                         </details>
                     </li>
                     <li><a href="/#preise">Preise</a></li>
@@ -104,85 +150,96 @@
                 </ul>
             </nav>
             <nav class="lang" aria-label="Sprache / Language">
-                <a href="/it-service-zuerich/" lang="de-CH" hreflang="de-CH" aria-current="page">DE</a>
-                <a href="/en/it-support-zurich/" lang="en" hreflang="en">EN</a>
+                <a href="/it-service-zuerich/" lang="de-CH" hreflang="de-CH" aria-label="DE – Deutsch" aria-current="page">DE</a>
+                <a href="/en/it-support-zurich/" lang="en" hreflang="en" aria-label="EN – English">EN</a>
             </nav>
         </header>
         <main class="service-page" id="main-content" tabindex="-1">
             <nav class="breadcrumbs" aria-label="Brotkrumennavigation">
                 <ol>
                     <li><a href="/">Startseite</a></li>
-                    <li><span aria-current="page">IT-Service Zürich</span></li>
+                    <li><span aria-current="page">PC- &amp; Windows-Hilfe</span></li>
                 </ol>
             </nav>
 
             <header class="service-hero">
                 <img class="service-logo" src="/assets/logo.svg" width="72" height="72" alt="">
                 <div>
-                    <h1>IT-Service und PC-Hilfe in Zürich</h1>
-                    <p class="sub">PC, Notebook, Handy oder Tablet einrichten, Softwarefehler eingrenzen und Backups aufsetzen. Persönliche IT-Hilfe in Zürich und Oerlikon oder per Fernwartung.</p>
+                    <h1>PC- und Windows-Hilfe in Zürich</h1>
+                    <p class="sub">Windows einrichten, langsame Notebooks prüfen, Mailkonten und Daten umziehen. Persönliche PC-Hilfe in Zürich und Oerlikon oder per Fernwartung.</p>
                     <p class="service-price">
-                        <strong>ab CHF 149</strong>
-                        <span>Für PC- und Notebook-Setup sowie kleinere Softwareprobleme.</span>
+                        <strong>Pro Stunde: CHF 130 privat · CHF 160 geschäftlich</strong>
+                        <span>Je 15 Minuten: CHF 32.50 privat, CHF 40 geschäftlich.</span>
                     </p>
                     <div class="row">
-                        <a class="btn primary" href="/#kontakt">Kontaktformular</a>
+                        <a class="btn primary" href="/?service=pc#kontakt">Hilfe anfragen</a>
                         <a class="btn" href="tel:+41768414468">+41 76 841 44 68</a>
                         <a class="btn" href="https://wa.me/41768414468">WhatsApp</a>
                     </div>
                 </div>
             </header>
 
-            <section class="card">
-                <h2>Hilfe für Geräte, Programme und Daten</h2>
-                <p>Der neue Laptop braucht noch ein Benutzerprofil, Programme machen nach einem Update Probleme oder beim Handywechsel sollen die Daten mitkommen? Ich helfe Privatpersonen und kleinen Unternehmen bei der Einrichtung und bei Problemen auf Software-Ebene.</p>
-                <ul>
-                    <li><strong>PC und Notebook</strong> – Geräte einrichten, Software installieren und Fehler auf Software-Ebene eingrenzen.</li>
-                    <li><strong>Smartphone und Tablet</strong> – Profile und Apps einrichten, Daten übertragen und ein Backup anlegen.</li>
-                    <li><strong>Backup und Datensicherung</strong> – Eine zum Alltag passende Sicherung einrichten und mit einem kurzen Wiederherstellungstest prüfen, ob sich Daten zurückholen lassen.</li>
-                </ul>
+            <section class="card service-copy">
+                <h2>Wobei ich dir helfe</h2>
+                <h3>Neuen PC oder neues Notebook einrichten</h3>
+                <p>Ich installiere und konfiguriere Windows, unterstütze bei Benutzerkonten, E-Mail und Programmen und helfe beim Umzug deiner Dateien. Wir besprechen, welche Einstellungen, Programme und Lizenzen du übernehmen möchtest.</p>
+                <h3>Langsame Geräte und Windows-Fehler eingrenzen</h3>
+                <p>Ich untersuche blockierte Updates, Treiberprobleme, Programmfehler und auffällige Startzeiten. Dazu prüfe ich unter anderem den freien Speicher, Autostart-Programme und Sicherheitseinstellungen.</p>
+                <h3>Fernwartung oder persönliche Hilfe</h3>
+                <p>Bei stabiler Internetverbindung können wir viele Einstellungen gemeinsam per Fernwartung prüfen. Wenn das Gerät nicht startet oder die Verbindung selbst betroffen ist, besprechen wir einen Termin vor Ort.</p>
             </section>
+
             <section class="card">
-                <h2>Bei dir vor Ort in Zürich oder per Fernwartung</h2>
-                <p>Von Zürich-Oerlikon aus komme ich nach Absprache zu dir nach Hause oder ins Büro. Das Einsatzgebiet umfasst Zürich und die Umgebung im Umkreis von etwa 20 km, zum Beispiel Wallisellen, Opfikon und Dübendorf.</p>
-                <p>Wenn das Gerät online und für die Fernwartung zugänglich ist, lassen sich viele Softwareprobleme auch ohne Anfahrt untersuchen. Im Erstgespräch klären wir, was du beobachtest und welcher Weg sinnvoll ist.</p>
+                <h2>So läuft die Zusammenarbeit ab</h2>
+                <p>Beschreibe das Gerät, die Windows-Version, die Fehlermeldung und wann das Problem begonnen hat. Wir klären den nächsten Schritt und die Kosten. Bei einem Umzug prüfen wir nach der Einrichtung gemeinsam, ob deine wichtigen Dateien und Konten verfügbar sind.</p>
+                <p>Persönliche Hilfe in Zürich und Umgebung, ungefähr 20 km ab Oerlikon. Ob Fernwartung sinnvoll ist, klären wir beim Erstgespräch. Unterstützung auf Deutsch und Englisch.</p>
+            </section>
+
+            <section class="card">
+                <h2>Preise und Abrechnung</h2>
+                <p>Fernwartung ab 15 Minuten, ohne Anfahrt. Vor Ort mindestens 60 Minuten plus einmalige Anfahrtspauschale pro Termin. Danach Abrechnung in 15-Minuten-Schritten. <a href="/#preise">Preise und Konditionen ansehen</a>.</p>
+                <p>Das unverbindliche 15-Minuten-Erstgespräch per Telefon oder WhatsApp ist kostenlos. Technische Fehlersuche und Fernwartung sind kostenpflichtig.</p>
             </section>
 
             <section class="card">
                 <h2>Häufige Fragen</h2>
                 <details class="faq">
-                    <summary>Reparierst du auch kaputte Hardware?</summary>
-                    <p>Ich helfe bei der Einrichtung und bei Softwareproblemen. Hardware-Reparaturen wie ein Displaytausch gehören nicht zum Angebot.</p>
+                    <summary>Installierst du Windows neu?</summary>
+                    <p>Ja, nach Absprache. Wir klären vorher die Datensicherung, die benötigten Programme und ob deine Lizenz zur gewünschten Installation passt.</p>
                 </details>
                 <details class="faq">
-                    <summary>Was soll ich für das Erstgespräch bereithalten?</summary>
-                    <p>Hilfreich sind das Gerät oder Modell, das Betriebssystem und der genaue Wortlaut einer Fehlermeldung. Wenn der Fehler nach einer Änderung auftrat, sag mir, was sich geändert hat.</p>
+                    <summary>Reparierst du ein defektes Display oder Laufwerk?</summary>
+                    <p>Ich helfe bei Einrichtung und Softwareproblemen. Physische Geräte- und Laufwerksreparaturen gehören nicht zu diesem Angebot.</p>
                 </details>
                 <details class="faq">
-                    <summary>Gibt es IT-Hilfe auch für kleine Unternehmen?</summary>
-                    <p>Ja. Ich unterstütze sowohl Privatpersonen als auch kleine Unternehmen. Die geltenden Stundensätze und die Anfahrtspauschalen findest du in der <a href="/#preise">Preisübersicht</a>.</p>
+                    <summary>Was brauche ich für die Fernwartung?</summary>
+                    <p>Einen benutzbaren PC und eine stabile Internetverbindung. Im Erstgespräch klären wir, ob Fernwartung für dein Anliegen sinnvoll ist.</p>
                 </details>
             </section>
 
             <section class="card">
-                <h2>Hilfe für dein Gerät anfragen</h2>
-                <p>Beschreibe kurz das Gerät und das Problem. Wenn du Hilfe vor Ort möchtest, nenne bitte auch den Einsatzort.</p>
-                <p><a href="/#kontakt">Anfrage über das Kontaktformular senden</a></p>
-            </section>
-
-            <section class="card">
-                <h2>Weitere Leistungen</h2>
+                <h2>Verwandte Leistungen</h2>
                 <ul>
-                    <li><a href="/wlan-hilfe-zuerich/">WLAN-Hilfe Zürich</a></li>
-                    <li><a href="/webseiten-zuerich/">Webseiten Zürich</a></li>
-                    <li><a href="/individualsoftware-zuerich/">Individualsoftware Zürich</a></li>
+                    <li><a href="/datensicherung-zuerich/">Datensicherung vor einem PC-Wechsel</a></li>
+                    <li><a href="/mac-hilfe-zuerich/">Hilfe beim Wechsel von Windows auf Mac</a></li>
+                    <li><a href="/drucker-hilfe-zuerich/">Drucker und Treiber einrichten</a></li>
                 </ul>
+            </section>
+
+            <section class="card">
+                <h2>Kostenloses Erstgespräch</h2>
+                <p><a href="tel:+41768414468">Anrufen</a> · <a href="https://wa.me/41768414468">WhatsApp</a> · <a href="/?service=pc#kontakt">Kontaktformular</a></p>
             </section>
         </main>
         <footer class="footer">
-            <a href="/">Startseite</a> · <a href="/#impressum">Impressum</a> · <a href="/#datenschutz">Datenschutz</a>
+            <span>© <span id="y"></span> Eirich IT-Service &amp; Softwareentwicklung</span>
+            <nav aria-label="Informationen">
+                <a href="/#faq">FAQ</a>
+                <a href="/#impressum">Impressum</a>
+                <a href="/#datenschutz">Datenschutz</a>
+            </nav>
         </footer>
     </div>
-<script src="/script.js" defer></script>
+    <script src="/script.js" defer onerror="document.documentElement.classList.remove('js-nav')"></script>
 </body>
 </html>

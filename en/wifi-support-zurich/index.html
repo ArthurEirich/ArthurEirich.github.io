@@ -3,8 +3,9 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Wi-Fi Support and Router Setup in Zurich | Eirich</title>
-    <meta name="description" content="Weak Wi-Fi, dropped connections or a new router? Get help setting up and troubleshooting Wi-Fi in Zurich, Oerlikon and the surrounding area.">
+    <script>document.documentElement.classList.add("js-nav");</script>
+    <title>Wi-Fi, Router and FRITZ!Box Support in Zurich | Eirich</title>
+    <meta name="description" content="Troubleshoot slow Wi-Fi, dead zones and dropped connections. Get help with FRITZ!Box, mesh Wi-Fi and home networking in Zurich and Oerlikon.">
     <meta name="theme-color" content="#0b1220">
     <link rel="canonical" href="https://eiricha.com/en/wifi-support-zurich/">
     <link rel="alternate" hreflang="de-CH" href="https://eiricha.com/wlan-hilfe-zuerich/">
@@ -16,8 +17,8 @@
     <meta property="og:url" content="https://eiricha.com/en/wifi-support-zurich/">
     <meta property="og:locale" content="en_GB">
     <meta property="og:locale:alternate" content="de_CH">
-    <meta property="og:title" content="Wi-Fi Support and Router Setup in Zurich | Eirich">
-    <meta property="og:description" content="Weak Wi-Fi, dropped connections or a new router? Get help setting up and troubleshooting Wi-Fi in Zurich, Oerlikon and the surrounding area.">
+    <meta property="og:title" content="Wi-Fi, Router and FRITZ!Box Support in Zurich | Eirich">
+    <meta property="og:description" content="Troubleshoot slow Wi-Fi, dead zones and dropped connections. Get help with FRITZ!Box, mesh Wi-Fi and home networking in Zurich and Oerlikon.">
     <meta property="og:image" content="https://eiricha.com/assets/og-image.jpg">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
@@ -30,8 +31,8 @@
                     "@type": "WebPage",
                     "@id": "https://eiricha.com/en/wifi-support-zurich/#page",
                     "url": "https://eiricha.com/en/wifi-support-zurich/",
-                    "name": "Wi-Fi Support and Router Setup in Zurich | Eirich",
-                    "description": "Weak Wi-Fi, dropped connections or a new router? Get help setting up and troubleshooting Wi-Fi in Zurich, Oerlikon and the surrounding area.",
+                    "name": "Wi-Fi, Router and FRITZ!Box Support in Zurich | Eirich",
+                    "description": "Troubleshoot slow Wi-Fi, dead zones and dropped connections. Get help with FRITZ!Box, mesh Wi-Fi and home networking in Zurich and Oerlikon.",
                     "inLanguage": "en",
                     "mainEntity": {
                         "@id": "https://eiricha.com/en/wifi-support-zurich/#service"
@@ -44,17 +45,40 @@
                     "@type": "Service",
                     "@id": "https://eiricha.com/en/wifi-support-zurich/#service",
                     "url": "https://eiricha.com/en/wifi-support-zurich/",
-                    "name": "Wi-Fi support in Zurich",
-                    "description": "Weak Wi-Fi, dropped connections or a new router? Get help setting up and troubleshooting Wi-Fi in Zurich, Oerlikon and the surrounding area.",
+                    "name": "Wi-Fi, routers & networks",
+                    "description": "Troubleshoot slow Wi-Fi, dead zones and dropped connections. Get help with FRITZ!Box, mesh Wi-Fi and home networking in Zurich and Oerlikon.",
                     "provider": {
                         "@id": "https://eiricha.com/#business",
+                        "@type": "LocalBusiness",
                         "name": "Eirich IT-Service & Softwareentwicklung",
                         "url": "https://eiricha.com/"
                     },
                     "areaServed": {
                         "@type": "City",
-                        "name": "Zurich"
-                    }
+                        "name": "Zürich"
+                    },
+                    "offers": [
+                        {
+                            "@type": "Offer",
+                            "name": "Private customers",
+                            "priceSpecification": {
+                                "@type": "UnitPriceSpecification",
+                                "price": 130,
+                                "priceCurrency": "CHF",
+                                "unitCode": "HUR"
+                            }
+                        },
+                        {
+                            "@type": "Offer",
+                            "name": "Business customers",
+                            "priceSpecification": {
+                                "@type": "UnitPriceSpecification",
+                                "price": 160,
+                                "priceCurrency": "CHF",
+                                "unitCode": "HUR"
+                            }
+                        }
+                    ]
                 },
                 {
                     "@type": "BreadcrumbList",
@@ -69,7 +93,7 @@
                         {
                             "@type": "ListItem",
                             "position": 2,
-                            "name": "Wi-Fi support in Zurich",
+                            "name": "Wi-Fi, routers & networks",
                             "item": "https://eiricha.com/en/wifi-support-zurich/"
                         }
                     ]
@@ -82,20 +106,42 @@
     <a class="skip-link" href="#main-content">Skip to content</a>
     <div class="wrap site-wrap">
         <header class="site-nav-bar">
-            <button class="btn nav-toggle" type="button" aria-expanded="false" aria-controls="main-navigation" hidden>Menu</button>
+            <button class="btn nav-toggle" type="button" aria-expanded="false" aria-controls="main-navigation">Menu</button>
             <nav id="main-navigation" class="site-nav" aria-label="Main navigation">
                 <ul class="site-nav-list">
                     <li><a href="/en/">Home</a></li>
                     <li>
                         <details class="nav-services">
                             <summary>Services</summary>
-                            <ul>
-                                <li><a href="/en/#leistungen">Overview</a></li>
-                                <li><a href="/en/it-support-zurich/">IT support</a></li>
-                                <li><a href="/en/wifi-support-zurich/" aria-current="page">Wi-Fi support</a></li>
-                                <li><a href="/en/website-design-zurich/">Websites</a></li>
-                                <li><a href="/en/custom-software-zurich/">Custom software</a></li>
-                            </ul>
+                            <div class="nav-services-panel">
+                                <a href="/en/#leistungen">All services</a>
+                                <div class="nav-service-groups">
+                                    <div>
+                                        <strong>Computers &amp; devices</strong>
+                                        <ul>
+                                            <li><a href="/en/it-support-zurich/">PC &amp; Windows support</a></li>
+                                            <li><a href="/en/mac-apple-support-zurich/">Mac &amp; Apple support</a></li>
+                                            <li><a href="/en/smartphone-tablet-support-zurich/">Smartphones &amp; tablets</a></li>
+                                            <li><a href="/en/printer-scanner-support-zurich/">Printers &amp; scanners</a></li>
+                                            <li><a href="/en/computer-help-seniors-zurich/">Computer help for seniors</a></li>
+                                        </ul>
+                                    </div>
+                                    <div>
+                                        <strong>Wi-Fi &amp; backups</strong>
+                                        <ul>
+                                            <li><a href="/en/wifi-support-zurich/" aria-current="page">Wi-Fi, routers &amp; networks</a></li>
+                                            <li><a href="/en/backup-data-protection-zurich/">Backups &amp; data protection</a></li>
+                                        </ul>
+                                    </div>
+                                    <div>
+                                        <strong>Web &amp; software</strong>
+                                        <ul>
+                                            <li><a href="/en/website-design-zurich/">Websites &amp; landing pages</a></li>
+                                            <li><a href="/en/custom-software-zurich/">Custom software &amp; automation</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
                         </details>
                     </li>
                     <li><a href="/en/#preise">Prices</a></li>
@@ -104,85 +150,96 @@
                 </ul>
             </nav>
             <nav class="lang" aria-label="Language / Sprache">
-                <a href="/wlan-hilfe-zuerich/" lang="de-CH" hreflang="de-CH">DE</a>
-                <a href="/en/wifi-support-zurich/" lang="en" hreflang="en" aria-current="page">EN</a>
+                <a href="/wlan-hilfe-zuerich/" lang="de-CH" hreflang="de-CH" aria-label="DE – Deutsch">DE</a>
+                <a href="/en/wifi-support-zurich/" lang="en" hreflang="en" aria-label="EN – English" aria-current="page">EN</a>
             </nav>
         </header>
         <main class="service-page" id="main-content" tabindex="-1">
             <nav class="breadcrumbs" aria-label="Breadcrumb">
                 <ol>
                     <li><a href="/en/">Home</a></li>
-                    <li><span aria-current="page">Wi-Fi support in Zurich</span></li>
+                    <li><span aria-current="page">Wi-Fi, routers &amp; networks</span></li>
                 </ol>
             </nav>
 
             <header class="service-hero">
                 <img class="service-logo" src="/assets/logo.svg" width="72" height="72" alt="">
                 <div>
-                    <h1>Wi-Fi support in Zurich</h1>
-                    <p class="sub">Weak Wi-Fi, dropped connections or a new router? Get help setting up and troubleshooting Wi-Fi in Zurich, Oerlikon and the surrounding area.</p>
+                    <h1>Wi-Fi and router support in Zurich</h1>
+                    <p class="sub">Troubleshoot slow Wi-Fi, dead zones and dropped connections. Get help with FRITZ!Box, mesh Wi-Fi and home networking in Zurich and Oerlikon.</p>
                     <p class="service-price">
-                        <strong>from CHF 189</strong>
-                        <span>For setup, optimisation and common Wi-Fi issues.</span>
+                        <strong>Per hour: CHF 130 private · CHF 160 business</strong>
+                        <span>Per 15 minutes: CHF 32.50 for private customers, CHF 40 for businesses.</span>
                     </p>
                     <div class="row">
-                        <a class="btn primary" href="/en/#kontakt">Contact form</a>
+                        <a class="btn primary" href="/en/?service=wifi#kontakt">Request help</a>
                         <a class="btn" href="tel:+41768414468">+41 76 841 44 68</a>
                         <a class="btn" href="https://wa.me/41768414468">WhatsApp</a>
                     </div>
                 </div>
             </header>
 
-            <section class="card">
-                <h2>When Wi-Fi is slow or keeps dropping</h2>
-                <p>If video calls drop or Wi-Fi is weak in certain rooms, the cause could be the wireless signal, a particular device or the internet connection. We’ll look at which devices are affected and where or when the problem happens.</p>
-                <ul>
-                    <li><strong>Router setup</strong> – Get help setting up a new router and connecting your devices.</li>
-                    <li><strong>Wi-Fi coverage</strong> – Check whether the router’s placement and settings suit the rooms where you use Wi-Fi.</li>
-                    <li><strong>Network troubleshooting</strong> – Narrow down whether the problem affects one device, the wireless network or the internet connection.</li>
-                </ul>
+            <section class="card service-copy">
+                <h2>What I can help with</h2>
+                <h3>Find the cause of slow or unreliable Wi-Fi</h3>
+                <p>Do calls only drop in the home office, or is the internet slow throughout the property? I check whether the problem is with a device, Wi-Fi or the broadband connection. We can compare reception across rooms or test a connection directly at the router.</p>
+                <h3>Set up routers, FRITZ!Box and mesh systems</h3>
+                <p>I can help configure your router, FRITZ!Box, mesh nodes or repeaters. We’ll review placement and settings, and set up a guest network if you need one.</p>
+                <h3>Connect devices to an existing network</h3>
+                <p>I help bring printers, phones, smart devices and office computers onto an existing home or small-office network. Checking more than one device helps narrow down the problem.</p>
             </section>
+
             <section class="card">
-                <h2>Wi-Fi help at home or in a small office</h2>
-                <p>An on-site visit is often useful for coverage problems because I can check reception where you work or live. I visit customers in Zurich and around Oerlikon, including Wallisellen, Opfikon and Kloten.</p>
-                <p>For the first call, it helps to know your router model and which devices and rooms are affected. If the connection is stable enough, we can discuss which settings can be checked remotely.</p>
+                <h2>How it works</h2>
+                <p>Tell me your router model and which devices or rooms are affected. An on-site visit helps when reception varies by room. Results depend on the building, internet connection and devices, so I don’t promise a specific speed or coverage.</p>
+                <p>I offer on-site help in Zurich and roughly 20 km around Oerlikon. We’ll discuss whether remote support is suitable. Support in English and German.</p>
+            </section>
+
+            <section class="card">
+                <h2>Prices and billing</h2>
+                <p>Remote support has a 15-minute minimum and no travel fee. On-site visits have a 60-minute minimum and one call-out fee per appointment. Additional time is billed in 15-minute increments. <a href="/en/#preise">See rates and billing terms</a>.</p>
+                <p>The 15-minute introductory consultation by phone or WhatsApp is free and non-binding. Technical troubleshooting and remote support are paid services.</p>
             </section>
 
             <section class="card">
                 <h2>Frequently asked questions</h2>
                 <details class="faq">
-                    <summary>Do I need to buy a new router?</summary>
-                    <p>That depends on the cause. We’ll first check which devices are affected and whether the router’s position or settings could explain the problem.</p>
+                    <summary>Do I need a new router or mesh system?</summary>
+                    <p>We’ll diagnose the cause first. Placement or settings may help. Mesh is one option for rooms that the existing Wi-Fi doesn’t reach well.</p>
                 </details>
                 <details class="faq">
-                    <summary>Can you help if the internet is completely down?</summary>
-                    <p>I can troubleshoot the router and devices on site. If the fault is with the internet connection itself, your internet provider handles the repair.</p>
+                    <summary>Can you help if the broadband connection is completely down?</summary>
+                    <p>I can check the router and devices on site. Your internet provider handles faults with the broadband connection itself.</p>
                 </details>
                 <details class="faq">
-                    <summary>Where can I find Wi-Fi support prices and call-out fees?</summary>
-                    <p>See the <a href="/en/#preise">price list</a> for Wi-Fi, router and network support, as well as call-out fees.</p>
+                    <summary>Can you set up my FRITZ!Box?</summary>
+                    <p>Yes. We’ll check the model, the type of connection and any access details you already have, then discuss which settings or devices are needed.</p>
                 </details>
-            </section>
-
-            <section class="card">
-                <h2>Tell me about your Wi-Fi problem</h2>
-                <p>Let me know whether the problem affects certain devices, particular rooms or the whole connection.</p>
-                <p><a href="/en/#kontakt">Send an enquiry through the contact form</a></p>
             </section>
 
             <section class="card">
                 <h2>Related services</h2>
                 <ul>
-                    <li><a href="/en/it-support-zurich/">IT support in Zurich</a></li>
-                    <li><a href="/en/website-design-zurich/">Website design in Zurich</a></li>
-                    <li><a href="/en/custom-software-zurich/">Custom software in Zurich</a></li>
+                    <li><a href="/en/printer-scanner-support-zurich/">Connect a wireless printer to your network</a></li>
+                    <li><a href="/en/it-support-zurich/">Troubleshoot a Windows network issue</a></li>
+                    <li><a href="/en/backup-data-protection-zurich/">Plan a NAS backup on your network</a></li>
                 </ul>
+            </section>
+
+            <section class="card">
+                <h2>Free introductory consultation</h2>
+                <p><a href="tel:+41768414468">Call me</a> · <a href="https://wa.me/41768414468">WhatsApp</a> · <a href="/en/?service=wifi#kontakt">Contact form</a></p>
             </section>
         </main>
         <footer class="footer">
-            <a href="/en/">Home</a> · <a href="/en/#impressum">Legal notice</a> · <a href="/en/#datenschutz">Privacy</a>
+            <span>© <span id="y"></span> Eirich IT-Service &amp; Softwareentwicklung</span>
+            <nav aria-label="Information">
+                <a href="/en/#faq">FAQ</a>
+                <a href="/en/#impressum">Legal notice</a>
+                <a href="/en/#datenschutz">Privacy</a>
+            </nav>
         </footer>
     </div>
-<script src="/script.js" defer></script>
+    <script src="/script.js" defer onerror="document.documentElement.classList.remove('js-nav')"></script>
 </body>
 </html>

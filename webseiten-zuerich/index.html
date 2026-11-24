@@ -3,8 +3,9 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Webseite erstellen lassen in Zürich | Eirich</title>
-    <meta name="description" content="Mobiloptimierte Webseiten und Landingpages für kleine Unternehmen in Zürich und Umgebung. Vom One-Pager mit Kontaktformular bis zur mehrseitigen Website.">
+    <script>document.documentElement.classList.add("js-nav");</script>
+    <title>Webdesign und Firmenwebseiten für KMU in Zürich | Eirich</title>
+    <meta name="description" content="Responsive Firmenwebseiten und Landingpages für KMU und Selbständige in Zürich. Leistungen, Projektablauf und Umfang des Basis-One-Pagers.">
     <meta name="theme-color" content="#0b1220">
     <link rel="canonical" href="https://eiricha.com/webseiten-zuerich/">
     <link rel="alternate" hreflang="de-CH" href="https://eiricha.com/webseiten-zuerich/">
@@ -16,8 +17,8 @@
     <meta property="og:url" content="https://eiricha.com/webseiten-zuerich/">
     <meta property="og:locale" content="de_CH">
     <meta property="og:locale:alternate" content="en_GB">
-    <meta property="og:title" content="Webseite erstellen lassen in Zürich | Eirich">
-    <meta property="og:description" content="Mobiloptimierte Webseiten und Landingpages für kleine Unternehmen in Zürich und Umgebung. Vom One-Pager mit Kontaktformular bis zur mehrseitigen Website.">
+    <meta property="og:title" content="Webdesign und Firmenwebseiten für KMU in Zürich | Eirich">
+    <meta property="og:description" content="Responsive Firmenwebseiten und Landingpages für KMU und Selbständige in Zürich. Leistungen, Projektablauf und Umfang des Basis-One-Pagers.">
     <meta property="og:image" content="https://eiricha.com/assets/og-image.jpg">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
@@ -30,8 +31,8 @@
                     "@type": "WebPage",
                     "@id": "https://eiricha.com/webseiten-zuerich/#page",
                     "url": "https://eiricha.com/webseiten-zuerich/",
-                    "name": "Webseite erstellen lassen in Zürich | Eirich",
-                    "description": "Mobiloptimierte Webseiten und Landingpages für kleine Unternehmen in Zürich und Umgebung. Vom One-Pager mit Kontaktformular bis zur mehrseitigen Website.",
+                    "name": "Webdesign und Firmenwebseiten für KMU in Zürich | Eirich",
+                    "description": "Responsive Firmenwebseiten und Landingpages für KMU und Selbständige in Zürich. Leistungen, Projektablauf und Umfang des Basis-One-Pagers.",
                     "inLanguage": "de-CH",
                     "mainEntity": {
                         "@id": "https://eiricha.com/webseiten-zuerich/#service"
@@ -44,17 +45,29 @@
                     "@type": "Service",
                     "@id": "https://eiricha.com/webseiten-zuerich/#service",
                     "url": "https://eiricha.com/webseiten-zuerich/",
-                    "name": "Webseiten Zürich",
-                    "description": "Mobiloptimierte Webseiten und Landingpages für kleine Unternehmen in Zürich und Umgebung. Vom One-Pager mit Kontaktformular bis zur mehrseitigen Website.",
+                    "name": "Webseiten & Landingpages",
+                    "description": "Responsive Firmenwebseiten und Landingpages für KMU und Selbständige in Zürich. Leistungen, Projektablauf und Umfang des Basis-One-Pagers.",
                     "provider": {
                         "@id": "https://eiricha.com/#business",
+                        "@type": "LocalBusiness",
                         "name": "Eirich IT-Service & Softwareentwicklung",
                         "url": "https://eiricha.com/"
                     },
                     "areaServed": {
                         "@type": "City",
                         "name": "Zürich"
-                    }
+                    },
+                    "offers": [
+                        {
+                            "@type": "Offer",
+                            "name": "Projekt-Einstiegspreis",
+                            "priceSpecification": {
+                                "@type": "PriceSpecification",
+                                "minPrice": 1490,
+                                "priceCurrency": "CHF"
+                            }
+                        }
+                    ]
                 },
                 {
                     "@type": "BreadcrumbList",
@@ -69,7 +82,7 @@
                         {
                             "@type": "ListItem",
                             "position": 2,
-                            "name": "Webseiten Zürich",
+                            "name": "Webseiten & Landingpages",
                             "item": "https://eiricha.com/webseiten-zuerich/"
                         }
                     ]
@@ -82,20 +95,42 @@
     <a class="skip-link" href="#main-content">Zum Inhalt springen</a>
     <div class="wrap site-wrap">
         <header class="site-nav-bar">
-            <button class="btn nav-toggle" type="button" aria-expanded="false" aria-controls="main-navigation" hidden>Menü</button>
+            <button class="btn nav-toggle" type="button" aria-expanded="false" aria-controls="main-navigation">Menü</button>
             <nav id="main-navigation" class="site-nav" aria-label="Hauptnavigation">
                 <ul class="site-nav-list">
                     <li><a href="/">Startseite</a></li>
                     <li>
                         <details class="nav-services">
                             <summary>Leistungen</summary>
-                            <ul>
-                                <li><a href="/#leistungen">Übersicht</a></li>
-                                <li><a href="/it-service-zuerich/">IT-Service Zürich</a></li>
-                                <li><a href="/wlan-hilfe-zuerich/">WLAN-Hilfe Zürich</a></li>
-                                <li><a href="/webseiten-zuerich/" aria-current="page">Webseiten Zürich</a></li>
-                                <li><a href="/individualsoftware-zuerich/">Individualsoftware Zürich</a></li>
-                            </ul>
+                            <div class="nav-services-panel">
+                                <a href="/#leistungen">Alle Leistungen</a>
+                                <div class="nav-service-groups">
+                                    <div>
+                                        <strong>Computer &amp; Geräte</strong>
+                                        <ul>
+                                            <li><a href="/it-service-zuerich/">PC- &amp; Windows-Hilfe</a></li>
+                                            <li><a href="/mac-hilfe-zuerich/">Mac &amp; Apple-Support</a></li>
+                                            <li><a href="/handy-hilfe-zuerich/">Smartphone &amp; Tablet</a></li>
+                                            <li><a href="/drucker-hilfe-zuerich/">Drucker &amp; Scanner</a></li>
+                                            <li><a href="/computerhilfe-senioren-zuerich/">Computerhilfe für Senioren</a></li>
+                                        </ul>
+                                    </div>
+                                    <div>
+                                        <strong>WLAN &amp; Datensicherung</strong>
+                                        <ul>
+                                            <li><a href="/wlan-hilfe-zuerich/">WLAN, Router &amp; Netzwerk</a></li>
+                                            <li><a href="/datensicherung-zuerich/">Backup &amp; Datensicherung</a></li>
+                                        </ul>
+                                    </div>
+                                    <div>
+                                        <strong>Web &amp; Software</strong>
+                                        <ul>
+                                            <li><a href="/webseiten-zuerich/" aria-current="page">Webseiten &amp; Landingpages</a></li>
+                                            <li><a href="/individualsoftware-zuerich/">Individualsoftware &amp; Automatisierung</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
                         </details>
                     </li>
                     <li><a href="/#preise">Preise</a></li>
@@ -104,15 +139,15 @@
                 </ul>
             </nav>
             <nav class="lang" aria-label="Sprache / Language">
-                <a href="/webseiten-zuerich/" lang="de-CH" hreflang="de-CH" aria-current="page">DE</a>
-                <a href="/en/website-design-zurich/" lang="en" hreflang="en">EN</a>
+                <a href="/webseiten-zuerich/" lang="de-CH" hreflang="de-CH" aria-label="DE – Deutsch" aria-current="page">DE</a>
+                <a href="/en/website-design-zurich/" lang="en" hreflang="en" aria-label="EN – English">EN</a>
             </nav>
         </header>
         <main class="service-page" id="main-content" tabindex="-1">
             <nav class="breadcrumbs" aria-label="Brotkrumennavigation">
                 <ol>
                     <li><a href="/">Startseite</a></li>
-                    <li><span aria-current="page">Webseiten Zürich</span></li>
+                    <li><span aria-current="page">Webseiten &amp; Landingpages</span></li>
                 </ol>
             </nav>
 
@@ -120,68 +155,79 @@
                 <img class="service-logo" src="/assets/logo.svg" width="72" height="72" alt="">
                 <div>
                     <h1>Webseiten für kleine Unternehmen in Zürich</h1>
-                    <p class="sub">Mobiloptimierte Webseiten und Landingpages für kleine Unternehmen in Zürich und Umgebung. Vom One-Pager mit Kontaktformular bis zur mehrseitigen Website.</p>
+                    <p class="sub">Responsive Firmenwebseiten und Landingpages für KMU und Selbständige in Zürich. Leistungen, Projektablauf und Umfang des Basis-One-Pagers.</p>
                     <p class="service-price">
                         <strong>ab CHF 1'490</strong>
-                        <span>Für einen mobiloptimierten One-Pager mit Kontaktformular.</span>
+                        <span>Projektpreis nach vereinbartem Umfang und Angebot.</span>
                     </p>
                     <div class="row">
-                        <a class="btn primary" href="/#kontakt">Kontaktformular</a>
+                        <a class="btn primary" href="/?service=web#kontakt">Projekt anfragen</a>
                         <a class="btn" href="tel:+41768414468">+41 76 841 44 68</a>
                         <a class="btn" href="https://wa.me/41768414468">WhatsApp</a>
                     </div>
                 </div>
             </header>
 
-            <section class="card">
-                <h2>Ein Webauftritt, auf dem Kunden schnell finden, was sie brauchen</h2>
-                <p>Was bietest du an, wo bist du tätig und wie können Interessierte dich erreichen? Diese Fragen bestimmen den Aufbau der Webseite. Für ein einzelnes Angebot kann ein One-Pager genügen. Haben deine Leistungen unterschiedliche Zielgruppen oder brauchen sie mehr Erklärung, können eigene Unterseiten sinnvoll sein.</p>
-                <ul>
-                    <li><strong>One-Pager und Landingpages</strong> – Eine mobiloptimierte Seite für ein klar umrissenes Angebot, mit Kontaktformular und einem Grundgerüst für Impressum und Datenschutz.</li>
-                    <li><strong>Mehrseitige Webseiten</strong> – Business-Pakete mit drei bis fünf Seiten sowie SEO und Google Maps sind auf Anfrage möglich.</li>
-                </ul>
+            <section class="card service-copy">
+                <h2>Wobei ich dir helfe</h2>
+                <h3>Seiten für Selbständige und lokale Betriebe</h3>
+                <p>Ob Beratung, Beauty und Wellness oder ein anderer lokaler Dienst: Wir klären, was Kunden auf der Webseite wissen müssen, welche Leistungen eigene Seiten brauchen und wie Anfragen ankommen sollen. Bei einem klar abgegrenzten Angebot kann ein One-Pager genügen.</p>
+                <h3>Was der Basis-One-Pager umfasst</h3>
+                <p>Der Einstiegspreis gilt für einen mobiloptimierten One-Pager mit Kontaktformular und einem Grundgerüst für Impressum und Datenschutz. Rechtsberatung und die Prüfung individueller Rechtstexte sind nicht Teil dieses Angebots.</p>
+                <h3>Technische SEO, Veröffentlichung und Pflege klären</h3>
+                <p>Für das Angebot besprechen wir schnelle Ladezeiten, sinnvolle Titel und Seitenstruktur, Domain und Hosting sowie die Veröffentlichung. Mehrseitige Firmenwebseiten, zum Beispiel mit drei bis fünf Seiten, Google Maps, zusätzlichen SEO-Leistungen, laufender Pflege oder späteren Erweiterungen klären wir nach Bedarf separat.</p>
             </section>
+
             <section class="card">
-                <h2>Abstimmung für Betriebe in Zürich und Umgebung</h2>
-                <p>Für eine Zürcher Firma ist die Frage wichtig, ob Kunden zu dir kommen oder du in einem bestimmten Gebiet unterwegs bist. Im Erstgespräch besprechen wir, welche Angaben zum Angebot, zum Standort und zum Kontakt auf die Seite gehören.</p>
-                <p>Die Abstimmung kann aus Zürich-Oerlikon auch remote erfolgen. Hilfreich sind vorhandene Texte, Bilder oder ein Link zur bisherigen Website. Danach lässt sich der Umfang für ein Angebot klären.</p>
+                <h2>So läuft die Zusammenarbeit ab</h2>
+                <p>Bring vorhandene Texte, Bilder oder einen Link zur aktuellen Webseite mit. Wir besprechen Ziele, Inhalte und Kontaktwege, vereinbaren den Umfang, prüfen die Seite auf verschiedenen Bildschirmgrössen und stimmen die Veröffentlichung ab.</p>
+                <p>Ich arbeite ab Zürich-Oerlikon mit Unternehmen in Zürich und Umgebung. Die Projektabstimmung ist auch remote möglich. Unterstützung auf Deutsch und Englisch.</p>
+            </section>
+
+            <section class="card">
+                <h2>Preise und Abrechnung</h2>
+                <p>Für den Basis-One-Pager gelten die oben beschriebenen Liefergegenstände. <a href="/#preise">Preise und Konditionen ansehen</a>.</p>
+                <p>Das unverbindliche 15-Minuten-Erstgespräch per Telefon oder WhatsApp ist kostenlos. Technische Fehlersuche und Fernwartung sind kostenpflichtig.</p>
             </section>
 
             <section class="card">
                 <h2>Häufige Fragen</h2>
                 <details class="faq">
-                    <summary>Reicht für meinen Betrieb eine einzige Seite?</summary>
-                    <p>Wenn Angebot und Kontakt auf einer Seite verständlich bleiben, kann ein One-Pager passen. Bei mehreren Leistungen mit eigenem Erklärungsbedarf besprechen wir, ob Unterseiten sinnvoll sind.</p>
+                    <summary>Ist Hosting im Einstiegspreis enthalten?</summary>
+                    <p>Der Basisumfang ist der mobiloptimierte One-Pager mit Kontaktformular und dem Grundgerüst für die Rechtstexte. Domain, Hosting und die technische Einrichtung klären wir im Angebot.</p>
                 </details>
                 <details class="faq">
-                    <summary>Kann die Webseite ein Kontaktformular enthalten?</summary>
-                    <p>Ja. Das Kontaktformular ist im Basis-One-Pager vorgesehen. Im Erstgespräch klären wir, welche Angaben du für eine Anfrage benötigst.</p>
+                    <summary>Kannst du mehrere Leistungsseiten erstellen?</summary>
+                    <p>Ja, auf Anfrage. Wir stimmen Seitenumfang, Inhalte und technische SEO-Anforderungen ab, bevor du ein Angebot erhältst.</p>
                 </details>
                 <details class="faq">
-                    <summary>Wo finde ich die Kosten für eine Webseite?</summary>
-                    <p>Den Einstiegspreis für Webseiten und Landingpages findest du in der <a href="/#preise">Preisübersicht</a>. Für den konkreten Umfang erstelle ich nach dem Erstgespräch ein Angebot.</p>
+                    <summary>Kann ich die Webseite später erweitern lassen?</summary>
+                    <p>Ja. Wartung und spätere Erweiterungen können separat vereinbart werden.</p>
                 </details>
             </section>
 
             <section class="card">
-                <h2>Deine Webseite besprechen</h2>
-                <p>Erzähl mir, was die Webseite zeigen soll und wie Interessierte dich darüber erreichen sollen.</p>
-                <p><a href="/#kontakt">Anfrage über das Kontaktformular senden</a></p>
-            </section>
-
-            <section class="card">
-                <h2>Weitere Leistungen</h2>
+                <h2>Verwandte Leistungen</h2>
                 <ul>
-                    <li><a href="/it-service-zuerich/">IT-Service Zürich</a></li>
-                    <li><a href="/wlan-hilfe-zuerich/">WLAN-Hilfe Zürich</a></li>
-                    <li><a href="/individualsoftware-zuerich/">Individualsoftware Zürich</a></li>
+                    <li><a href="/individualsoftware-zuerich/">Individuelle Anwendungen und Schnittstellen für interne Abläufe</a></li>
+                    <li><a href="/wlan-hilfe-zuerich/">WLAN für dein Büro einrichten</a></li>
                 </ul>
+            </section>
+
+            <section class="card">
+                <h2>Kostenloses Erstgespräch</h2>
+                <p><a href="tel:+41768414468">Anrufen</a> · <a href="https://wa.me/41768414468">WhatsApp</a> · <a href="/?service=web#kontakt">Kontaktformular</a></p>
             </section>
         </main>
         <footer class="footer">
-            <a href="/">Startseite</a> · <a href="/#impressum">Impressum</a> · <a href="/#datenschutz">Datenschutz</a>
+            <span>© <span id="y"></span> Eirich IT-Service &amp; Softwareentwicklung</span>
+            <nav aria-label="Informationen">
+                <a href="/#faq">FAQ</a>
+                <a href="/#impressum">Impressum</a>
+                <a href="/#datenschutz">Datenschutz</a>
+            </nav>
         </footer>
     </div>
-<script src="/script.js" defer></script>
+    <script src="/script.js" defer onerror="document.documentElement.classList.remove('js-nav')"></script>
 </body>
 </html>
