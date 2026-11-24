@@ -1,0 +1,39 @@
+name: IndexNow
+
+on:
+  workflow_run:
+    workflows: ["pages build and deployment"]
+    types: [completed]
+    branches: [main]
+  workflow_dispatch:
+    inputs:
+      submit:
+        description: Send the latest production delta to IndexNow (off for a dry run)
+        type: boolean
+        default: false
+
+permissions:
+  actions: read
+  contents: read
+
+jobs:
+  indexnow:
+    if: >-
+      (github.event_name == 'workflow_run' &&
+       github.event.workflow_run.conclusion == 'success' &&
+       github.event.workflow_run.head_repository.full_name == github.repository) ||
+      (github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main')
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - name: Check out main history
+        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Check production and notify IndexNow
+        env:
+          GH_TOKEN: ${{ github.token }}
+          INDEXNOW_SUBMIT: ${{ github.event_name == 'workflow_run' || inputs.submit }}
+        run: python3 -u .github/scripts/indexnow.py
