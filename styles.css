@@ -590,7 +590,7 @@ p, li {
     margin: 0 0 12px;
 }
 
-.home-wrap {
+.site-wrap {
     padding-top: 18px;
 }
 
@@ -670,8 +670,7 @@ p, li {
     background: var(--card);
 }
 
-.site-nav-bar .lang a,
-.service-navigation .lang a {
+.site-nav-bar .lang a {
     display: grid;
     min-width: 44px;
     min-height: 44px;
@@ -719,17 +718,8 @@ p, li {
 }
 
 .service-page {
-    padding-top: 24px;
     line-height: 1.55;
     overflow-wrap: anywhere;
-}
-
-.service-navigation {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: space-between;
-    gap: 8px 16px;
 }
 
 .breadcrumbs ol {
@@ -765,6 +755,17 @@ p, li {
 
 .service-hero .sub {
     margin: 10px 0 0;
+}
+
+.service-price {
+    margin: 14px 0 0;
+    color: var(--muted);
+}
+
+.service-price strong {
+    display: block;
+    font-size: 22px;
+    color: var(--accent);
 }
 
 .service-hero .row {

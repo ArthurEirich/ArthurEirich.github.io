@@ -1,4 +1,5 @@
-document.getElementById("y").textContent = new Date().getFullYear();
+const year = document.getElementById("y");
+if (year) year.textContent = new Date().getFullYear();
 
 const form = document.getElementById("contact-form");
 if (form) {
@@ -62,7 +63,7 @@ if (navigation) {
         if (!mobile.matches) return;
 
         closeMobileMenu();
-        if (link.hash) {
+        if (link.hash && link.pathname === window.location.pathname) {
             const section = document.getElementById(link.hash.slice(1));
             if (section) {
                 section.tabIndex = -1;

@@ -79,25 +79,52 @@
     </script>
 </head>
 <body>
-    <div class="wrap service-page">
-        <div class="service-navigation">
+    <a class="skip-link" href="#main-content">Skip to content</a>
+    <div class="wrap site-wrap">
+        <header class="site-nav-bar">
+            <button class="btn nav-toggle" type="button" aria-expanded="false" aria-controls="main-navigation" hidden>Menu</button>
+            <nav id="main-navigation" class="site-nav" aria-label="Main navigation">
+                <ul class="site-nav-list">
+                    <li><a href="/en/">Home</a></li>
+                    <li>
+                        <details class="nav-services">
+                            <summary>Services</summary>
+                            <ul>
+                                <li><a href="/en/#leistungen">Overview</a></li>
+                                <li><a href="/en/it-support-zurich/" aria-current="page">IT support</a></li>
+                                <li><a href="/en/wifi-support-zurich/">Wi-Fi support</a></li>
+                                <li><a href="/en/website-design-zurich/">Websites</a></li>
+                                <li><a href="/en/custom-software-zurich/">Custom software</a></li>
+                            </ul>
+                        </details>
+                    </li>
+                    <li><a href="/en/#preise">Prices</a></li>
+                    <li><a href="/en/#ueber-mich">About me</a></li>
+                    <li><a href="/en/#kontakt">Contact</a></li>
+                </ul>
+            </nav>
+            <nav class="lang" aria-label="Language / Sprache">
+                <a href="/it-service-zuerich/" lang="de-CH" hreflang="de-CH">DE</a>
+                <a href="/en/it-support-zurich/" lang="en" hreflang="en" aria-current="page">EN</a>
+            </nav>
+        </header>
+        <main class="service-page" id="main-content" tabindex="-1">
             <nav class="breadcrumbs" aria-label="Breadcrumb">
                 <ol>
                     <li><a href="/en/">Home</a></li>
                     <li><span aria-current="page">IT support in Zurich</span></li>
                 </ol>
             </nav>
-            <nav class="lang" aria-label="Language / Sprache">
-                <a href="/it-service-zuerich/" lang="de-CH" hreflang="de-CH">DE</a>
-                <a href="/en/it-support-zurich/" lang="en" hreflang="en" aria-current="page">EN</a>
-            </nav>
-        </div>
-        <main>
+
             <header class="service-hero">
                 <img class="service-logo" src="/assets/logo.svg" width="72" height="72" alt="">
                 <div>
                     <h1>IT support and computer help in Zurich</h1>
                     <p class="sub">Get help setting up your computer, phone or tablet, troubleshooting software and setting up backups. On-site support in Zurich and Oerlikon or remote help.</p>
+                    <p class="service-price">
+                        <strong>from CHF 149</strong>
+                        <span>For PC and laptop setup and smaller software issues.</span>
+                    </p>
                     <div class="row">
                         <a class="btn primary" href="/en/#kontakt">Contact form</a>
                         <a class="btn" href="tel:+41768414468">+41 76 841 44 68</a>
@@ -156,5 +183,6 @@
             <a href="/en/">Home</a> · <a href="/en/#impressum">Legal notice</a> · <a href="/en/#datenschutz">Privacy</a>
         </footer>
     </div>
+<script src="/script.js" defer></script>
 </body>
 </html>

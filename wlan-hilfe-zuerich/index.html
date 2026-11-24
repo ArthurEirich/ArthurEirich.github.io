@@ -79,25 +79,52 @@
     </script>
 </head>
 <body>
-    <div class="wrap service-page">
-        <div class="service-navigation">
+    <a class="skip-link" href="#main-content">Zum Inhalt springen</a>
+    <div class="wrap site-wrap">
+        <header class="site-nav-bar">
+            <button class="btn nav-toggle" type="button" aria-expanded="false" aria-controls="main-navigation" hidden>Menü</button>
+            <nav id="main-navigation" class="site-nav" aria-label="Hauptnavigation">
+                <ul class="site-nav-list">
+                    <li><a href="/">Startseite</a></li>
+                    <li>
+                        <details class="nav-services">
+                            <summary>Leistungen</summary>
+                            <ul>
+                                <li><a href="/#leistungen">Übersicht</a></li>
+                                <li><a href="/it-service-zuerich/">IT-Service Zürich</a></li>
+                                <li><a href="/wlan-hilfe-zuerich/" aria-current="page">WLAN-Hilfe Zürich</a></li>
+                                <li><a href="/webseiten-zuerich/">Webseiten Zürich</a></li>
+                                <li><a href="/individualsoftware-zuerich/">Individualsoftware Zürich</a></li>
+                            </ul>
+                        </details>
+                    </li>
+                    <li><a href="/#preise">Preise</a></li>
+                    <li><a href="/#ueber-mich">Über mich</a></li>
+                    <li><a href="/#kontakt">Kontakt</a></li>
+                </ul>
+            </nav>
+            <nav class="lang" aria-label="Sprache / Language">
+                <a href="/wlan-hilfe-zuerich/" lang="de-CH" hreflang="de-CH" aria-current="page">DE</a>
+                <a href="/en/wifi-support-zurich/" lang="en" hreflang="en">EN</a>
+            </nav>
+        </header>
+        <main class="service-page" id="main-content" tabindex="-1">
             <nav class="breadcrumbs" aria-label="Brotkrumennavigation">
                 <ol>
                     <li><a href="/">Startseite</a></li>
                     <li><span aria-current="page">WLAN-Hilfe Zürich</span></li>
                 </ol>
             </nav>
-            <nav class="lang" aria-label="Sprache / Language">
-                <a href="/wlan-hilfe-zuerich/" lang="de-CH" hreflang="de-CH" aria-current="page">DE</a>
-                <a href="/en/wifi-support-zurich/" lang="en" hreflang="en">EN</a>
-            </nav>
-        </div>
-        <main>
+
             <header class="service-hero">
                 <img class="service-logo" src="/assets/logo.svg" width="72" height="72" alt="">
                 <div>
                     <h1>WLAN-Hilfe in Zürich</h1>
                     <p class="sub">Schwaches WLAN, Verbindungsabbrüche oder ein neuer Router? Eirich hilft bei Einrichtung und Optimierung in Zürich, Oerlikon und Umgebung.</p>
+                    <p class="service-price">
+                        <strong>ab CHF 189</strong>
+                        <span>Für Einrichtung, Optimierung und typische WLAN-Probleme.</span>
+                    </p>
                     <div class="row">
                         <a class="btn primary" href="/#kontakt">Kontaktformular</a>
                         <a class="btn" href="tel:+41768414468">+41 76 841 44 68</a>
@@ -156,5 +183,6 @@
             <a href="/">Startseite</a> · <a href="/#impressum">Impressum</a> · <a href="/#datenschutz">Datenschutz</a>
         </footer>
     </div>
+<script src="/script.js" defer></script>
 </body>
 </html>
