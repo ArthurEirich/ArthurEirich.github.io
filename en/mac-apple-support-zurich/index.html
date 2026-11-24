@@ -3,6 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script>document.documentElement.classList.add("js-nav");</script>
     <title>Mac, MacBook and iCloud Support in Zurich | Eirich</title>
     <meta name="description" content="English-speaking Mac support in Zurich and Oerlikon. Set up a MacBook or iMac, migrate files and get help with macOS, iCloud and Time Machine.">
     <meta name="theme-color" content="#0b1220">
@@ -105,7 +106,7 @@
     <a class="skip-link" href="#main-content">Skip to content</a>
     <div class="wrap site-wrap">
         <header class="site-nav-bar">
-            <button class="btn nav-toggle" type="button" aria-expanded="false" aria-controls="main-navigation" hidden>Menu</button>
+            <button class="btn nav-toggle" type="button" aria-expanded="false" aria-controls="main-navigation">Menu</button>
             <nav id="main-navigation" class="site-nav" aria-label="Main navigation">
                 <ul class="site-nav-list">
                     <li><a href="/en/">Home</a></li>
@@ -243,6 +244,6 @@
             </nav>
         </footer>
     </div>
-    <script src="/script.js" defer></script>
+    <script src="/script.js" defer onerror="document.documentElement.classList.remove('js-nav')"></script>
 </body>
 </html>

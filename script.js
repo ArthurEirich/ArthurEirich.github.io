@@ -92,7 +92,6 @@ if (navigation) {
     const menuIsOpen = () => toggle.getAttribute("aria-expanded") === "true";
     const closeMobileMenu = () => toggle.setAttribute("aria-expanded", "false");
 
-    toggle.hidden = false;
     toggle.addEventListener("click", () => {
         if (menuIsOpen()) services.open = false;
         toggle.setAttribute("aria-expanded", String(!menuIsOpen()));

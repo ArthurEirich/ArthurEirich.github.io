@@ -3,6 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script>document.documentElement.classList.add("js-nav");</script>
     <title>Eirich IT-Service &amp; Softwareentwicklung | Zürich</title>
     <meta name="description"
           content="IT-Hilfe für Windows, Mac, Handy, WLAN, Backup und Drucker in Zürich. Persönliche Hilfe für Senioren, Webseiten und Individualsoftware für KMU.">
@@ -196,7 +197,7 @@
 <a class="skip-link" href="#main-content">Zum Inhalt springen</a>
 <div class="wrap site-wrap">
 <header class="site-nav-bar">
-    <button class="btn nav-toggle" type="button" aria-expanded="false" aria-controls="main-navigation" hidden>Menü</button>
+    <button class="btn nav-toggle" type="button" aria-expanded="false" aria-controls="main-navigation">Menü</button>
     <nav id="main-navigation" class="site-nav" aria-label="Hauptnavigation">
         <ul class="site-nav-list">
             <li><a href="/" aria-current="page">Startseite</a></li>
@@ -729,6 +730,6 @@
 </footer>
 </div>
 
-<script src="script.js" defer></script>
+<script src="script.js" defer onerror="document.documentElement.classList.remove('js-nav')"></script>
 </body>
 </html>

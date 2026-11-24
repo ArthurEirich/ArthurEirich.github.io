@@ -3,6 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script>document.documentElement.classList.add("js-nav");</script>
     <title>iPhone, Android and Tablet Setup in Zurich | Eirich</title>
     <meta name="description" content="Set up an iPhone, iPad or Android device. Get help moving contacts, photos and supported WhatsApp chats and setting up email, apps and accessibility.">
     <meta name="theme-color" content="#0b1220">
@@ -105,7 +106,7 @@
     <a class="skip-link" href="#main-content">Skip to content</a>
     <div class="wrap site-wrap">
         <header class="site-nav-bar">
-            <button class="btn nav-toggle" type="button" aria-expanded="false" aria-controls="main-navigation" hidden>Menu</button>
+            <button class="btn nav-toggle" type="button" aria-expanded="false" aria-controls="main-navigation">Menu</button>
             <nav id="main-navigation" class="site-nav" aria-label="Main navigation">
                 <ul class="site-nav-list">
                     <li><a href="/en/">Home</a></li>
@@ -240,6 +241,6 @@
             </nav>
         </footer>
     </div>
-    <script src="/script.js" defer></script>
+    <script src="/script.js" defer onerror="document.documentElement.classList.remove('js-nav')"></script>
 </body>
 </html>

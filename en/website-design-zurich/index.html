@@ -3,6 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script>document.documentElement.classList.add("js-nav");</script>
     <title>Website Design for Small Businesses in Zurich | Eirich</title>
     <meta name="description" content="Responsive business websites and landing pages for Zurich’s SMEs and independent professionals. See what the starting price covers and how a project works.">
     <meta name="theme-color" content="#0b1220">
@@ -94,7 +95,7 @@
     <a class="skip-link" href="#main-content">Skip to content</a>
     <div class="wrap site-wrap">
         <header class="site-nav-bar">
-            <button class="btn nav-toggle" type="button" aria-expanded="false" aria-controls="main-navigation" hidden>Menu</button>
+            <button class="btn nav-toggle" type="button" aria-expanded="false" aria-controls="main-navigation">Menu</button>
             <nav id="main-navigation" class="site-nav" aria-label="Main navigation">
                 <ul class="site-nav-list">
                     <li><a href="/en/">Home</a></li>
@@ -227,6 +228,6 @@
             </nav>
         </footer>
     </div>
-    <script src="/script.js" defer></script>
+    <script src="/script.js" defer onerror="document.documentElement.classList.remove('js-nav')"></script>
 </body>
 </html>

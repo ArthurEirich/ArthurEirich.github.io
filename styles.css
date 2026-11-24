@@ -682,7 +682,7 @@ p, li {
 }
 
 @media (max-width: 720px) {
-    .nav-toggle:not([hidden]) {
+    .js-nav .nav-toggle {
         display: inline-flex;
     }
 
@@ -691,7 +691,7 @@ p, li {
         flex-basis: 100%;
     }
 
-    .nav-toggle:not([hidden])[aria-expanded="false"] + .site-nav {
+    .js-nav .nav-toggle[aria-expanded="false"] + .site-nav {
         display: none;
     }
 
