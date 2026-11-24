@@ -49,47 +49,97 @@ a:hover {
 .brand {
     display: flex;
     align-items: center;
-    justify-content: center;  /* wichtig: nicht flex-start */
     gap: 16px;
     margin: 0 0 10px;
-    text-align: left;         /* Logo + H1 links im Block, Block selbst ist zentriert */
-    width: 100%;
 }
 
 .brand-logo {
-    width: 144px;
-    height: 144px;
+    width: clamp(96px, 14vw, 144px);
+    height: auto;
     display: block;
     flex: 0 0 auto;
     object-fit: contain;
 }
 
-/* Mobile: untereinander, damit nichts gequetscht wird */
-@media (max-width: 700px) {
-    .brand {
-        flex-direction: column;
-        gap: 10px;
+.brand h1 {
+    font-size: clamp(24px, 3.5vw, 34px);
+    overflow-wrap: anywhere;
+}
+
+.top {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(240px, 290px);
+    align-items: center;
+    gap: 24px;
+}
+
+.hero-intro {
+    display: grid;
+    gap: 10px;
+}
+
+.card.hero-contact {
+    display: grid;
+    gap: 6px;
+    margin-top: 0;
+}
+
+.hero-contact h2 {
+    margin: 0 0 4px;
+}
+
+.hero-contact h3 {
+    margin: 8px 0 2px;
+    padding-top: 10px;
+    border-top: 1px solid var(--line);
+    color: var(--muted);
+    font-size: 14px;
+}
+
+.hero-contact .btn {
+    min-height: 44px;
+    padding: 8px 12px;
+}
+
+.hero-contact svg {
+    flex: none;
+    width: 24px;
+    height: 24px;
+}
+
+.hero-contact a:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+}
+
+@media (max-width: 720px) {
+    .top {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 16px;
+    }
+
+    .hero-intro {
         text-align: center;
     }
 
+    .hero-contact {
+        width: min(100%, 420px);
+        justify-self: center;
+    }
+
+    .brand {
+        flex-direction: column;
+        gap: 10px;
+    }
+
     .brand h1 {
-        max-width: 100%;
         font-size: clamp(22px, 7vw, 34px);
-        overflow-wrap: anywhere;
     }
 
     .brand-logo {
         width: 72px;
         height: 72px;
     }
-}
-
-.top {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    align-items: center;
-    text-align: center
 }
 
 h1 {
@@ -109,25 +159,6 @@ h1 {
     flex-wrap: wrap;
     margin-top: 14px;
     justify-content: center
-}
-
-/* NUR Kontaktknöpfe (erste Reihe) responsive machen */
-@media (max-width: 720px) {
-    .row.row-contacts {
-        width: 100%
-    }
-
-    .row.row-contacts .btn {
-        flex: 1 1 calc(50% - 12px);
-        justify-content: center;
-        text-align: center;
-    }
-}
-
-@media (max-width: 420px) {
-    .row.row-contacts .btn {
-        flex-basis: 100%
-    }
 }
 
 .btn {
@@ -820,7 +851,6 @@ p, li {
 .platforms {
     display: flex;
     flex-wrap: wrap;
-    justify-content: center;
     gap: 6px 14px;
     margin: 0;
     padding: 0;
@@ -831,8 +861,10 @@ p, li {
     font-weight: 600;
 }
 
-.contact-links {
-    justify-content: flex-start;
+@media (max-width: 720px) {
+    .platforms {
+        justify-content: center;
+    }
 }
 
 .service-grid .price-card p,
