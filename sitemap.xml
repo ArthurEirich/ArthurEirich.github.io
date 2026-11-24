@@ -10,18 +10,54 @@
         <loc>https://eiricha.com/en/</loc>
         <xhtml:link rel="alternate" hreflang="de-CH" href="https://eiricha.com/"/>
         <xhtml:link rel="alternate" hreflang="en" href="https://eiricha.com/en/"/>
-        <lastmod>2026-11-23</lastmod>
+        <lastmod>2026-11-24</lastmod>
     </url>
     <url>
         <loc>https://eiricha.com/it-service-zuerich/</loc>
+        <xhtml:link rel="alternate" hreflang="de-CH" href="https://eiricha.com/it-service-zuerich/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://eiricha.com/en/it-support-zurich/"/>
+        <lastmod>2026-11-24</lastmod>
+    </url>
+    <url>
+        <loc>https://eiricha.com/en/it-support-zurich/</loc>
+        <xhtml:link rel="alternate" hreflang="de-CH" href="https://eiricha.com/it-service-zuerich/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://eiricha.com/en/it-support-zurich/"/>
+        <lastmod>2026-11-24</lastmod>
     </url>
     <url>
         <loc>https://eiricha.com/wlan-hilfe-zuerich/</loc>
+        <xhtml:link rel="alternate" hreflang="de-CH" href="https://eiricha.com/wlan-hilfe-zuerich/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://eiricha.com/en/wifi-support-zurich/"/>
+        <lastmod>2026-11-24</lastmod>
+    </url>
+    <url>
+        <loc>https://eiricha.com/en/wifi-support-zurich/</loc>
+        <xhtml:link rel="alternate" hreflang="de-CH" href="https://eiricha.com/wlan-hilfe-zuerich/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://eiricha.com/en/wifi-support-zurich/"/>
+        <lastmod>2026-11-24</lastmod>
     </url>
     <url>
         <loc>https://eiricha.com/webseiten-zuerich/</loc>
+        <xhtml:link rel="alternate" hreflang="de-CH" href="https://eiricha.com/webseiten-zuerich/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://eiricha.com/en/website-design-zurich/"/>
+        <lastmod>2026-11-24</lastmod>
+    </url>
+    <url>
+        <loc>https://eiricha.com/en/website-design-zurich/</loc>
+        <xhtml:link rel="alternate" hreflang="de-CH" href="https://eiricha.com/webseiten-zuerich/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://eiricha.com/en/website-design-zurich/"/>
+        <lastmod>2026-11-24</lastmod>
     </url>
     <url>
         <loc>https://eiricha.com/individualsoftware-zuerich/</loc>
+        <xhtml:link rel="alternate" hreflang="de-CH" href="https://eiricha.com/individualsoftware-zuerich/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://eiricha.com/en/custom-software-zurich/"/>
+        <lastmod>2026-11-24</lastmod>
+    </url>
+    <url>
+        <loc>https://eiricha.com/en/custom-software-zurich/</loc>
+        <xhtml:link rel="alternate" hreflang="de-CH" href="https://eiricha.com/individualsoftware-zuerich/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://eiricha.com/en/custom-software-zurich/"/>
+        <lastmod>2026-11-24</lastmod>
     </url>
 </urlset>
