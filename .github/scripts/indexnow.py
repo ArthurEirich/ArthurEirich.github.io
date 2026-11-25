@@ -62,9 +62,13 @@ def request(url, headers=None, data=None, accepted=(200,), verify_body=None):
             if not retryable:
                 hint = {
                     400: "Check the request body and key format.",
-                    403: "Check authorization or IndexNow key ownership.",
+                    403: "Check authorization for this endpoint.",
                     422: "Check that every URL belongs to the verified host.",
                 }.get(status, "Check the endpoint and response.")
+                if status == 403 and verify_body is not None:
+                    hint = "Public IndexNow key retrieval was denied. Check for Cloudflare Error 1010."
+                elif status == 403 and url == ENDPOINT:
+                    hint = "IndexNow API authorization failed. Check key ownership and keyLocation."
                 raise RuntimeError(f"{url} returned {problem}. {hint}") from error
         except (IncompleteRead, URLError, TimeoutError) as error:
             problem = f"network error: {error}"
@@ -427,7 +431,7 @@ def verify_key(sha):
     if git("show", f"{sha}:{key_file}") != key_content:
         raise RuntimeError("The IndexNow key file must contain exactly its filename stem in UTF-8.")
     key_url = f"{SITE}/{key_file}"
-    request(key_url, verify_body=key_content)
+    request(key_url, headers={"User-Agent": "Eirich-IndexNow/1.0"}, verify_body=key_content)
     print(f"Verified the production IndexNow key at {key_url}.")
     return key, key_url
 
