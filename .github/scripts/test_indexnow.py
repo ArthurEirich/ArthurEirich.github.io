@@ -111,7 +111,9 @@ class ManifestTests(unittest.TestCase):
               patch.object(indexnow, "request", return_value=(200, key.encode())) as verify,
               patch.object(indexnow, "submit_urls") as send):
             indexnow.main()
-            verify.assert_called_once_with(key_url, verify_body=key.encode())
+            verify.assert_called_once_with(
+                key_url, headers={"User-Agent": "Eirich-IndexNow/1.0"}, verify_body=key.encode()
+            )
             send.assert_not_called()
             checkpoints.save.assert_not_called()
             os.environ["INDEXNOW_SUBMIT"] = "true"
@@ -353,6 +355,18 @@ class HTTPTests(unittest.TestCase):
                     with self.assertRaisesRegex(RuntimeError, f"HTTP {status}"):
                         indexnow.submit_urls("test-key", indexnow.SITE + "/key.txt", [indexnow.SITE + "/"])
                     send.assert_called_once()
+
+    def test_forbidden_diagnostics_distinguish_public_key_and_submission(self):
+        key_url = indexnow.SITE + "/key.txt"
+        with patch.object(indexnow.HTTP, "open", side_effect=self.http_error(403)) as send:
+            with self.assertRaisesRegex(RuntimeError, "HTTP 403.*Public IndexNow key retrieval was denied"):
+                indexnow.request(key_url, verify_body=b"key")
+            send.assert_called_once()
+
+        with patch.object(indexnow.HTTP, "open", side_effect=self.http_error(403)) as send:
+            with self.assertRaisesRegex(RuntimeError, "HTTP 403.*IndexNow API authorization failed"):
+                indexnow.submit_urls("test-key", key_url, [indexnow.SITE + "/"])
+            send.assert_called_once()
 
 
     def test_rejects_noncanonical_hosts_before_indexnow_post(self):
