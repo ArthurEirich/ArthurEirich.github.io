@@ -9,12 +9,16 @@ if (form) {
     const topic = Array.from(form.elements.thema.options).find((option) => option.dataset.service === service);
     if (topic) topic.selected = true;
 
+    let submitting = false;
     form.addEventListener("submit", async (e) => {
         e.preventDefault();
+        if (submitting) return;
+        submitting = true;
         status.className = "form-status";
         status.textContent = form.dataset.msgSending;
         button.disabled = true;
 
+        let outcome;
         try {
             const res = await fetch(form.dataset.endpoint, {
                 method: "POST",
@@ -22,15 +26,24 @@ if (form) {
                 body: new FormData(form)
             });
             if (!res.ok) throw new Error(res.status);
+            const result = await res.json();
+            // FormSubmit returns its success flag as a string or boolean.
+            if (result?.success !== true && result?.success !== "true") {
+                throw new Error("FormSubmit did not confirm submission");
+            }
             form.reset();
             status.className = "form-status ok";
             status.textContent = form.dataset.msgOk;
-        } catch (err) {
+            outcome = "success";
+        } catch {
             status.className = "form-status err";
             status.textContent = form.dataset.msgError;
+            outcome = "error";
         } finally {
+            submitting = false;
             button.disabled = false;
         }
+        form.dispatchEvent(new CustomEvent("contact-form-result", {bubbles: true, detail: outcome}));
     });
 }
 

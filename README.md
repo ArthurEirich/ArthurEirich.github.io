@@ -54,3 +54,9 @@ PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover -s .github/scripts -v
 ```
 
 The tests use temporary Git history and mock external API responses.
+
+## Cloudflare Pages build and conversion analytics
+
+Use `python3 .github/scripts/build_pages.py` to stage the static site in `dist`.
+See [Conversion tracking on Cloudflare Pages](CONVERSION-ANALYTICS.md) for the
+required Pages build settings, local tests, reporting and activation review.
