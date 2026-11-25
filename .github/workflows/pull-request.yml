@@ -19,7 +19,7 @@ jobs:
           node-version: '24'
           package-manager-cache: false
       - name: Test analytics
-        run: node --test .github/scripts/test_analytics.mjs
+        run: node --test .github/scripts/test_analytics.mjs .github/scripts/test_consent.mjs
       - name: Test IndexNow
         run: PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover -s .github/scripts -v
       - name: Validate disabled and enabled Pages output

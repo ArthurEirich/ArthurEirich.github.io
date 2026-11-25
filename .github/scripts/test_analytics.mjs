@@ -186,8 +186,9 @@ async function exerciseBrowser({url = origin + "/", referrer = "", navigator = {
             Object.defineProperty(globalThis, names[index], {value, configurable: true});
         });
         const module = "../../analytics.js?browser=" + ++browserNumber;
-        await import(module);
-        await import(module);
+        const {start} = await import(module);
+        start(() => true);
+        start(() => true);
         // Registered handlers read fetch and document when an event occurs.
         return await exercise({
             requests, formRequests, listeners, form, button, status,
@@ -302,29 +303,52 @@ test("Pages builds preserve static routes, metadata, and disabled and preview is
     const sitemap = readFileSync("sitemap.xml", "utf8");
     const routes = Array.from(sitemap.matchAll(/<loc>https:\/\/eiricha\.com([^<]*)<\/loc>/g), (match) => match[1]);
     assert(routes.length > 0);
-    const build = (branch, activation) => execFileSync("python3", [".github/scripts/build_pages.py"], {
-        env: {...process.env, CF_PAGES_BRANCH: branch, CONVERSION_ANALYTICS_ENABLED: activation}
+    const token = "0123456789abcdef0123456789abcdef";
+    const build = (branch, activation, beacon = token) => execFileSync("python3", [".github/scripts/build_pages.py"], {
+        env: {...process.env, CF_PAGES_BRANCH: branch, CONVERSION_ANALYTICS_ENABLED: activation, WEB_ANALYTICS_BEACON_TOKEN: beacon}
     });
     build("main", "true");
+    const stripConsent = (html) => html
+        .replace(/\n<aside class="card privacy-consent"[\s\S]+?<\/aside>/, "")
+        .replace(/<button type="button" class="privacy-settings"[^>]*>[^<]+<\/button>\n/, "")
+        .replace('<script type="module" src="/consent.js" referrerpolicy="no-referrer"></script>\n', "");
     for (const path of routes) {
-        assert.equal(languageFor(path), path.startsWith("/en/") ? "en" : "de");
+        const language = path.startsWith("/en/") ? "en" : "de";
+        assert.equal(languageFor(path), language);
         const file = path.slice(1) + "index.html";
         const output = readFileSync("dist/" + file, "utf8");
-        const loader = '<script type="module" src="/analytics.js" referrerpolicy="no-referrer"></script>\n';
-        assert.equal(output.split(loader).length, 2);
-        assert.equal(output.replace(loader, ""), readFileSync(file, "utf8"));
+        assert.equal(output.match(/id="privacy-settings"/g).length, 1);
+        assert.equal(output.match(/src="\/consent.js"/g).length, 1);
+        assert(output.includes(language === "en" ? "Allow analytics" : "Statistik erlauben"));
+        assert(output.includes(language === "en" ? "Necessary only" : "Nur notwendige"));
+        assert(output.includes(`data-web-analytics="${token}"`));
+        assert(output.includes('data-conversion-analytics="true"'));
+        assert(!output.includes('src="/analytics.js"'));
+        assert(!output.includes("static.cloudflareinsights.com"));
+        assert.equal(stripConsent(output)
+            .replace('data-conversion-status="enabled"', 'data-conversion-status="enabled" hidden')
+            .replace('data-conversion-status="disabled" hidden', 'data-conversion-status="disabled"'),
+        readFileSync(file, "utf8"));
     }
+    assert(existsSync("dist/analytics.js"));
+    assert(existsSync("dist/analytics-schema.mjs"));
+
     build("feature", "true");
     assert.equal(existsSync("dist/analytics.js"), false);
-    assert.equal(readFileSync("dist/index.html", "utf8"), readFileSync("index.html", "utf8"));
+    assert(!readFileSync("dist/index.html", "utf8").includes(token));
+
     build("main", "");
     assert.equal(existsSync("dist/analytics.js"), false);
+    assert(readFileSync("dist/index.html", "utf8").includes(`data-web-analytics="${token}"`));
+
+    build("main", "", "");
+    assert(!readFileSync("dist/index.html", "utf8").includes("data-web-analytics"));
     assert.deepEqual(JSON.parse(readFileSync("dist/_routes.json", "utf8")), {
         version: 1, include: ["/api/analytics"], exclude: []
     });
     const publicFiles = [
         ...routes.map((path) => path.slice(1) + "index.html"),
-        "_routes.json", "404.html", "CNAME", "robots.txt", "sitemap.xml", "styles.css", "script.js",
+        "_routes.json", "404.html", "CNAME", "robots.txt", "sitemap.xml", "styles.css", "script.js", "consent.js",
         "assets/arthur.jpg", "assets/arthur-web.jpg", "assets/logo.svg", "assets/og-image.jpg",
         ...readdirSync(".").filter((name) => /^[a-f0-9]{32}\.txt$/.test(name))
     ];
@@ -333,6 +357,10 @@ test("Pages builds preserve static routes, metadata, and disabled and preview is
         .map((entry) => entry.parentPath.slice(4).replace(/^\//, "") + "/" + entry.name)
         .map((name) => name.replace(/^\//, "")).sort(), publicFiles.sort());
     for (const file of publicFiles) {
-        assert.deepEqual(readFileSync("dist/" + file), readFileSync(file));
+        if (file.endsWith("index.html")) {
+            assert.equal(stripConsent(readFileSync("dist/" + file, "utf8")), readFileSync(file, "utf8"));
+        } else {
+            assert.deepEqual(readFileSync("dist/" + file), readFileSync(file));
+        }
     }
 });

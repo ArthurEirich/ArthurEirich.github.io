@@ -52,13 +52,17 @@ function linkEvent(target) {
     return "";
 }
 
-function start() {
+let initialized = false;
+
+export function start(mayTrack) {
+    if (initialized || !mayTrack()) return;
     const {origin, pathname, search} = window.location;
     const language = languageFor(pathname);
     if (origin !== productionOrigin || !language) return;
     if (navigator.globalPrivacyControl || [navigator.doNotTrack, window.doNotTrack, navigator.msDoNotTrack]
         .some((value) => value === "1" || value === "yes")) return;
 
+    initialized = true;
     const params = new URLSearchParams(search);
     const utmSource = allowedParam(params, "utm_source", sources);
     const medium = allowedParam(params, "utm_medium", media);
@@ -68,7 +72,7 @@ function start() {
     let eventCount = 0;
 
     function send(event, service = serviceFor(pathname)) {
-        if (!events.has(event) || eventCount >= maxEventsPerDocument) return;
+        if (!mayTrack() || !events.has(event) || eventCount >= maxEventsPerDocument) return;
         eventCount += 1;
         try {
             // Fetch permits suppressing the full URL in the Referer header.
@@ -103,5 +107,3 @@ function start() {
 
     if ((utmSource && utmSource !== "other_referral") || medium || campaign) send("utm_landing");
 }
-
-start();
