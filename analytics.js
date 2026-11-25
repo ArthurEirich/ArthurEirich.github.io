@@ -1,5 +1,5 @@
 import {
-    campaigns, endpoint, events, languageFor, media, productionOrigin, sources
+    campaigns, endpoint, events, languageFor, media, productionOrigin, serviceFor, services, sources
 } from "./analytics-schema.mjs";
 
 const referrers = new Map([
@@ -10,7 +10,14 @@ const referrers = new Map([
     ["search.ch", "search_ch"], ["www.search.ch", "search_ch"],
     ["maps.apple.com", "apple_maps"],
     ["www.linkedin.com", "linkedin"], ["www.facebook.com", "facebook"],
-    ["l.facebook.com", "facebook"]
+    ["l.facebook.com", "facebook"],
+    ["cylex-swiss.ch", "cylex"], ["www.cylex-swiss.ch", "cylex"],
+    ["goregio.ch", "goregio"], ["www.goregio.ch", "goregio"],
+    ["infosenior.ch", "infosenior"], ["www.infosenior.ch", "infosenior"],
+    ["xn--zrich-kva.im", "zuerich_im"], ["www.xn--zrich-kva.im", "zuerich_im"],
+    ["firmen.ch", "firmen_ch"], ["www.firmen.ch", "firmen_ch"],
+    ["stadtbranchenbuch.ch", "stadtbranchenbuch"], ["www.stadtbranchenbuch.ch", "stadtbranchenbuch"],
+    ["expat.com", "expat"], ["www.expat.com", "expat"]
 ]);
 
 const contactResult = "contact-form-result";
@@ -59,7 +66,7 @@ function start() {
         referralSource(document.referrer);
     let eventCount = 0;
 
-    function send(event) {
+    function send(event, service = serviceFor(pathname)) {
         if (!events.has(event) || eventCount >= maxEventsPerDocument) return;
         eventCount += 1;
         try {
@@ -67,7 +74,7 @@ function start() {
             void fetch(endpoint, {
                 method: "POST",
                 headers: {"Content-Type": "application/json"},
-                body: JSON.stringify({event, path: pathname, language, source, medium, campaign}),
+                body: JSON.stringify({event, path: pathname, language, source, medium, campaign, service}),
                 keepalive: true,
                 credentials: "omit",
                 referrerPolicy: "no-referrer"
@@ -87,8 +94,10 @@ function start() {
     });
     document.addEventListener(contactResult, (event) => {
         if (event.target !== document.getElementById("contact-form")) return;
-        if (event.detail === "success") send("contact_form_success");
-        if (event.detail === "error") send("contact_form_error");
+        const {outcome, service} = event.detail ?? {};
+        const allowedService = services.has(service) ? service : "";
+        if (outcome === "success") send("contact_form_success", allowedService);
+        if (outcome === "error") send("contact_form_error", allowedService);
     });
 
     if ((utmSource && utmSource !== "other_referral") || medium || campaign) send("utm_landing");

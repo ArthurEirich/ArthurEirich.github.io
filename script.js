@@ -18,6 +18,7 @@ if (form) {
         status.textContent = form.dataset.msgSending;
         button.disabled = true;
 
+        const selectedService = form.elements.thema.selectedOptions[0]?.dataset.service ?? "";
         let outcome;
         try {
             const res = await fetch(form.dataset.endpoint, {
@@ -43,7 +44,10 @@ if (form) {
             submitting = false;
             button.disabled = false;
         }
-        form.dispatchEvent(new CustomEvent("contact-form-result", {bubbles: true, detail: outcome}));
+        form.dispatchEvent(new CustomEvent("contact-form-result", {
+            bubbles: true,
+            detail: {outcome, service: selectedService}
+        }));
     });
 }
 

@@ -10,7 +10,7 @@ const origin = "https://eiricha.com";
 const endpoint = origin + "/api/analytics";
 const valid = {
     event: "email_click", path: "/en/", language: "en",
-    source: "google", medium: "organic", campaign: "zurich_it_support"
+    source: "google", medium: "organic", campaign: "zurich_it_support", service: ""
 };
 
 function fixture() {
@@ -43,8 +43,20 @@ test("writes a minimal allowed event with a fixed sampling index", async () => {
     assert.equal(await reply.text(), "");
     assert.deepEqual(rows, [{
         indexes: ["site"],
-        blobs: ["email_click", "/en/", "en", "google", "organic", "zurich_it_support"]
+        blobs: ["email_click", "/en/", "en", "google", "organic", "zurich_it_support", ""]
     }]);
+});
+
+test("accepts known form services and service page attribution", async () => {
+    const {rows, env} = fixture();
+    for (const data of [
+        {...valid, event: "contact_form_success", service: "wifi"},
+        {...valid, event: "contact_form_error", service: "mobile"},
+        {...valid, path: "/en/custom-software-zurich/", service: "software"}
+    ]) {
+        assert.equal((await send(env, {body: JSON.stringify(data)})).status, 204);
+    }
+    assert.deepEqual(rows.map(({blobs}) => blobs[6]), ["wifi", "mobile", "software"]);
 });
 
 test("rejects malformed events, extra fields, unknown UTM values and personal data", async () => {
@@ -60,6 +72,10 @@ test("rejects malformed events, extra fields, unknown UTM values and personal da
         {...valid, phone: "+41000000000"},
         {...valid, timestamp: 123},
         {...valid, event: "utm_landing", source: "other_referral", medium: "", campaign: ""},
+        {...valid, service: "mac"},
+        {...valid, path: "/en/it-support-zurich/", service: "mac"},
+        {...valid, event: "contact_form_success", service: "private enquiry"},
+        {...valid, service: undefined},
         {...valid, campaign: null}, [], null
     ]) {
         assert.equal((await send(env, {body: JSON.stringify(invalid)})).status, 400);
@@ -127,13 +143,17 @@ async function exerciseBrowser({url = origin + "/", referrer = "", navigator = {
     const formListeners = new Map();
     const button = {disabled: false};
     const status = {};
+    const topic = {
+        options: [{dataset: {service: "pc"}}, {dataset: {service: "mac"}}, {dataset: {}, value: "custom topic"}],
+        get selectedOptions() { return this.options.filter((option) => option.selected); }
+    };
     const form = {
         dataset: {endpoint: "https://formsubmit.co/ajax/test", msgOk: "sent", msgError: "error"},
-        elements: {thema: {options: [{dataset: {service: "pc"}}]}},
+        elements: {thema: topic},
         addEventListener: (type, listener) => formListeners.set(type, listener),
         querySelector: () => button,
         resetCount: 0,
-        reset() { this.resetCount += 1; },
+        reset() { this.resetCount += 1; topic.options.forEach((option) => { option.selected = false; }); },
         dispatchEvent: (event) => listeners.get(event.type)?.({target: form, detail: event.detail})
     };
     const window = {location: new URL(url)};
@@ -218,17 +238,22 @@ withBrowser("tracks one confirmed form success, preserves service preselection a
     assert.equal(button.disabled, true);
     assert.equal(formRequests.length, 1);
     assert.equal(events().length, 0);
+    form.elements.thema.options[0].selected = false;
+    form.elements.thema.options[1].selected = true;
     form.respond({ok: true, json: async () => ({success: "true"})});
     await pending;
     assert.equal(form.resetCount, 1);
     assert.equal(button.disabled, false);
     assert.equal(status.textContent, "sent");
+    form.elements.thema.options[2].selected = true;
     const second = submit();
     form.respond({ok: true, json: async () => ({success: "false"})});
     await second;
     assert.equal(form.resetCount, 1);
     assert.equal(status.textContent, "error");
-    assert.deepEqual(events().map((data) => data.event), ["contact_form_success", "contact_form_error"]);
+    assert.deepEqual(events().map(({event, service}) => [event, service]), [
+        ["contact_form_success", "pc"], ["contact_form_error", ""]
+    ]);
 });
 
 for (const navigator of [{globalPrivacyControl: true}, {doNotTrack: "1"}]) {
@@ -245,6 +270,32 @@ withBrowser("normalizes external referrers and caps events per document", {
     for (let i = 0; i < 21; i++) click("tel:+41000000000");
     assert.equal(events().length, 20);
     assert(events().every(({source}) => source === "google"));
+});
+
+for (const [domain, source] of [
+    ["cylex-swiss.ch", "cylex"], ["goregio.ch", "goregio"], ["infosenior.ch", "infosenior"],
+    ["zürich.im", "zuerich_im"], ["firmen.ch", "firmen_ch"],
+    ["stadtbranchenbuch.ch", "stadtbranchenbuch"], ["expat.com", "expat"]
+]) {
+    for (const host of [domain, "www." + domain]) {
+        withBrowser("normalizes " + host, {
+            referrer: `https://${host}/listing?secret=hidden`,
+            url: origin + "/en/wifi-support-zurich/?service=pc"
+        }, ({click, events}) => {
+            click("tel:+41000000000");
+            assert.deepEqual(events(), [{
+                event: "phone_click", path: "/en/wifi-support-zurich/", language: "en",
+                source, medium: "", campaign: "", service: "wifi"
+            }]);
+        });
+    }
+}
+
+withBrowser("treats referrer lookalikes as other referrals", {
+    referrer: "https://www.expat.com.example.test/listing"
+}, ({click, events}) => {
+    click("tel:+41000000000");
+    assert.equal(events()[0].source, "other_referral");
 });
 
 test("Pages builds preserve static routes, metadata, and disabled and preview isolation", () => {

@@ -1,12 +1,12 @@
 import {
-    campaigns, endpoint, events, languageFor, media, productionOrigin, sources
+    campaigns, endpoint, events, languageFor, media, productionOrigin, serviceFor, services, sources
 } from "../../analytics-schema.mjs";
 
 const maxBodyBytes = 512;
 const maxWritesPerMinute = 120;
 let minute = -1;
 let writes = 0;
-const fields = ["event", "path", "language", "source", "medium", "campaign"];
+const fields = ["event", "path", "language", "source", "medium", "campaign", "service"];
 const response = (status, headers) => new Response(null, {
     status, headers: {"Cache-Control": "no-store", ...headers}
 });
@@ -37,9 +37,11 @@ function isValid(data) {
     if (!data || typeof data !== "object" || Array.isArray(data)) return false;
     if (Object.keys(data).length !== fields.length ||
         !fields.every((field) => Object.hasOwn(data, field) && typeof data[field] === "string")) return false;
+    const routeService = serviceFor(data.path);
+    const formEvent = data.event.startsWith("contact_form_");
     return events.has(data.event) &&
         languageFor(data.path) !== "" && languageFor(data.path) === data.language &&
-        (!data.event.startsWith("contact_form_") || data.path === "/" || data.path === "/en/") &&
+        (formEvent ? routeService === "" && services.has(data.service) : data.service === routeService) &&
         (data.source === "" || sources.has(data.source)) &&
         (data.medium === "" || media.has(data.medium)) &&
         (data.campaign === "" || campaigns.has(data.campaign)) &&
@@ -86,7 +88,7 @@ export async function onRequest({request, env}) {
         // Analytics Engine supplies the ingestion timestamp. A fixed index supports sampling-aware counts.
         env.ANALYTICS.writeDataPoint({
             indexes: ["site"],
-            blobs: [data.event, data.path, data.language, data.source, data.medium, data.campaign]
+            blobs: [data.event, data.path, data.language, data.source, data.medium, data.campaign, data.service]
         });
     } catch {
         return response(503);
