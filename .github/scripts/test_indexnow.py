@@ -1,4 +1,4 @@
-"""Local regression tests. All GitHub and IndexNow requests are mocked."""
+"""Local regression tests. External API calls are mocked."""
 
 import io
 import json
@@ -6,6 +6,7 @@ import os
 import subprocess
 import tempfile
 import unittest
+from contextlib import ExitStack
 from pathlib import Path
 from unittest.mock import MagicMock, call, patch
 from urllib.error import HTTPError
@@ -46,6 +47,8 @@ class ManifestTests(unittest.TestCase):
             "gone/index.html": "Goodbye",
             "old-name.html": "Moved page",
             "alias.html": '<link rel="canonical" href="/">',
+            "foreign.html": '<link rel="canonical" href="https://www.eiricha.com/foreign.html">',
+            "preview.html": '<link rel="canonical" href="https://eirich-it-services.pages.dev/preview.html">',
             "private.html": '<meta name="robots" content="noindex, follow">',
             "404.html": "Error",
             "_includes/navigation.html": "Old navigation",
@@ -87,98 +90,230 @@ class ManifestTests(unittest.TestCase):
         key = "0123456789abcdef0123456789abcdef"
         before = self.commit({"index.html": "Old home"})
         after = self.commit({"index.html": "New home", f"{key}.txt": key})
-        event = Path("event.json")
-        event.write_text("{}", encoding="utf-8")
-        deployments = [{"head_sha": sha, "html_url": "https://github.com/owner/site/actions"}
-                       for sha in (before, after)]
+        current, previous = deployment(2, after), deployment(1, before)
+        cloudflare, checkpoints = MagicMock(), MagicMock()
+        cloudflare.current.return_value = current
+        cloudflare.history.return_value = [previous, current]
+        checkpoints.load.return_value = (None, False)
+        self.git("update-ref", "refs/remotes/origin/main", after)
         env = {
             "GITHUB_EVENT_NAME": "workflow_dispatch",
-            "GITHUB_EVENT_PATH": str(event),
+            "GITHUB_REF": "refs/heads/main",
             "GITHUB_REPOSITORY": "owner/site",
+            "GITHUB_REPOSITORY_ID": "123",
             "GH_TOKEN": "test-token",
             "INDEXNOW_SUBMIT": "false",
         }
         key_url = f"{indexnow.SITE}/{key}.txt"
         with (patch.dict(os.environ, env),
-              patch.object(indexnow.GitHub, "production_pair", return_value=deployments),
+              patch.object(indexnow, "Cloudflare", return_value=cloudflare),
+              patch.object(indexnow, "Checkpoints", return_value=checkpoints),
               patch.object(indexnow, "request", return_value=(200, key.encode())) as verify,
               patch.object(indexnow, "submit_urls") as send):
             indexnow.main()
             verify.assert_called_once_with(key_url, verify_body=key.encode())
             send.assert_not_called()
+            checkpoints.save.assert_not_called()
             os.environ["INDEXNOW_SUBMIT"] = "true"
             verify.side_effect = RuntimeError("Verification unavailable")
             with self.assertRaisesRegex(RuntimeError, "Verification unavailable"):
                 indexnow.main()
             send.assert_not_called()
+            checkpoints.save.assert_not_called()
+
+
+def deployment(number, sha=None):
+    return indexnow.Deployment.from_dict({
+        "id": f"00000000-0000-0000-0000-{number:012d}",
+        "sha": sha or f"{number:040x}",
+        "finished": f"2026-11-25T09:00:{number:02d}Z",
+    })
 
 
 class DeploymentTests(unittest.TestCase):
     def setUp(self):
-        self.api = indexnow.GitHub("owner/site", "test-token")
+        self.api = indexnow.Cloudflare("1" * 32, "test-token", "owner/site")
 
-    def run_record(self, number, **fields):
+    def record(self, number, *, environment="production", branch="main", status="success", **fields):
+        item = deployment(number)
         return {
-            "id": number,
-            "run_attempt": 1,
-            "workflow_id": 42,
-            "name": "pages build and deployment",
-            "conclusion": "success",
-            "head_branch": "main",
-            "head_repository": {"full_name": "owner/site"},
-            "updated_at": f"2026-11-24T00:00:{number:02d}Z",
+            "id": item.id,
+            "project_name": indexnow.PROJECT,
+            "environment": environment,
+            "is_skipped": False,
+            "deployment_trigger": {"metadata": {"branch": branch, "commit_hash": item.sha}},
+            "latest_stage": {"name": "deploy", "status": status, "ended_on": item.finished.isoformat()},
             **fields,
         }
 
-    def test_manual_and_automatic_use_real_successful_deployments(self):
-        # Its report job finished late, but the deploy itself still came first.
-        first = self.run_record(1, updated_at="2026-11-24T00:00:12Z")
-        current = self.run_record(2)
-        skipped = self.run_record(3)
-        later = self.run_record(4)
-        foreign = self.run_record(5, head_repository={"full_name": "fork/site"})
-        unrelated = self.run_record(6, name="CI")
-        failed = self.run_record(7, conclusion="failure")
+    def test_canonical_production_is_independent_of_latest_deployment(self):
+        project = {
+            "name": indexnow.PROJECT,
+            "production_branch": "main",
+            "source": {"type": "github", "config": {"owner": "Owner", "repo_name": "Site"}},
+            "canonical_deployment": self.record(3),
+            "latest_deployment": self.record(5, environment="preview", branch="branch"),
+        }
+        with patch.object(self.api, "get", return_value=(project, {})):
+            self.assertEqual(self.api.current(), deployment(3))
+            project["canonical_deployment"] = self.record(6, status="failure")
+            self.assertIsNone(self.api.current())
+            project["canonical_deployment"] = self.record(6, environment="preview", branch="main")
+            self.assertIsNone(self.api.current())
+            project["source"]["config"]["repo_name"] = "different"
+            with self.assertRaisesRegex(RuntimeError, "does not match"):
+                self.api.current()
 
-        def rest(route, **params):
-            if route.endswith("/runs"):
-                return {"workflow_runs": [later, failed, unrelated, foreign, current, first, skipped]}
-            run_id = int(route.split("/")[3])
-            return {"jobs": [{
-                "name": "deploy",
-                "conclusion": "skipped" if run_id == 3 else "success",
-                "completed_at": f"2026-11-24T00:00:{run_id:02d}Z",
-            }]}
+    def test_history_is_paginated_deduplicated_and_ordered_by_successful_deploy(self):
+        first = [
+            self.record(6), self.record(5, status="failure"),
+            self.record(4, environment="preview", branch="preview"), self.record(2),
+            self.record(7), self.record(3, is_skipped=True),
+        ]
+        second = [self.record(2), self.record(1), self.record(8, branch="other")]
+        with patch.object(self.api, "get", side_effect=[(first, {"total_pages": 2}), (second, {"total_pages": 2})]) as get:
+            self.assertEqual(self.api.history(deployment(6)), [deployment(1), deployment(2), deployment(6)])
+            self.assertEqual(get.call_args_list, [
+                call("/deployments", env="production", page=1, per_page=25),
+                call("/deployments", env="production", page=2, per_page=25),
+            ])
 
-        with patch.object(self.api, "get", side_effect=rest):
-            self.assertEqual(self.api.production_pair(current), (first, current))
-            self.assertEqual(self.api.production_pair(None), (current, later))
-            with self.assertRaisesRegex(RuntimeError, "did not successfully deploy"):
-                self.api.production_pair(skipped)
-            with self.assertRaisesRegex(RuntimeError, "did not successfully deploy"):
-                self.api.production_pair(failed)
+    def test_domain_requires_canonical_host_active(self):
+        with patch.object(self.api, "get", return_value=({"name": "eiricha.com", "status": "pending"}, {})) as get:
+            with self.assertRaisesRegex(RuntimeError, "not active"):
+                self.api.verify_domain()
+            get.assert_called_once_with("/domains/eiricha.com")
 
-    def test_rerun_uses_previous_successful_attempt(self):
-        first = self.run_record(1)
-        rerun = self.run_record(1, run_attempt=2, updated_at="2026-11-24T00:00:02Z")
-        failed = {**rerun, "conclusion": "failure"}
+    def test_check_trigger_requires_cloudflare_app_and_full_sha(self):
+        sha = deployment(1).sha
+        check = {"app": {"slug": "cloudflare-workers-and-pages"}, "name": "Cloudflare Pages",
+                 "conclusion": "success", "head_sha": sha}
+        self.assertEqual(indexnow.check_sha({"action": "completed", "check_run": check}), sha)
+        for fields in ({"app": {"slug": "another-app"}}, {"conclusion": "failure"}, {"head_sha": "bad"}):
+            with self.subTest(fields=fields):
+                self.assertIsNone(indexnow.check_sha({"action": "completed", "check_run": {**check, **fields}}))
+        self.assertIsNone(indexnow.check_sha({"action": "rerequested", "check_run": check}))
 
-        def rest(route, **params):
-            if route.endswith("/runs"):
-                return {"workflow_runs": [rerun]}
-            if route.endswith("/jobs"):
-                attempt = int(route.split("/")[5])
-                return {"jobs": [{"name": "deploy", "conclusion": "success",
-                                  "completed_at": f"2026-11-24T00:00:{attempt:02d}Z"}]}
-            self.assertTrue(route.endswith("/attempts/1"))
-            return first
 
-        with patch.object(self.api, "get", side_effect=rest):
-            self.assertEqual(self.api.production_pair(rerun), (first, rerun))
-        with patch.object(self.api, "get", side_effect=lambda route, **params: (
-            {"workflow_runs": [failed]} if route.endswith("/runs") else rest(route, **params)
-        )):
-            self.assertEqual(self.api.production_pair(None), (None, first))
+class ReconcileTests(unittest.TestCase):
+    def setUp(self):
+        self.cloudflare = MagicMock()
+        self.checkpoints = MagicMock()
+        self.first = deployment(1)
+        self.second = deployment(2)
+        self.current = deployment(3)
+        self.cloudflare.current.return_value = self.current
+        self.cloudflare.history.return_value = [self.first, self.second, self.current]
+        self.checkpoints.load.return_value = (self.first, False)
+        mocks = ExitStack()
+        self.addCleanup(mocks.close)
+        mocks.enter_context(patch.object(indexnow, "ensure_main_commits"))
+        self.verify = mocks.enter_context(patch.object(indexnow, "verify_key", return_value=("key", indexnow.SITE + "/key.txt")))
+        self.submit = mocks.enter_context(patch.object(indexnow, "submit_urls"))
+        self.manifest = mocks.enter_context(patch.object(indexnow, "manifest", side_effect=lambda sha: self.snapshots[sha]))
+        self.stable = indexnow.SITE + "/"
+        self.transient = indexnow.SITE + "/temporary/"
+        self.new = indexnow.SITE + "/new/"
+        self.snapshots = {
+            self.first.sha: {self.stable: "original"},
+            self.second.sha: {self.stable: "changed", self.transient: "added"},
+            self.current.sha: {self.stable: "original", self.new: "added"},
+        }
+
+    def test_multiple_rapid_deploys_collect_each_transition_and_submit_once(self):
+        indexnow.reconcile(self.cloudflare, self.checkpoints, dry_run=False, event_sha=self.second.sha)
+        self.verify.assert_called_once_with(self.current.sha)
+        self.cloudflare.verify_domain.assert_called_once()
+        self.submit.assert_called_once_with("key", indexnow.SITE + "/key.txt", sorted([self.stable, self.transient, self.new]))
+        self.checkpoints.save.assert_called_once_with(self.current)
+
+    def test_duplicate_event_or_rerun_skips_submission(self):
+        self.checkpoints.load.return_value = self.current, False
+        indexnow.reconcile(self.cloudflare, self.checkpoints, dry_run=False, event_sha=self.current.sha)
+        self.cloudflare.history.assert_not_called()
+        self.submit.assert_not_called()
+        self.checkpoints.save.assert_not_called()
+
+    def test_redeploying_same_commit_updates_checkpoint_without_resending(self):
+        current = deployment(4, self.first.sha)
+        self.cloudflare.current.return_value = current
+        self.cloudflare.history.return_value = [self.first, current]
+        indexnow.reconcile(self.cloudflare, self.checkpoints, dry_run=False)
+        self.verify.assert_not_called()
+        self.submit.assert_not_called()
+        self.checkpoints.save.assert_called_once_with(current)
+
+    def test_missing_successful_canonical_deployment_skips_all_submission_steps(self):
+        self.cloudflare.current.return_value = None
+        indexnow.reconcile(self.cloudflare, self.checkpoints, dry_run=False)
+        self.cloudflare.history.assert_not_called()
+        self.checkpoints.load.assert_not_called()
+        self.verify.assert_not_called()
+        self.submit.assert_not_called()
+
+    def test_preview_check_does_not_submit(self):
+        indexnow.reconcile(self.cloudflare, self.checkpoints, dry_run=False, event_sha=deployment(4).sha)
+        self.verify.assert_not_called()
+        self.submit.assert_not_called()
+        self.checkpoints.save.assert_not_called()
+
+    def test_advanced_production_is_checked_again_after_key_verification(self):
+        self.cloudflare.current.side_effect = [self.current, deployment(4)]
+        indexnow.reconcile(self.cloudflare, self.checkpoints, dry_run=False)
+        self.verify.assert_called_once()
+        self.submit.assert_not_called()
+        self.checkpoints.save.assert_not_called()
+
+    def test_failed_batch_leaves_checkpoint_for_retry(self):
+        self.submit.side_effect = RuntimeError("Network failure")
+        with self.assertRaisesRegex(RuntimeError, "Network failure"):
+            indexnow.reconcile(self.cloudflare, self.checkpoints, dry_run=False)
+        self.checkpoints.save.assert_not_called()
+        self.submit.side_effect = None
+        indexnow.reconcile(self.cloudflare, self.checkpoints, dry_run=False)
+        self.checkpoints.save.assert_called_once_with(self.current)
+
+    def test_first_run_uses_immediately_previous_success_and_skips_missing_baseline(self):
+        self.checkpoints.load.return_value = None, False
+        indexnow.reconcile(self.cloudflare, self.checkpoints, dry_run=False)
+        self.assertEqual(self.manifest.call_args_list, [call(self.second.sha), call(self.current.sha)])
+        self.submit.reset_mock()
+        self.cloudflare.history.return_value = [self.current]
+        indexnow.reconcile(self.cloudflare, self.checkpoints, dry_run=False)
+        self.submit.assert_not_called()
+
+    def test_rollback_compares_to_last_checkpoint_even_if_old_deploy_existed(self):
+        self.cloudflare.current.return_value = self.first
+        self.cloudflare.history.return_value = [self.first]
+        self.checkpoints.load.return_value = self.current, False
+        indexnow.reconcile(self.cloudflare, self.checkpoints, dry_run=False)
+        self.submit.assert_called_once_with("key", indexnow.SITE + "/key.txt", [self.new])
+        self.checkpoints.save.assert_called_once_with(self.first)
+
+
+class CheckpointTests(unittest.TestCase):
+    def test_only_downloads_verified_workflow_artifacts_from_this_repo_main(self):
+        checkpoints = indexnow.Checkpoints("owner/site", "123", "test-token")
+        item = deployment(1)
+        run = {"id": 15, "head_branch": "main", "head_repository_id": 123, "repository_id": 123}
+        base = {"created_at": "2026-11-25T09:00:00Z", "expires_at": "2027-02-23T09:00:00Z",
+                "workflow_run": run, "expired": False}
+        artifacts = [
+            {**base, "id": 1},
+            {**base, "id": 4, "expired": True},
+            {**base, "id": 3, "workflow_run": {**run, "head_repository_id": 42}},
+            {**base, "id": 2, "workflow_run": {**run, "id": 16}},
+        ]
+
+        def download(command, *, check):
+            self.assertIn("15", command)
+            Path(command[-1], indexnow.CHECKPOINT_FILE).write_text(json.dumps(item.to_dict()), encoding="utf-8")
+        with (patch.object(checkpoints, "get", side_effect=[
+            {"artifacts": artifacts}, {"path": ".github/workflows/ci.yml"}, {"path": ".github/workflows/indexnow.yml@main"},
+        ]),
+              patch.object(indexnow.subprocess, "run", side_effect=download) as run_command):
+            self.assertEqual(checkpoints.load()[0], item)
+            run_command.assert_called_once()
 
 
 class HTTPTests(unittest.TestCase):
@@ -218,3 +353,11 @@ class HTTPTests(unittest.TestCase):
                     with self.assertRaisesRegex(RuntimeError, f"HTTP {status}"):
                         indexnow.submit_urls("test-key", indexnow.SITE + "/key.txt", [indexnow.SITE + "/"])
                     send.assert_called_once()
+
+
+    def test_rejects_noncanonical_hosts_before_indexnow_post(self):
+        for host in ("www.eiricha.com", "eiricha.ch", "eirich-it-services.pages.dev", "preview.example"):
+            with self.subTest(host=host), patch.object(indexnow.HTTP, "open") as send:
+                with self.assertRaisesRegex(ValueError, "canonical URLs"):
+                    indexnow.submit_urls("test-key", indexnow.SITE + "/key.txt", [f"https://{host}/"])
+                send.assert_not_called()

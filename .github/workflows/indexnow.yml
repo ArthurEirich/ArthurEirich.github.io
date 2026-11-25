@@ -1,14 +1,14 @@
 name: IndexNow
 
 on:
-  workflow_run:
-    workflows: ["pages build and deployment"]
+  check_run:
     types: [completed]
-    branches: [main]
+  schedule:
+    - cron: "17,47 * * * *"
   workflow_dispatch:
     inputs:
       submit:
-        description: Send the latest production delta to IndexNow (off for a dry run)
+        description: Send the pending production delta to IndexNow (off for a dry run)
         type: boolean
         default: false
 
@@ -19,21 +19,36 @@ permissions:
 jobs:
   indexnow:
     if: >-
-      (github.event_name == 'workflow_run' &&
-       github.event.workflow_run.conclusion == 'success' &&
-       github.event.workflow_run.head_repository.full_name == github.repository) ||
-      (github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main')
+      github.ref == 'refs/heads/main' &&
+      (github.event_name != 'check_run' ||
+       (github.event.check_run.app.slug == 'cloudflare-workers-and-pages' &&
+        github.event.check_run.name == 'Cloudflare Pages' &&
+        github.event.check_run.conclusion == 'success'))
+    concurrency:
+      group: indexnow-cloudflare-production
+      cancel-in-progress: false
     runs-on: ubuntu-latest
     timeout-minutes: 12
     steps:
       - name: Check out main history
         uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
         with:
-          ref: ${{ github.sha }}
+          ref: refs/heads/main
           fetch-depth: 0
           persist-credentials: false
-      - name: Check production and notify IndexNow
+      - name: Reconcile production with IndexNow
+        id: reconcile
         env:
           GH_TOKEN: ${{ github.token }}
-          INDEXNOW_SUBMIT: ${{ github.event_name == 'workflow_run' || inputs.submit }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ vars.CLOUDFLARE_ACCOUNT_ID }}
+          CLOUDFLARE_PAGES_READ_TOKEN: ${{ secrets.CLOUDFLARE_PAGES_READ_TOKEN }}
+          INDEXNOW_SUBMIT: ${{ github.event_name != 'workflow_dispatch' || inputs.submit }}
         run: python3 -u .github/scripts/indexnow.py
+      - name: Save production checkpoint
+        if: steps.reconcile.outputs.checkpoint == 'true'
+        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6.0.0
+        with:
+          name: indexnow-cloudflare-production-v1
+          path: ${{ runner.temp }}/indexnow-checkpoint.json
+          if-no-files-found: error
+          overwrite: true
