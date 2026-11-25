@@ -274,7 +274,7 @@ withBrowser("normalizes external referrers and caps events per document", {
 
 for (const [domain, source] of [
     ["cylex-swiss.ch", "cylex"], ["goregio.ch", "goregio"], ["infosenior.ch", "infosenior"],
-    ["zürich.im", "zuerich_im"], ["firmen.ch", "firmen_ch"],
+    ["zuerich.im", "zuerich_im"], ["zürich.im", "zuerich_im"], ["firmen.ch", "firmen_ch"],
     ["stadtbranchenbuch.ch", "stadtbranchenbuch"], ["expat.com", "expat"]
 ]) {
     for (const host of [domain, "www." + domain]) {

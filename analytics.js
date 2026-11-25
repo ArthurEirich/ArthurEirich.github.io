@@ -14,6 +14,7 @@ const referrers = new Map([
     ["cylex-swiss.ch", "cylex"], ["www.cylex-swiss.ch", "cylex"],
     ["goregio.ch", "goregio"], ["www.goregio.ch", "goregio"],
     ["infosenior.ch", "infosenior"], ["www.infosenior.ch", "infosenior"],
+    ["zuerich.im", "zuerich_im"], ["www.zuerich.im", "zuerich_im"],
     ["xn--zrich-kva.im", "zuerich_im"], ["www.xn--zrich-kva.im", "zuerich_im"],
     ["firmen.ch", "firmen_ch"], ["www.firmen.ch", "firmen_ch"],
     ["stadtbranchenbuch.ch", "stadtbranchenbuch"], ["www.stadtbranchenbuch.ch", "stadtbranchenbuch"],
