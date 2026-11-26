@@ -57,17 +57,26 @@ public_files = (
 def add_consent(html, language, token, conversions):
     settings, reject, accept, privacy, explanation, signal, storage = CONSENT_COPY[language]
     policy = "/en/#datenschutz" if language == "en" else "/#datenschutz"
+    reload_notice, reload_button = (
+        ("Die Auswahl wurde für zukünftige Seitenaufrufe übernommen, sofern der Browser sie speichern konnte. "
+         "Ein bereits geladenes Cloudflare-Skript endet erst beim Neuladen. Warte auf das Ergebnis einer laufenden "
+         "Anfrage. Nicht gesendete Eingaben gehen beim Neuladen verloren.", "Seite neu laden")
+        if language == "de" else
+        ("Your choice applies to future page loads if your browser saved it. If the Cloudflare script was loaded, it stops when you reload. Wait for any pending submission to finish. Reloading discards unsent entries.",
+         "Reload page")
+    )
     config = (f' data-web-analytics="{token}"' if token else "")
     if conversions:
         config += ' data-conversion-analytics="true"'
     banner = f'''<aside class="card privacy-consent" id="privacy-consent" aria-labelledby="privacy-consent-title"{config} hidden>
     <h2 id="privacy-consent-title" tabindex="-1">{settings}</h2>
     <p>{explanation} <a href="{policy}">{privacy}</a></p>
-    <p id="privacy-consent-notice" role="status" data-signal="{signal}" data-storage="{storage}" hidden></p>
+    <p id="privacy-consent-notice" role="status" data-signal="{signal}" data-storage="{storage}" data-reload="{reload_notice}" hidden></p>
     <div class="privacy-consent-actions">
         <button type="button" class="btn" id="privacy-reject">{reject}</button>
         <button type="button" class="btn" id="privacy-accept">{accept}</button>
     </div>
+    <button type="button" class="btn" id="privacy-restart" hidden>{reload_button}</button>
 </aside>'''
     control = (f'<button type="button" class="privacy-settings" id="privacy-settings" '
                f'aria-controls="privacy-consent" aria-expanded="false" hidden>{settings}</button>')

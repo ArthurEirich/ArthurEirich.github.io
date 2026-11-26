@@ -724,9 +724,10 @@
             Cloudflare Web Analytics beginnt mit dem nächsten Seitenaufruf. Eine aktivierte Conversion-Messung
             zählt nur Aktionen ab deiner Einwilligung und kann dann die aktuelle Einstiegsquelle zuordnen. Zum Widerruf
             öffne die Datenschutzeinstellungen in der Fusszeile und wähle «Nur notwendige». Falls das
-            Cloudflare-Skript geladen war, wird die Seite neu geladen, um es zu stoppen. Bereits gesendete
-            oder beim Verlassen der Seite vorgemerkte Anfragen können noch ankommen. Frühere Statistiken
-            werden durch den Widerruf nicht gelöscht. Global Privacy Control und Do Not Track haben
+            Cloudflare-Skript geladen war, endet es beim Neuladen. Bei einem Entwurf, einer laufenden
+            Anfrage oder einem Ergebnis bleibt das Formular sichtbar, bis du die Seite neu lädst.
+            Bis dahin kann das Skript weitere Anfragen senden. Vorgemerkte Anfragen können auch danach
+            noch ankommen. Frühere Statistiken werden durch den Widerruf nicht gelöscht. Global Privacy Control und Do Not Track haben
             Vorrang vor einer gespeicherten Einwilligung.
         </p>
         <p>
@@ -751,7 +752,7 @@
         <p>
             Cloudflare liefert die Website aus, schützt sie und stellt die Statistik-Infrastruktur bereit.
             Für Auslieferung, Sicherheit und Betrieb kann Cloudflare IP-Adressen, Browserinformationen,
-            aufgerufene URLs und weitere technische Daten bearbeiten. Die Cloudflare-Ratenbegrenzung schützt
+            aufgerufene URLs und weitere technische Daten bearbeiten. Eine eingerichtete Cloudflare-Ratenbegrenzung schützt
             den Conversion-Endpunkt anhand der IP-Adresse. Diese Bearbeitung ist vom Conversion-Datensatz
             getrennt. Die Aufbewahrung von Betriebsdaten hängt vom Dienst und seinen Einstellungen ab.
             <a href="https://www.cloudflare.com/privacypolicy/">Datenschutzhinweise von Cloudflare</a> ·

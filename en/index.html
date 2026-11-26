@@ -722,8 +722,9 @@
             Cloudflare Web Analytics starts on the next page load. If enabled, conversion tracking counts only
             actions after consent and can then attribute the current landing page. To withdraw consent, open
             Privacy settings in the footer and select “Necessary only”. If the Cloudflare beacon was
-            loaded, the page reloads to stop it. A request already sent or queued during unloading
-            may still arrive, and withdrawal does not erase earlier statistics. Global Privacy
+            loaded, a reload stops it. If the contact form has a draft, a submission or a result, I leave
+            it on screen and ask you to reload when ready. Until then, the loaded beacon may still send
+            requests. Queued requests may arrive afterward. Earlier statistics are not erased. Global Privacy
             Control and Do Not Track override a stored permission.
         </p>
         <p>
@@ -747,7 +748,7 @@
         <p>
             Cloudflare delivers and protects the site and provides its analytics infrastructure. Its
             systems can process IP addresses, browser information, requested URLs and other technical
-            data for delivery, security and operations. Cloudflare's edge rate limit uses IP addresses
+            data for delivery, security and operations. If configured, Cloudflare's edge rate limit uses IP addresses
             to protect the custom analytics endpoint. This infrastructure processing is separate from
             the conversion dataset. Operational retention depends on the applicable service and settings.
             <a href="https://www.cloudflare.com/privacypolicy/">Cloudflare privacy policy</a> ·

@@ -6,6 +6,7 @@ if (form) {
     const service = new URLSearchParams(window.location.search).get("service");
     const topic = Array.from(form.elements.thema.options).find((option) => option.dataset.service === service);
     if (topic) topic.selected = true;
+    form.dataset.initialTopic = String(form.elements.thema.selectedIndex);
 }
 if (form && form.dataset.contactPreview !== "true") {
     const status = document.getElementById("form-status");
@@ -19,6 +20,8 @@ if (form && form.dataset.contactPreview !== "true") {
         e.preventDefault();
         if (submitting) return;
         submitting = true;
+        form.dataset.contactPending = "true";
+        form.dispatchEvent(new CustomEvent("contact-form-start"));
         const startedAt = performance.now();
         status.className = "form-status";
         status.textContent = form.dataset.msgSending;
@@ -65,8 +68,10 @@ if (form && form.dataset.contactPreview !== "true") {
             outcome = "error";
         } finally {
             submitting = false;
+            delete form.dataset.contactPending;
             button.disabled = false;
         }
+        form.dataset.contactOutcome = outcome;
         form.dispatchEvent(new CustomEvent("contact-form-result", {
             bubbles: true,
             detail: {outcome, service: selectedService, startedAt}

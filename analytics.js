@@ -21,7 +21,6 @@ const referrers = new Map([
     ["expat.com", "expat"], ["www.expat.com", "expat"]
 ]);
 
-const contactResult = "contact-form-result";
 const maxEventsPerDocument = 20;
 
 function allowedParam(params, name, allowed) {
@@ -40,16 +39,6 @@ function referralSource(referrer) {
     } catch {
         return "";
     }
-}
-
-function linkEvent(target) {
-    const anchor = target?.closest?.("a[href]");
-    if (!anchor) return "";
-    const url = new URL(anchor.href);
-    if (url.protocol === "tel:") return "phone_click";
-    if (url.protocol === "mailto:") return "email_click";
-    if (url.protocol === "https:" && url.hostname === "wa.me") return "whatsapp_click";
-    return "";
 }
 
 let initialized = false;
@@ -72,7 +61,7 @@ export function start(mayTrack) {
     let eventCount = 0;
 
     function send(event, service = serviceFor(pathname)) {
-        if (!mayTrack() || !events.has(event) || eventCount >= maxEventsPerDocument) return;
+        if (!mayTrack() || !services.has(service) || !events.has(event) || eventCount >= maxEventsPerDocument) return;
         eventCount += 1;
         try {
             // Fetch permits suppressing the full URL in the Referer header.
@@ -89,22 +78,6 @@ export function start(mayTrack) {
         }
     }
 
-    document.addEventListener("click", (event) => {
-        if (event.defaultPrevented || !event.isTrusted) return;
-        try {
-            send(linkEvent(event.target));
-        } catch {
-            // An invalid link must never interfere with navigation.
-        }
-    });
-    document.addEventListener(contactResult, (event) => {
-        if (event.target !== document.getElementById("contact-form")) return;
-        const {outcome, service, startedAt} = event.detail ?? {};
-        if (!mayTrack(startedAt)) return;
-        const allowedService = services.has(service) ? service : "";
-        if (outcome === "success") send("contact_form_success", allowedService);
-        if (outcome === "error") send("contact_form_error", allowedService);
-    });
-
     if ((utmSource && utmSource !== "other_referral") || medium || campaign) send("utm_landing");
+    return send;
 }

@@ -1007,3 +1007,11 @@ p, li {
     outline: 2px solid var(--accent);
     outline-offset: 2px;
 }
+
+#privacy-restart {
+    margin-top: 8px;
+}
+
+#privacy-restart[hidden] {
+    display: none;
+}

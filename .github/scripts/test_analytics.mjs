@@ -1,3 +1,4 @@
+import {observeConversions} from "../../consent.js";
 import assert from "node:assert/strict";
 import {execFileSync} from "node:child_process";
 import {existsSync, readFileSync, readdirSync} from "node:fs";
@@ -187,8 +188,9 @@ async function exerciseBrowser({url = origin + "/", referrer = "", navigator = {
         });
         const module = "../../analytics.js?browser=" + ++browserNumber;
         const {start} = await import(module);
-        start(mayTrack);
-        start(mayTrack);
+        const send = start(mayTrack);
+        if (send) observeConversions(mayTrack, send);
+        assert.equal(start(mayTrack), undefined);
         // Registered handlers read fetch and document when an event occurs.
         return await exercise({
             requests, formRequests, listeners, form, button, status,

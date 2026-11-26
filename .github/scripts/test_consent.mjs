@@ -3,7 +3,7 @@ import {readFileSync} from "node:fs";
 import {test} from "node:test";
 import {runInNewContext} from "node:vm";
 
-const source = readFileSync("consent.js", "utf8").replace('import("./analytics.js")', "loadConversions()");
+const source = readFileSync("consent.js", "utf8").replace("export function", "function").replace('import("./analytics.js")', "loadConversions()");
 const key = "eiricha.analyticsConsent";
 const grant = JSON.stringify({preference: "allow", version: 2, scope: "web-analytics,conversions", date: "2026-09-30"});
 const deny = JSON.stringify({preference: "necessary", version: 2, scope: "web-analytics,conversions", date: "2026-09-30"});
@@ -21,16 +21,27 @@ class Element extends EventTarget {
 
 async function load({
     store = new Map(), path = "/", hostname = "https://eiricha.com", privacy = {}, unavailable = false,
-    web = true, conversions = true, existingBeacon = false, readOnly = false
+    web = true, conversions = true, existingBeacon = false, readOnly = false, contact
 } = {}) {
     const elements = Object.fromEntries(["privacy-consent", "privacy-settings", "privacy-consent-title",
-        "privacy-accept", "privacy-reject", "privacy-consent-notice"].map((id) => [id, new Element()]));
+        "privacy-accept", "privacy-reject", "privacy-consent-notice", "privacy-restart"].map((id) => [id, new Element()]));
     const panel = elements["privacy-consent"];
     if (web) panel.dataset.webAnalytics = "0123456789abcdef0123456789abcdef";
     if (conversions) panel.dataset.conversionAnalytics = "true";
+    if (contact) {
+        const form = new Element();
+        form.elements = {
+            name: {value: contact.draft ?? ""}, kontakt: {value: ""}, nachricht: {value: ""},
+            thema: {selectedIndex: 0}, datenschutz: {checked: false}
+        };
+        form.dataset.contactPending = contact.pending ? "true" : "";
+        elements["contact-form"] = form;
+    }
     const beacons = [];
     const conversionChecks = [];
     const document = {
+        addEventListener() {},
+        removeEventListener() {},
         getElementById: (id) => elements[id],
         querySelector: () => existingBeacon || beacons[0],
         head: {append: (element) => beacons.push(element)},
@@ -62,7 +73,8 @@ async function load({
     await Promise.resolve();
     await Promise.resolve();
     return {
-        panel, beacons, navigations, conversionChecks, window, store,
+        panel, beacons, navigations, conversionChecks, window, store, form: elements["contact-form"],
+        restart: elements["privacy-restart"],
         accept: elements["privacy-accept"], reject: elements["privacy-reject"], settings: elements["privacy-settings"]
     };
 }
@@ -184,4 +196,53 @@ test("requires fresh consent when configured analytics products change", async (
     assert.equal(page.panel.hidden, false);
     assert.deepEqual(page.beacons, []);
     assert.deepEqual(page.conversionChecks, []);
+});
+
+test("withdrawal preserves a draft until the visitor explicitly reloads", async () => {
+    const page = await load({store: new Map([[key, grant]]), contact: {draft: "Unsaved"}});
+    page.reject.click();
+    assert.equal(page.conversionChecks[0](), false);
+    assert.equal(JSON.parse(page.store.get(key)).preference, "necessary");
+    assert.equal(page.form.elements.name.value, "Unsaved");
+    assert.deepEqual(page.navigations, []);
+    assert.equal(page.restart.hidden, false);
+    page.restart.click();
+    assert.deepEqual(page.navigations, ["reload"]);
+});
+
+test("cross-tab withdrawal waits for an in-flight submission and keeps its result visible", async () => {
+    const store = new Map([[key, grant]]);
+    const page = await load({store, contact: {pending: true}});
+    store.set(key, deny);
+    const change = new Event("storage");
+    change.key = key;
+    page.window.dispatchEvent(change);
+    assert.equal(page.restart.disabled, true);
+    assert.equal(page.conversionChecks[0](), false);
+    page.restart.click();
+    assert.deepEqual(page.navigations, []);
+    delete page.form.dataset.contactPending;
+    page.form.dispatchEvent(new Event("contact-form-result"));
+    assert.equal(page.restart.disabled, false);
+    assert.deepEqual(page.navigations, []);
+    page.restart.click();
+    assert.deepEqual(page.navigations, ["reload"]);
+});
+
+test("neither analytics product configured leaves the panel closed", async () => {
+    const page = await load({web: false, conversions: false});
+    assert.equal(page.panel.hidden, true);
+    assert.equal(page.settings.hidden, false);
+    assert.deepEqual(page.beacons, []);
+    assert.deepEqual(page.conversionChecks, []);
+});
+
+test("withdrawal also protects a result that completed just before the consent change", async () => {
+    const page = await load({store: new Map([[key, grant]]), contact: {}});
+    page.form.dataset.contactOutcome = "success";
+    page.reject.click();
+    assert.equal(page.form.dataset.contactOutcome, "success");
+    assert.deepEqual(page.navigations, []);
+    assert.equal(page.restart.hidden, false);
+    assert.equal(page.restart.disabled, false);
 });
