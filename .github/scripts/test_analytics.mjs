@@ -176,7 +176,7 @@ async function exerciseBrowser({url = origin + "/", referrer = "", navigator = {
         return new Promise((resolve) => { form.respond = resolve; });
     };
     runInNewContext(readFileSync("script.js", "utf8"), {
-        window, document, fetch, URLSearchParams, CustomEvent, FormData: class {}
+        window, document, fetch, URLSearchParams, CustomEvent, performance, FormData: class {}
     });
 
     const names = ["window", "document", "fetch", "navigator"];

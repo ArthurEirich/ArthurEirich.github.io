@@ -14,17 +14,17 @@ SITEMAP_NS = {"s": "http://www.sitemaps.org/schemas/sitemap/0.9"}
 CONSENT_COPY = {
     "de": (
         "Datenschutzeinstellungen", "Nur notwendige", "Statistik erlauben", "Datenschutz",
-        "Mit deiner Erlaubnis messen wir die Nutzung der Website. Wenn Statistik verfügbar ist, startet sie beim nächsten "
-        "Seitenaufruf. Du kannst deine Wahl jederzeit in den Datenschutzeinstellungen ändern.",
+        "Mit deiner Erlaubnis messen wir die Nutzung der Website. Falls aktiviert, zählt die Conversion-Messung ab deiner "
+        "Einwilligung. Cloudflare Web Analytics startet beim nächsten Seitenaufruf.",
         "Dein Browser lehnt Statistik über Global Privacy Control oder Do Not Track ab.",
-        "Dein Browser konnte die Auswahl nicht speichern. Auf dieser Seite bleibt die Statistik aus.",
+        "Dein Browser konnte die Auswahl nicht speichern. Für einen dauerhaften Widerruf lösche die Website-Daten im Browser.",
     ),
     "en": (
         "Privacy settings", "Necessary only", "Allow analytics", "Privacy policy",
-        "With your permission, we measure how the site is used. When available, analytics starts on your next page load. "
-        "You can change your choice at any time in Privacy settings.",
+        "With your permission, we measure how the site is used. If enabled, conversion tracking starts when you agree. "
+        "Cloudflare Web Analytics starts on your next page load.",
         "Your browser opts out of analytics through Global Privacy Control or Do Not Track.",
-        "Your browser could not save the choice. Analytics stays off on this page.",
+        "Your browser could not save the choice. To withdraw permanently, clear this site’s data in your browser.",
     ),
 }
 

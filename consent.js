@@ -1,5 +1,5 @@
 const storageKey = "eiricha.analyticsConsent";
-const policyVersion = 1;
+const policyVersion = 2;
 const beaconURL = "https://static.cloudflareinsights.com/beacon.min.js";
 
 function browserBlocksAnalytics() {
@@ -7,11 +7,11 @@ function browserBlocksAnalytics() {
     return navigator.globalPrivacyControl === true || dnt.some((value) => value === "1" || value === "yes");
 }
 
-function readPreference() {
+function readPreference(scope) {
     try {
         const raw = localStorage.getItem(storageKey);
         const value = JSON.parse(raw);
-        if (value?.version !== policyVersion || !["allow", "necessary"].includes(value.preference) ||
+        if (value?.version !== policyVersion || value.scope !== scope || !["allow", "necessary"].includes(value.preference) ||
             !/^\d{4}-\d{2}-\d{2}$/.test(value.date)) return "";
         // An absent-key removal checks whether a saved grant can be withdrawn
         // without rewriting that grant or storing any additional value.
@@ -22,10 +22,10 @@ function readPreference() {
     }
 }
 
-function writePreference(preference) {
+function writePreference(preference, scope) {
     try {
         localStorage.setItem(storageKey, JSON.stringify({
-            preference, version: policyVersion, date: new Date().toISOString().slice(0, 10)
+            preference, version: policyVersion, scope, date: new Date().toISOString().slice(0, 10)
         }));
         return true;
     } catch {
@@ -48,12 +48,14 @@ if (panel) {
     const accept = document.getElementById("privacy-accept");
     const notice = document.getElementById("privacy-consent-notice");
     const {webAnalytics, conversionAnalytics} = panel.dataset;
+    const scope = [webAnalytics && "web-analytics", conversionAnalytics && "conversions"].filter(Boolean).join(",");
     const configured = location.origin === "https://eiricha.com" && Boolean(webAnalytics || conversionAnalytics);
     const forcedNecessary = new URLSearchParams(location.search).get("privacy-choice") === "necessary";
-    let storageUnavailable = forcedNecessary && !writePreference("necessary");
-    let preference = forcedNecessary ? "necessary" : readPreference();
+    let storageUnavailable = forcedNecessary && !writePreference("necessary", scope);
+    let preference = forcedNecessary ? "necessary" : readPreference(scope);
     let restoreSettingsFocus = false;
     let active = false;
+    let grantedAt = 0;
     let beaconStarted = false;
 
     if (forcedNecessary && !storageUnavailable) {
@@ -71,13 +73,13 @@ if (panel) {
         if (focus) (open ? title : settings).focus();
     }
 
-    function mayTrack() {
-        return active && preference === "allow" && !browserBlocksAnalytics();
+    function mayTrack(startedAt = Infinity) {
+        return startedAt >= grantedAt && active && preference === "allow" && !browserBlocksAnalytics();
     }
 
     function stop(persisted) {
         active = false;
-        if (!beaconStarted) return;
+        if (!beaconStarted && persisted) return;
         if (persisted) {
             location.reload();
         } else {
@@ -88,12 +90,25 @@ if (panel) {
         }
     }
 
+    function startConversions() {
+        if (!conversionAnalytics || !mayTrack()) return;
+        void import("./analytics.js").then(({start}) => {
+            if (mayTrack()) start(mayTrack);
+        }).catch(() => {});
+    }
+
     function decide(choice) {
         const wasActive = active;
-        const persisted = writePreference(choice);
+        const persisted = writePreference(choice, scope);
         storageUnavailable = !persisted;
         preference = persisted ? choice : "necessary";
-        if (wasActive && preference !== "allow") stop(persisted);
+        if (preference === "allow") {
+            if (!wasActive) grantedAt = performance.now();
+            active = configured;
+            startConversions();
+        } else if (wasActive) {
+            stop(persisted);
+        }
         show(storageUnavailable, restoreSettingsFocus && !storageUnavailable);
     }
 
@@ -111,7 +126,7 @@ if (panel) {
     });
 
     function refreshPreference() {
-        const saved = readPreference();
+        const saved = readPreference(scope);
         const blocked = browserBlocksAnalytics();
         // Never start analytics on an already loaded or restored page after a new grant.
         preference = saved;
@@ -136,9 +151,5 @@ if (panel) {
         beacon.dataset.cfBeacon = JSON.stringify({token: webAnalytics, spa: false});
         document.head.append(beacon);
     }
-    if (active && conversionAnalytics) {
-        void import("./analytics.js").then(({start}) => {
-            if (mayTrack()) start(mayTrack);
-        }).catch(() => {});
-    }
+    startConversions();
 }

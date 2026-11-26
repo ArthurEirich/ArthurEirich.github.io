@@ -99,7 +99,8 @@ export function start(mayTrack) {
     });
     document.addEventListener(contactResult, (event) => {
         if (event.target !== document.getElementById("contact-form")) return;
-        const {outcome, service} = event.detail ?? {};
+        const {outcome, service, startedAt} = event.detail ?? {};
+        if (!mayTrack(startedAt)) return;
         const allowedService = services.has(service) ? service : "";
         if (outcome === "success") send("contact_form_success", allowedService);
         if (outcome === "error") send("contact_form_error", allowedService);

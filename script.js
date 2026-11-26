@@ -14,6 +14,7 @@ if (form) {
         e.preventDefault();
         if (submitting) return;
         submitting = true;
+        const startedAt = performance.now();
         status.className = "form-status";
         status.textContent = form.dataset.msgSending;
         button.disabled = true;
@@ -46,7 +47,7 @@ if (form) {
         }
         form.dispatchEvent(new CustomEvent("contact-form-result", {
             bubbles: true,
-            detail: {outcome, service: selectedService}
+            detail: {outcome, service: selectedService, startedAt}
         }));
     });
 }

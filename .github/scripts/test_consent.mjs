@@ -5,8 +5,8 @@ import {runInNewContext} from "node:vm";
 
 const source = readFileSync("consent.js", "utf8").replace('import("./analytics.js")', "loadConversions()");
 const key = "eiricha.analyticsConsent";
-const grant = JSON.stringify({preference: "allow", version: 1, date: "2026-09-30"});
-const deny = JSON.stringify({preference: "necessary", version: 1, date: "2026-09-30"});
+const grant = JSON.stringify({preference: "allow", version: 2, scope: "web-analytics,conversions", date: "2026-09-30"});
+const deny = JSON.stringify({preference: "necessary", version: 2, scope: "web-analytics,conversions", date: "2026-09-30"});
 
 class Element extends EventTarget {
     dataset = {};
@@ -57,7 +57,7 @@ async function load({
     location.replace = (url) => navigations.push(url.href);
     runInNewContext(source, {
         document, localStorage, window, navigator: privacy, history: {replaceState() {}}, location,
-        URL, URLSearchParams, loadConversions: async () => ({start: (check) => conversionChecks.push(check)})
+        URL, URLSearchParams, performance, loadConversions: async () => ({start: (check) => conversionChecks.push(check)})
     });
     await Promise.resolve();
     await Promise.resolve();
@@ -67,7 +67,7 @@ async function load({
     };
 }
 
-test("makes no analytics loads before a decision and never replays the current visit on acceptance", async () => {
+test("starts only conversions immediately after acceptance and keeps Web Analytics for the next load", async () => {
     const page = await load();
     assert.equal(page.panel.hidden, false);
     assert.equal(page.settings.hidden, false);
@@ -76,12 +76,16 @@ test("makes no analytics loads before a decision and never replays the current v
     page.accept.click();
     assert.equal(page.panel.hidden, true);
     const saved = JSON.parse(page.store.get(key));
-    assert.deepEqual(Object.keys(saved).sort(), ["date", "preference", "version"]);
+    assert.deepEqual(Object.keys(saved).sort(), ["date", "preference", "scope", "version"]);
     assert.equal(saved.preference, "allow");
-    assert.equal(saved.version, 1);
+    assert.equal(saved.version, 2);
     assert.match(saved.date, /^\d{4}-\d{2}-\d{2}$/);
     assert.deepEqual(page.beacons, []);
-    assert.deepEqual(page.conversionChecks, []);
+    await Promise.resolve();
+    await Promise.resolve();
+    assert.equal(page.conversionChecks.length, 1);
+    assert(page.conversionChecks[0]());
+    assert.equal(page.conversionChecks[0](0), false);
 
     const english = await load({store: page.store, path: "/en/wifi-support-zurich/"});
     assert.equal(english.panel.hidden, true);
@@ -157,10 +161,10 @@ test("honors independent product flags, preview isolation and existing beacon de
     const preview = await load({store, hostname: "https://preview.pages.dev"});
     assert.deepEqual(preview.beacons, []);
     assert.deepEqual(preview.conversionChecks, []);
-    const webOnly = await load({store, conversions: false});
+    const webOnly = await load({store: new Map([[key, grant.replace("web-analytics,conversions", "web-analytics")]]), conversions: false});
     assert.equal(webOnly.beacons.length, 1);
     assert.deepEqual(webOnly.conversionChecks, []);
-    const conversionOnly = await load({store, web: false});
+    const conversionOnly = await load({store: new Map([[key, grant.replace("web-analytics,conversions", "conversions")]]), web: false});
     assert.deepEqual(conversionOnly.beacons, []);
     assert.equal(conversionOnly.conversionChecks.length, 1);
     const existing = await load({store, existingBeacon: true});
@@ -168,7 +172,15 @@ test("honors independent product flags, preview isolation and existing beacon de
 });
 
 test("requires a new decision after a policy version change", async () => {
-    const page = await load({store: new Map([[key, grant.replace('"version":1', '"version":0')]])});
+    const page = await load({store: new Map([[key, grant.replace('"version":2', '"version":1')]])});
+    assert.equal(page.panel.hidden, false);
+    assert.deepEqual(page.beacons, []);
+    assert.deepEqual(page.conversionChecks, []);
+});
+
+test("requires fresh consent when configured analytics products change", async () => {
+    const store = new Map([[key, grant.replace("web-analytics,conversions", "web-analytics")]]);
+    const page = await load({store});
     assert.equal(page.panel.hidden, false);
     assert.deepEqual(page.beacons, []);
     assert.deepEqual(page.conversionChecks, []);
