@@ -60,3 +60,6 @@ The tests use temporary Git history and mock external API responses.
 Use `python3 .github/scripts/build_pages.py` to stage the static site in `dist`.
 See [Conversion tracking on Cloudflare Pages](CONVERSION-ANALYTICS.md) for the
 required Pages build settings, local tests, reporting and activation review.
+
+The [contact migration guide](CONTACT-MIGRATION.md) covers the independently gated
+Cloudflare Email Sending backend, Turnstile, verification and rollback.

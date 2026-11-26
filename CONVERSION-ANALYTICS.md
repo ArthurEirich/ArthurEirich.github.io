@@ -28,7 +28,7 @@ After separate approval, set `CONVERSION_ANALYTICS_ENABLED=true` as a **Producti
 - Confirm whether the Gmail inbox is consumer Gmail or a Google Workspace account and which terms and transfer safeguards apply to it. Confirm FormSubmit's contracting entity, subprocessors, locations, retention, deletion and transfer terms. The [Google privacy policy](https://policies.google.com/privacy) and [FormSubmit site](https://formsubmit.co/) describe the services but do not establish account-specific arrangements.
 - Confirm the controller details, applicable legal bases and retention periods for communication and infrastructure logs. Review the policy against the [Swiss FADP](https://www.fedlex.admin.ch/eli/cc/2022/491/en) and the [GDPR](https://eur-lex.europa.eu/eli/reg/2016/679/oj) where applicable.
 
-The staging script copies the sitemap routes, shared static files, custom 404 page and current IndexNow verification file explicitly. Add any future static assets to the staging list and update the canonical route allowlist when routes change. The only Functions invocation route is `/api/analytics`.
+The staging script copies the sitemap routes, shared static files, custom 404 page and current IndexNow verification file explicitly. Add any future static assets to the staging list and update the canonical route allowlist when routes change. The only Functions invocation routes are `/api/analytics` and `/api/contact`.
 
 ## Collection and limits
 

@@ -136,7 +136,7 @@ test("caps writes per isolate and reopens the next minute", async (t) => {
 });
 
 let browserNumber = 0;
-async function exerciseBrowser({url = origin + "/", referrer = "", navigator = {}, transportFails = false}, exercise) {
+async function exerciseBrowser({url = origin + "/", referrer = "", navigator = {}, transportFails = false, mayTrack = () => true}, exercise) {
     const requests = [];
     const formRequests = [];
     const listeners = new Map();
@@ -187,8 +187,8 @@ async function exerciseBrowser({url = origin + "/", referrer = "", navigator = {
         });
         const module = "../../analytics.js?browser=" + ++browserNumber;
         const {start} = await import(module);
-        start(() => true);
-        start(() => true);
+        start(mayTrack);
+        start(mayTrack);
         // Registered handlers read fetch and document when an event occurs.
         return await exercise({
             requests, formRequests, listeners, form, button, status,
@@ -299,6 +299,15 @@ withBrowser("treats referrer lookalikes as other referrals", {
     assert.equal(events()[0].source, "other_referral");
 });
 
+withBrowser("ignores form submissions that started before consent even when they finish later", {
+    mayTrack: (startedAt = Infinity) => startedAt >= 20
+}, ({form, listeners, events}) => {
+    const signal = listeners.get("contact-form-result");
+    signal({target: form, detail: {outcome: "success", service: "wifi", startedAt: 10}});
+    signal({target: form, detail: {outcome: "success", service: "pc", startedAt: 21}});
+    assert.deepEqual(events().map(({event, service}) => [event, service]), [["contact_form_success", "pc"]]);
+});
+
 test("Pages builds preserve static routes, metadata, and disabled and preview isolation", () => {
     const sitemap = readFileSync("sitemap.xml", "utf8");
     const routes = Array.from(sitemap.matchAll(/<loc>https:\/\/eiricha\.com([^<]*)<\/loc>/g), (match) => match[1]);
@@ -344,7 +353,7 @@ test("Pages builds preserve static routes, metadata, and disabled and preview is
     build("main", "", "");
     assert(!readFileSync("dist/index.html", "utf8").includes("data-web-analytics"));
     assert.deepEqual(JSON.parse(readFileSync("dist/_routes.json", "utf8")), {
-        version: 1, include: ["/api/analytics"], exclude: []
+        version: 1, include: ["/api/analytics", "/api/contact"], exclude: []
     });
     const publicFiles = [
         ...routes.map((path) => path.slice(1) + "index.html"),
@@ -363,4 +372,35 @@ test("Pages builds preserve static routes, metadata, and disabled and preview is
             assert.deepEqual(readFileSync("dist/" + file), readFileSync(file));
         }
     }
+});
+
+test("contact builds independently of either analytics product and keeps FormSubmit as the production default and prevents preview delivery", () => {
+    const build = (branch, contact, siteKey = "isolatedMockSiteKey") => execFileSync(
+        "python3", [".github/scripts/build_pages.py"], {
+            env: {...process.env, CF_PAGES_BRANCH: branch, CONTACT_BACKEND_ENABLED: contact,
+                TURNSTILE_SITE_KEY: siteKey, CONVERSION_ANALYTICS_ENABLED: "", WEB_ANALYTICS_BEACON_TOKEN: ""}
+        }
+    );
+    build("main", "true");
+    assert(existsSync("dist/contact.js"));
+    assert(!existsSync("dist/analytics.js"));
+    assert(!readFileSync("dist/wlan-hilfe-zuerich/index.html", "utf8").includes("isolatedMockSiteKey"));
+    for (const [page, language] of [["index.html", "de"], ["en/index.html", "en"]]) {
+        const html = readFileSync("dist/" + page, "utf8");
+        assert(html.includes('id="contact-form" method="POST" action="/api/contact"'));
+        assert(html.includes(`data-contact-language="${language}"`));
+        assert(html.includes('data-contact-status="cloudflare">'));
+        assert(html.includes('data-contact-status="formsubmit" hidden'));
+        assert(!html.includes("formsubmit.co/ajax"));
+        assert(!html.includes('name="_captcha"'));
+    }
+    build("feature", "true");
+    assert(!existsSync("dist/contact.js"));
+    assert(!readFileSync("dist/en/index.html", "utf8").includes("formsubmit.co/ajax"));
+    assert(readFileSync("dist/en/index.html", "utf8").includes('data-contact-preview="true"'));
+    assert(!readFileSync("dist/en/index.html", "utf8").includes("isolatedMockSiteKey"));
+    assert.throws(() => build("main", "true", ""));
+    build("main", "");
+    assert(!existsSync("dist/contact.js"));
+    assert(readFileSync("dist/en/index.html", "utf8").includes("formsubmit.co/ajax"));
 });

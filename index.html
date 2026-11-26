@@ -695,13 +695,16 @@
                 <ul>
                     <li>Bereitstellung der Website und IT-Sicherheit: Bearbeitung nach Treu und Glauben und Verhältnismässigkeit (Art. 6 DSG), berechtigtes Interesse.</li>
                     <li>Bearbeitung von Anfragen / (vor-)vertragliche Kommunikation: Bearbeitung im Zusammenhang mit Abschluss oder Abwicklung eines Vertrags (Art. 31 Abs. 2 lit. a DSG).</li>
+                    <li>Soweit die DSGVO anwendbar ist, beruht die freiwillige Statistik auf Einwilligung
+                        (Art. 6 Abs. 1 lit. a). Für erforderliche vorvertragliche Schritte kommt lit. b in
+                        Betracht. Betriebssicherheit und Missbrauchsschutz können, nach Interessenabwägung,
+                        auf lit. f beruhen.</li>
                     <li>Gesetzliche Pflichten (falls relevant): Bearbeitung aufgrund einer gesetzlichen Grundlage.</li>
                 </ul>
 
                 <h3>Empfänger / Dienste</h3>
                 <ul>
                     <li><strong>Hosting:</strong> Cloudflare Pages (Cloudflare, Inc.) stellt die Website bereit. Dabei kann Cloudflare technische Anfragedaten für Auslieferung, Sicherheit und Betrieb verarbeiten.</li>
-                    <li><strong>Kontaktformular:</strong> FormSubmit leitet deine Angaben an mein Gmail-Postfach weiter.</li>
                     <li><strong>Kontaktwege:</strong> Bei WhatsApp gelten die Datenschutzbestimmungen des jeweiligen Anbieters.</li>
                     <li><strong>Externe Links:</strong> Beim Klick auf Links (z. B. Google Maps/Google Bewertungen/Instagram) gelten die Regeln des jeweiligen Anbieters.</li>
                 </ul>
@@ -756,15 +759,29 @@
         </p>
 
         <h3>Kommunikation und Bearbeitung im Ausland</h3>
+        <p data-contact-status="formsubmit">
+            FormSubmit leitet die Angaben aus dem Kontaktformular an mein Gmail-Postfach weiter.
+            Laut <a href="https://formsubmit.co/documentation">FormSubmit-Dokumentation</a> werden
+            Einsendungen 30 Tage aufbewahrt. Bearbeitungsorte und Übermittlungsgarantien dieses Dienstes
+            sind nicht bestätigt.
+        </p>
+        <p data-contact-status="cloudflare" hidden>
+            Cloudflare Turnstile prüft das Formular zum Schutz vor automatisierten Eingaben.
+            Dabei können technische Browser- und Anfragedaten verarbeitet werden. Cloudflare Email
+            Sending sendet die Formularangaben an mein Gmail-Postfach. Die Anwendung führt kein Archiv
+            der Anfragen. Cloudflare kann Versand- und Zustelldaten im Activity Log anzeigen.
+            Wenn die E-Mail-Vorschau dort aktiviert ist, können Inhalte und Kopfzeilen laut Cloudflare
+            rund sieben Tage sichtbar sein. Frühere Einsendungen über FormSubmit können noch der
+            dort dokumentierten Aufbewahrungsfrist von 30 Tagen unterliegen.
+            <a href="https://developers.cloudflare.com/email-service/observability/logs/">Cloudflare Activity Log</a> ·
+            <a href="https://www.cloudflare.com/turnstile-privacy-policy/">Datenschutzhinweise zu Turnstile</a>
+        </p>
         <p>
-            FormSubmit leitet den Inhalt des Kontaktformulars an mein Gmail-Postfach weiter.
-            Google stellt dieses Postfach für den Empfang und die Beantwortung der Anfragen bereit.
-            Dazu können Kontaktdaten, das gewählte Thema und die Nachricht gehören. Die Anbieter und
-            Cloudflare können Daten im Ausland bearbeiten. Cloudflares Auftragsbearbeitungsvertrag
-            beschreibt Schutzmassnahmen für Übermittlungen, darunter gegebenenfalls
-            Standardvertragsklauseln. Die genauen Bearbeitungsorte, Aufbewahrungsfristen und
-            Übermittlungsgarantien für FormSubmit und das hier genutzte Gmail-Konto sind nicht bestätigt.
-            <a href="https://formsubmit.co/">FormSubmit</a> ·
+            Google stellt das Postfach für den Empfang und die Beantwortung von Anfragen bereit.
+            Dazu können Kontaktdaten, Thema und Nachricht gehören. Die Anbieter können Daten im Ausland
+            bearbeiten. Cloudflares Auftragsbearbeitungsvertrag beschreibt gegebenenfalls anwendbare
+            Schutzmassnahmen wie Standardvertragsklauseln. Die genauen Übermittlungsgarantien und
+            betrieblichen Aufbewahrungsfristen für das hier genutzte Gmail-Konto sind nicht bestätigt.
             <a href="https://policies.google.com/privacy">Google-Datenschutzerklärung</a>
         </p>
 

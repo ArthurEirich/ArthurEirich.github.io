@@ -3,11 +3,16 @@ if (year) year.textContent = new Date().getFullYear();
 
 const form = document.getElementById("contact-form");
 if (form) {
-    const status = document.getElementById("form-status");
-    const button = form.querySelector("button[type=submit]");
     const service = new URLSearchParams(window.location.search).get("service");
     const topic = Array.from(form.elements.thema.options).find((option) => option.dataset.service === service);
     if (topic) topic.selected = true;
+}
+if (form && form.dataset.contactPreview !== "true") {
+    const status = document.getElementById("form-status");
+    const button = form.querySelector("button[type=submit]");
+    const firstParty = form.dataset.endpoint === "/api/contact";
+    const contact = firstParty ? import("./contact.js").then(({setup}) => setup(form)).catch(() => null) : null;
+    if (firstParty) button.disabled = false;
 
     let submitting = false;
     form.addEventListener("submit", async (e) => {
@@ -20,18 +25,29 @@ if (form) {
         button.disabled = true;
 
         const selectedService = form.elements.thema.selectedOptions[0]?.dataset.service ?? "";
+        const contactService = selectedService || (form.elements.thema.value ? "other" : "");
         let outcome;
+        let failure;
         try {
-            const res = await fetch(form.dataset.endpoint, {
-                method: "POST",
-                headers: {Accept: "application/json"},
-                body: new FormData(form)
-            });
-            if (!res.ok) throw new Error(res.status);
-            const result = await res.json();
-            // FormSubmit returns its success flag as a string or boolean.
-            if (result?.success !== true && result?.success !== "true") {
-                throw new Error("FormSubmit did not confirm submission");
+            if (firstParty) {
+                const send = await contact;
+                const result = send ? await send(contactService) : {error: "verification_unavailable"};
+                if (!result.success) {
+                    failure = result.error;
+                    throw new Error("Contact submission failed");
+                }
+            } else {
+                const res = await fetch(form.dataset.endpoint, {
+                    method: "POST",
+                    headers: {Accept: "application/json"},
+                    body: new FormData(form)
+                });
+                if (!res.ok) throw new Error(res.status);
+                const result = await res.json();
+                // FormSubmit returns its success flag as a string or boolean.
+                if (result?.success !== true && result?.success !== "true") {
+                    throw new Error("FormSubmit did not confirm submission");
+                }
             }
             form.reset();
             status.className = "form-status ok";
@@ -39,7 +55,13 @@ if (form) {
             outcome = "success";
         } catch {
             status.className = "form-status err";
-            status.textContent = form.dataset.msgError;
+            const messages = {
+                verification: form.dataset.msgVerification,
+                verification_unavailable: form.dataset.msgVerificationUnavailable,
+                invalid_request: form.dataset.msgInvalid,
+                delivery_unconfirmed: form.dataset.msgUnconfirmed
+            };
+            status.textContent = messages[failure] || form.dataset.msgError;
             outcome = "error";
         } finally {
             submitting = false;

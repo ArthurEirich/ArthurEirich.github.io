@@ -18,8 +18,8 @@ jobs:
         with:
           node-version: '24'
           package-manager-cache: false
-      - name: Test analytics
-        run: node --test .github/scripts/test_analytics.mjs .github/scripts/test_consent.mjs
+      - name: Test analytics, consent and contact
+        run: node --test .github/scripts/test_analytics.mjs .github/scripts/test_consent.mjs .github/scripts/test_contact.mjs
       - name: Test IndexNow
         run: PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover -s .github/scripts -v
       - name: Validate disabled and enabled Pages output
@@ -27,4 +27,6 @@ jobs:
           python3 .github/scripts/build_pages.py
           python3 .github/scripts/validate_pages.py
           CF_PAGES_BRANCH=main CONVERSION_ANALYTICS_ENABLED=true python3 .github/scripts/build_pages.py
+          python3 .github/scripts/validate_pages.py
+          CF_PAGES_BRANCH=main CONTACT_BACKEND_ENABLED=true TURNSTILE_SITE_KEY=isolatedMockSiteKey python3 .github/scripts/build_pages.py
           python3 .github/scripts/validate_pages.py
