@@ -1,3 +1,4 @@
+import {observeConversions} from "../../consent.js";
 import assert from "node:assert/strict";
 import {execFileSync} from "node:child_process";
 import {existsSync, readFileSync, readdirSync} from "node:fs";
@@ -136,7 +137,7 @@ test("caps writes per isolate and reopens the next minute", async (t) => {
 });
 
 let browserNumber = 0;
-async function exerciseBrowser({url = origin + "/", referrer = "", navigator = {}, transportFails = false}, exercise) {
+async function exerciseBrowser({url = origin + "/", referrer = "", navigator = {}, transportFails = false, mayTrack = () => true}, exercise) {
     const requests = [];
     const formRequests = [];
     const listeners = new Map();
@@ -176,7 +177,7 @@ async function exerciseBrowser({url = origin + "/", referrer = "", navigator = {
         return new Promise((resolve) => { form.respond = resolve; });
     };
     runInNewContext(readFileSync("script.js", "utf8"), {
-        window, document, fetch, URLSearchParams, CustomEvent, FormData: class {}
+        window, document, fetch, URLSearchParams, CustomEvent, performance, FormData: class {}
     });
 
     const names = ["window", "document", "fetch", "navigator"];
@@ -186,8 +187,10 @@ async function exerciseBrowser({url = origin + "/", referrer = "", navigator = {
             Object.defineProperty(globalThis, names[index], {value, configurable: true});
         });
         const module = "../../analytics.js?browser=" + ++browserNumber;
-        await import(module);
-        await import(module);
+        const {start} = await import(module);
+        const send = start(mayTrack);
+        if (send) observeConversions(mayTrack, send);
+        assert.equal(start(mayTrack), undefined);
         // Registered handlers read fetch and document when an event occurs.
         return await exercise({
             requests, formRequests, listeners, form, button, status,
@@ -298,33 +301,65 @@ withBrowser("treats referrer lookalikes as other referrals", {
     assert.equal(events()[0].source, "other_referral");
 });
 
+withBrowser("ignores form submissions that started before consent even when they finish later", {
+    mayTrack: (startedAt = Infinity) => startedAt >= 20
+}, ({form, listeners, events}) => {
+    const signal = listeners.get("contact-form-result");
+    signal({target: form, detail: {outcome: "success", service: "wifi", startedAt: 10}});
+    signal({target: form, detail: {outcome: "success", service: "pc", startedAt: 21}});
+    assert.deepEqual(events().map(({event, service}) => [event, service]), [["contact_form_success", "pc"]]);
+});
+
 test("Pages builds preserve static routes, metadata, and disabled and preview isolation", () => {
     const sitemap = readFileSync("sitemap.xml", "utf8");
     const routes = Array.from(sitemap.matchAll(/<loc>https:\/\/eiricha\.com([^<]*)<\/loc>/g), (match) => match[1]);
     assert(routes.length > 0);
-    const build = (branch, activation) => execFileSync("python3", [".github/scripts/build_pages.py"], {
-        env: {...process.env, CF_PAGES_BRANCH: branch, CONVERSION_ANALYTICS_ENABLED: activation}
+    const token = "0123456789abcdef0123456789abcdef";
+    const build = (branch, activation, beacon = token) => execFileSync("python3", [".github/scripts/build_pages.py"], {
+        env: {...process.env, CF_PAGES_BRANCH: branch, CONVERSION_ANALYTICS_ENABLED: activation, WEB_ANALYTICS_BEACON_TOKEN: beacon}
     });
     build("main", "true");
+    const stripConsent = (html) => html
+        .replace(/\n<aside class="card privacy-consent"[\s\S]+?<\/aside>/, "")
+        .replace(/<button type="button" class="privacy-settings"[^>]*>[^<]+<\/button>\n/, "")
+        .replace('<script type="module" src="/consent.js" referrerpolicy="no-referrer"></script>\n', "");
     for (const path of routes) {
-        assert.equal(languageFor(path), path.startsWith("/en/") ? "en" : "de");
+        const language = path.startsWith("/en/") ? "en" : "de";
+        assert.equal(languageFor(path), language);
         const file = path.slice(1) + "index.html";
         const output = readFileSync("dist/" + file, "utf8");
-        const loader = '<script type="module" src="/analytics.js" referrerpolicy="no-referrer"></script>\n';
-        assert.equal(output.split(loader).length, 2);
-        assert.equal(output.replace(loader, ""), readFileSync(file, "utf8"));
+        assert.equal(output.match(/id="privacy-settings"/g).length, 1);
+        assert.equal(output.match(/src="\/consent.js"/g).length, 1);
+        assert(output.includes(language === "en" ? "Allow analytics" : "Statistik erlauben"));
+        assert(output.includes(language === "en" ? "Necessary only" : "Nur notwendige"));
+        assert(output.includes(`data-web-analytics="${token}"`));
+        assert(output.includes('data-conversion-analytics="true"'));
+        assert(!output.includes('src="/analytics.js"'));
+        assert(!output.includes("static.cloudflareinsights.com"));
+        assert.equal(stripConsent(output)
+            .replace('data-conversion-status="enabled"', 'data-conversion-status="enabled" hidden')
+            .replace('data-conversion-status="disabled" hidden', 'data-conversion-status="disabled"'),
+        readFileSync(file, "utf8"));
     }
+    assert(existsSync("dist/analytics.js"));
+    assert(existsSync("dist/analytics-schema.mjs"));
+
     build("feature", "true");
     assert.equal(existsSync("dist/analytics.js"), false);
-    assert.equal(readFileSync("dist/index.html", "utf8"), readFileSync("index.html", "utf8"));
+    assert(!readFileSync("dist/index.html", "utf8").includes(token));
+
     build("main", "");
     assert.equal(existsSync("dist/analytics.js"), false);
+    assert(readFileSync("dist/index.html", "utf8").includes(`data-web-analytics="${token}"`));
+
+    build("main", "", "");
+    assert(!readFileSync("dist/index.html", "utf8").includes("data-web-analytics"));
     assert.deepEqual(JSON.parse(readFileSync("dist/_routes.json", "utf8")), {
-        version: 1, include: ["/api/analytics"], exclude: []
+        version: 1, include: ["/api/analytics", "/api/contact"], exclude: []
     });
     const publicFiles = [
         ...routes.map((path) => path.slice(1) + "index.html"),
-        "_routes.json", "404.html", "CNAME", "robots.txt", "sitemap.xml", "styles.css", "script.js",
+        "_routes.json", "404.html", "CNAME", "robots.txt", "sitemap.xml", "styles.css", "script.js", "consent.js",
         "assets/arthur.jpg", "assets/arthur-web.jpg", "assets/logo.svg", "assets/og-image.jpg",
         ...readdirSync(".").filter((name) => /^[a-f0-9]{32}\.txt$/.test(name))
     ];
@@ -333,6 +368,41 @@ test("Pages builds preserve static routes, metadata, and disabled and preview is
         .map((entry) => entry.parentPath.slice(4).replace(/^\//, "") + "/" + entry.name)
         .map((name) => name.replace(/^\//, "")).sort(), publicFiles.sort());
     for (const file of publicFiles) {
-        assert.deepEqual(readFileSync("dist/" + file), readFileSync(file));
+        if (file.endsWith("index.html")) {
+            assert.equal(stripConsent(readFileSync("dist/" + file, "utf8")), readFileSync(file, "utf8"));
+        } else {
+            assert.deepEqual(readFileSync("dist/" + file), readFileSync(file));
+        }
     }
+});
+
+test("contact builds independently of either analytics product and keeps FormSubmit as the production default and prevents preview delivery", () => {
+    const build = (branch, contact, siteKey = "isolatedMockSiteKey") => execFileSync(
+        "python3", [".github/scripts/build_pages.py"], {
+            env: {...process.env, CF_PAGES_BRANCH: branch, CONTACT_BACKEND_ENABLED: contact,
+                TURNSTILE_SITE_KEY: siteKey, CONVERSION_ANALYTICS_ENABLED: "", WEB_ANALYTICS_BEACON_TOKEN: ""}
+        }
+    );
+    build("main", "true");
+    assert(existsSync("dist/contact.js"));
+    assert(!existsSync("dist/analytics.js"));
+    assert(!readFileSync("dist/wlan-hilfe-zuerich/index.html", "utf8").includes("isolatedMockSiteKey"));
+    for (const [page, language] of [["index.html", "de"], ["en/index.html", "en"]]) {
+        const html = readFileSync("dist/" + page, "utf8");
+        assert(html.includes('id="contact-form" method="POST" action="/api/contact"'));
+        assert(html.includes(`data-contact-language="${language}"`));
+        assert(html.includes('data-contact-status="cloudflare">'));
+        assert(html.includes('data-contact-status="formsubmit" hidden'));
+        assert(!html.includes("formsubmit.co/ajax"));
+        assert(!html.includes('name="_captcha"'));
+    }
+    build("feature", "true");
+    assert(!existsSync("dist/contact.js"));
+    assert(!readFileSync("dist/en/index.html", "utf8").includes("formsubmit.co/ajax"));
+    assert(readFileSync("dist/en/index.html", "utf8").includes('data-contact-preview="true"'));
+    assert(!readFileSync("dist/en/index.html", "utf8").includes("isolatedMockSiteKey"));
+    assert.throws(() => build("main", "true", ""));
+    build("main", "");
+    assert(!existsSync("dist/contact.js"));
+    assert(readFileSync("dist/en/index.html", "utf8").includes("formsubmit.co/ajax"));
 });

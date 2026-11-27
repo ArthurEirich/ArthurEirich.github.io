@@ -695,42 +695,90 @@
                 <ul>
                     <li>Providing the website and IT security: processing in line with good faith and proportionality (Art. 6 FADP), legitimate interest.</li>
                     <li>Handling enquiries / (pre-)contractual communication: processing in connection with concluding or performing a contract (Art. 31 para. 2 lit. a FADP).</li>
+                    <li>Where the GDPR applies, optional analytics relies on consent (Art. 6(1)(a)).
+                        Necessary pre-contractual steps may rely on Art. 6(1)(b). Site security and abuse
+                        prevention may rely on Art. 6(1)(f), subject to a balancing assessment.</li>
                     <li>Legal obligations (if relevant): processing based on a statutory provision.</li>
                 </ul>
 
                 <h3>Recipients / services</h3>
                 <ul>
                     <li><strong>Hosting:</strong> Cloudflare Pages (Cloudflare, Inc.) serves this site. Cloudflare may process technical request data for delivery, security and operations.</li>
-                    <li><strong>Contact form:</strong> Your input is forwarded to me by email via the service Formsubmit (formsubmit.co). The form data is technically transmitted via its servers, possibly also abroad (incl. the USA).</li>
                     <li><strong>Contact channels:</strong> For WhatsApp, the provider's privacy policy applies.</li>
                     <li><strong>External links:</strong> When you click links (e.g. Google Maps/Google reviews/Instagram), the provider's rules apply.</li>
                 </ul>
             </div>
         </div>
 
-        <h3>Website statistics and conversion measurement</h3>
+        <h3>Consent and website statistics</h3>
         <p>
-            Cloudflare Web Analytics measures page views, traffic sources and loading performance to help
-            maintain this site. Cloudflare says it retains unsampled beacon data for seven days.
-            Statistics are available for up to six months.
-            <a href="https://developers.cloudflare.com/web-analytics/faq/">About Cloudflare Web Analytics</a>
+            Analytics is optional. I use it with your permission to understand site use, performance
+            and how people find or contact me. Your choice does not affect access to the site or contact
+            options. On this site, Privacy settings remembers only your choice, the policy version, the analytics services covered and
+            the decision date in browser storage. No tracking cookie or visitor identifier is set by
+            the consent controls. If storage is unavailable, analytics stays off.
         </p>
         <p>
-            Custom conversion tracking is currently disabled. If enabled, it measures contact attempts
-            and marketing channels. Cloudflare Analytics Engine would retain the event type (phone,
-            email or WhatsApp click, contact form success or error, or a landing with known campaign
-            values), approved page path, language, allowed source or referral category, allowed
-            medium and campaign, preset service, and server-generated time for three months. The service
-            comes from the service page viewed or the preset topic selected when submitting the form.
+            Cloudflare Web Analytics starts on the next page load. If enabled, conversion tracking counts only
+            actions after consent and can then attribute the current landing page. To withdraw consent, open
+            Privacy settings in the footer and select “Necessary only”. If the Cloudflare beacon was
+            loaded, a reload stops it. If the contact form has a draft, a submission or a result, I leave
+            it on screen and ask you to reload when ready. Until then, the loaded beacon may still send
+            requests. Queued requests may arrive afterward. Earlier statistics are not erased. Global Privacy
+            Control and Do Not Track override a stored permission.
         </p>
         <p>
-            The conversion dataset excludes IP addresses, browser identifiers, contact details, form
-            contents, full URLs and visitor identifiers. Attribution stays in the current page's
-            memory and may be lost when you navigate. Conversion tracking uses no cookies and honors
-            Global Privacy Control and Do Not Track. Cloudflare separately processes technical request
-            data, such as IP addresses and browser information, for delivery and security. Retention
-            of operational data depends on the service and its configuration. Processing may take
-            place abroad. <a href="https://www.cloudflare.com/privacypolicy/">Cloudflare privacy policy</a>
+            When configured, Cloudflare Web Analytics uses its browser beacon to measure page views,
+            traffic sources and loading performance. Cloudflare documents seven days of unsampled
+            beacon data and statistics available for up to six months.
+            <a href="https://developers.cloudflare.com/web-analytics/faq/">Cloudflare Web Analytics documentation</a>
+        </p>
+        <p data-conversion-status="disabled">Custom conversion tracking is currently disabled.</p>
+        <p data-conversion-status="enabled" hidden>Custom conversion tracking runs only after you allow analytics.</p>
+        <p>
+            When enabled, custom conversion tracking counts contact-link clicks, confirmed or failed form
+            submissions and landings with recognized campaign tags. Cloudflare Analytics Engine retains
+            the event type, canonical page, language, allowed source or referral category, allowed medium
+            and campaign, preset service and server-generated time for three months. The service comes
+            from the service page or the preset topic selected at submission. Attribution is kept in
+            memory only for the current page. The dataset excludes IP addresses, browser identifiers,
+            contact details, message contents, full URLs and visitor identifiers.
+            <a href="https://developers.cloudflare.com/analytics/analytics-engine/limits/#data-retention">Analytics Engine retention</a>
+        </p>
+        <p>
+            Cloudflare delivers and protects the site and provides its analytics infrastructure. Its
+            systems can process IP addresses, browser information, requested URLs and other technical
+            data for delivery, security and operations. If configured, Cloudflare's edge rate limit uses IP addresses
+            to protect the custom analytics endpoint. This infrastructure processing is separate from
+            the conversion dataset. Operational retention depends on the applicable service and settings.
+            <a href="https://www.cloudflare.com/privacypolicy/">Cloudflare privacy policy</a> ·
+            <a href="https://www.cloudflare.com/cloudflare-customer-dpa/">Cloudflare data processing addendum</a>
+        </p>
+
+        <h3>Communication and international processing</h3>
+        <p data-contact-status="formsubmit">
+            FormSubmit forwards contact form details to my Gmail inbox.
+            The <a href="https://formsubmit.co/documentation">FormSubmit documentation</a> states that
+            submissions are retained for 30 days. Its processing locations and transfer safeguards
+            have not been confirmed.
+        </p>
+        <p data-contact-status="cloudflare" hidden>
+            Cloudflare Turnstile protects the contact form against automated submissions and may
+            process technical browser and request data. Cloudflare Email Sending sends the form
+            details to my Gmail inbox. This application keeps no enquiry archive. Cloudflare can show
+            sending and delivery details in its Activity log. If email preview is enabled, Cloudflare
+            says message content and headers can be available for about seven days. Earlier FormSubmit
+            submissions may still be subject to that provider's documented 30-day retention.
+            <a href="https://developers.cloudflare.com/email-service/observability/logs/">Cloudflare Activity log</a> ·
+            <a href="https://www.cloudflare.com/turnstile-privacy-policy/">Turnstile privacy information</a>
+        </p>
+        <p>
+            Google provides the inbox used to receive and answer enquiries. The data can include
+            contact details, topic and message. Providers may process data abroad. Cloudflare's data
+            processing addendum describes safeguards such as standard contractual clauses where
+            applicable. Transfer safeguards and operational retention for the Gmail account used here
+            have not been confirmed.
+            <a href="https://policies.google.com/privacy">Google Privacy Policy</a>
         </p>
 
         <h3 style="margin-top:14px">Retention</h3>
@@ -741,8 +789,13 @@
 
         <h3>Your rights</h3>
         <p>
-            You have the right to access, rectification, erasure, restriction of processing, data disclosure/portability and objection.
-            You may also lodge a complaint with the Federal Data Protection and Information Commissioner (FDPIC).
+            Depending on the applicable law and its conditions, you can request access, correction,
+            deletion or a copy of your data and object to processing. Where the GDPR applies, rights
+            include restriction of processing and data portability. You can withdraw consent for future
+            processing and complain to the Swiss Federal Data Protection and Information Commissioner
+            (FDPIC) or, where applicable, a competent EU data protection authority.
+            <a href="https://www.fedlex.admin.ch/eli/cc/2022/491/en">Swiss FADP</a> ·
+            <a href="https://eur-lex.europa.eu/eli/reg/2016/679/oj">GDPR</a>
         </p>
     </section>
 

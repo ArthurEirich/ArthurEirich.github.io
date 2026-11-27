@@ -1,22 +1,36 @@
 # Conversion tracking on Cloudflare Pages
 
-Custom tracking ships disabled. Cloudflare Web Analytics continues to handle site-level traffic and performance. The custom endpoint has no read operation.
+Custom conversion tracking ships disabled. Cloudflare Web Analytics measures site traffic and performance when configured and allowed by the visitor. The custom endpoint has no read operation.
 
-## Safe Pages migration
+## Migrate Cloudflare Web Analytics to consent-controlled loading
 
-The production project `eirich-it-services` currently runs `exit 0` and publishes `.`. Current `main` has no staging script. Keep those settings together until `main` contains the script.
+The Pages build remains `python3 .github/scripts/build_pages.py` with output `dist`. Do not deploy consent UI to a domain where Cloudflare still injects a beacon before the visitor's choice. The site code cannot prevent a script injected by Cloudflare outside the build.
 
-1. Record the current production deployment ID and settings. Test this PR's commit in a separate temporary Git-connected Pages project with the repository root as its root, `python3 .github/scripts/build_pages.py` as its build command, and `dist` as its output directory. If the project setup requires a production branch, select the PR branch there, with no custom domain, production dataset binding, or activation variable. Use its `pages.dev` URL for the disabled smoke checks below. Keep this branch out of the live project’s legacy preview builds because publishing `.` can expose repository files.
-2. Once the preview passes and the PR is approved, pause automatic production deployments on `eirich-it-services` under its production branch controls. Confirm no production build is queued or running before merging. Keep serving the existing successful deployment. Merge the PR so the staging script is on `main` before changing the live project's settings.
-3. Set the production project's repository root, build command, and output directory to the same settings tested in the temporary project. Keep `CONVERSION_ANALYTICS_ENABLED` unset in Production and Preview. Verify the existing **Production** binding `ANALYTICS` targets `eirich_conversions`; keep Preview without that binding. Resume production deployment and trigger a new build of the merged `main` commit, for example with an existing production deploy hook after re-enabling builds. Check the commit SHA in Pages before running the disabled production smoke checks.
-4. If the new deployment fails verification, use Pages rollback to the previous successful deployment and pause automatic production builds while diagnosing. If you must build an older commit that predates the script, restore both `exit 0` and `.` before triggering that build. Once the migration is verified, remove the temporary project.
+**Activation gate:** Keep `WEB_ANALYTICS_BEACON_TOKEN` unset in Production and Preview until the third-party beacon withdrawal limitation has been explicitly resolved or the residual behavior has been explicitly reviewed and approved. An already initialized beacon can continue sending while a protected contact draft or submission delays a reload.
 
-## Activation after review
+1. In the Cloudflare account, open **Analytics & Logs → Web Analytics**, select the existing `eiricha.com` site, and open **Manage Site**. Choose **Enable with JS Snippet installation**. Copy only the public token value from the official snippet's `data-cf-beacon` JSON and confirm it belongs to this site. Do not select **Add a site**, use an API token, or paste the snippet itself into repository HTML.
+2. In **Workers & Pages → eirich-it-services → Metrics**, disable the Pages automatic Web Analytics injection. Also verify the existing site remains in manual snippet mode under **Manage Site** and that no zone-level automatic injection is enabled. If dashboard controls are linked, verify the final result in both views. If the existing site cannot be put in manual mode without injection, leave Web Analytics off and omit the token variable until resolved.
+3. If Pages still serves a previously injected beacon, redeploy the currently approved production commit with injection off and recheck uncached responses. In a fresh browser, check source HTML and Network on `eiricha.com` and on the Pages preview hostname. There should be no injected `beacon.min.js` and no RUM request. Check both languages. Once injection is absent, the approved consent implementation can be deployed with the token unset.
+4. Only after the activation gate above is satisfied, in **Workers & Pages → eirich-it-services → Settings → Variables and Secrets**, add the verified public token as the **Production** plain-text build variable `WEB_ANALYTICS_BEACON_TOKEN`. Leave it unset in Preview. Keep `CONVERSION_ANALYTICS_ENABLED` unset in both environments. Leave the Production `ANALYTICS` binding and any existing rate-limit rule unchanged. The code stages a public token as configuration and creates the beacon script only for consenting visitors on the canonical origin. With no configured token, Web Analytics stays off.
+5. If manual Web Analytics is approved and enabled, verify the rollout with the browser checks below. If pre-consent requests appear, check the Pages and zone injection settings again. Remove the public token and redeploy to stop the manual integration while diagnosing. Keep automatic injection off when rolling back.
 
-1. Approve the German and English notices and update the passages describing the disabled state. Review the purpose, applicable legal basis or consent requirements, Cloudflare's processing terms, international transfer arrangements, access controls and operational log settings. Cookieless measurement alone does not resolve Swiss DSG or GDPR obligations. Cloudflare processes request metadata separately from the application dataset. Keep request body logging off.
-2. After approval, set `CONVERSION_ANALYTICS_ENABLED=true` for **Production only**, as a Pages build and Functions runtime variable, then redeploy `main`. Keep the existing Web Analytics setting. The browser loader is staged only for an enabled `main` build. Preview and `pages.dev` URLs cannot write to the dataset. No new API token is needed.
+Cloudflare describes the [manual and Pages setup](https://developers.cloudflare.com/web-analytics/get-started/), [manual beacon behavior](https://developers.cloudflare.com/web-analytics/faq/) and [dataset retention](https://developers.cloudflare.com/analytics/analytics-engine/limits/#data-retention). Manual Web Analytics reports to `https://cloudflareinsights.com/cdn-cgi/rum`. If a Content Security Policy is added, the script source is `https://static.cloudflareinsights.com` and its RUM destination must be allowed separately.
 
-The staging script copies the sitemap routes, shared static files, custom 404 page and current IndexNow verification file explicitly. Add any future static assets to the staging list and update the canonical route allowlist when routes change. The only Functions invocation route is `/api/analytics`.
+## Consent and later conversion activation
+
+The bilingual controls appear on all 20 canonical pages. The footer settings control reopens the same non-modal panel. A decision stores only preference, policy version, configured analytics product scope and date in origin-local browser storage. Policy version or product-scope changes require a fresh decision. A rejected, unavailable or outdated choice cannot grant consent. Global Privacy Control and Do Not Track override stored consent. After a fresh grant, enabled conversions can attribute the current landing page and record new actions. Earlier clicks and submissions are never replayed. A bounded in-memory buffer holds only event names and preset service IDs for post-consent actions while the conversion module downloads. Withdrawal clears that buffer. Pages with neither product configured leave the banner closed. Cloudflare Web Analytics waits until the next page load to avoid measuring the earlier navigation.
+
+Withdrawal immediately disables custom sends and updates the saved preference if storage permits. Clean pages reload if the Web Analytics beacon was loaded. When a contact draft, submission, or result is present, the page instead explains the pending reload. It keeps the fields and delivery result on screen and enables **Reload page** once any submission finishes. Contact data is kept in the live form only and is never saved by the site to browser storage, cookies, or URLs. Reloading can discard the draft, and recovery from ordinary navigation, crashes, or browser closures depends on the browser. The beacon has no supported teardown. It may continue sending until the protected page reloads or closes, and an in-flight or unload request can still arrive afterward. Previous data is unaffected. Other open tabs on the same origin react to storage changes. A browser may require a new page load to apply a changed GPC or DNT setting to an already initialized third-party beacon. If storage becomes unwritable during withdrawal and even removing the saved decision fails, the reload uses a temporary necessary-only URL marker and retries saving the rejection. If the browser still cannot persist the change, clear this site's browser data before re-enabling storage.
+
+After separate approval, set `CONVERSION_ANALYTICS_ENABLED=true` as a **Production-only** Pages build and Functions runtime variable and redeploy `main`. The independent conversion gate still requires prior consent and the canonical origin. Preview builds omit both products' configuration. The endpoint's Origin check and activation gate protect the write route; a forged client can still send valid-looking requests. A client-only consent decision is not server authentication.
+
+## Privacy items to confirm before rollout
+
+- Verify which Cloudflare contract terms cover Pages, Web Analytics and Analytics Engine for this account, including the [Cloudflare DPA](https://www.cloudflare.com/cloudflare-customer-dpa/), product-specific processing locations, the applicable transfer mechanism and operational retention settings. The DPA describes safeguards including standard contractual clauses where applicable. The public terms alone do not confirm how this account is configured.
+- Confirm whether the Gmail inbox is consumer Gmail or a Google Workspace account and which terms and transfer safeguards apply to it. Confirm FormSubmit's contracting entity, subprocessors, locations, retention, deletion and transfer terms. The [Google privacy policy](https://policies.google.com/privacy) and [FormSubmit site](https://formsubmit.co/) describe the services but do not establish account-specific arrangements.
+- Confirm the controller details, applicable legal bases and retention periods for communication and infrastructure logs. Review the policy against the [Swiss FADP](https://www.fedlex.admin.ch/eli/cc/2022/491/en) and the [GDPR](https://eur-lex.europa.eu/eli/reg/2016/679/oj) where applicable.
+
+The staging script copies the sitemap routes, shared static files, custom 404 page and current IndexNow verification file explicitly. Add any future static assets to the staging list and update the canonical route allowlist when routes change. The only Functions invocation routes are `/api/analytics` and `/api/contact`.
 
 ## Collection and limits
 
@@ -30,7 +44,7 @@ The endpoint validates the exact HTTPS origin, JSON content type, maximum 512-by
 
 ### Cloudflare edge rate limit
 
-In the `eiricha.com` zone, add a WAF rate-limiting rule with this match expression:
+If the account supports it, verify or configure a WAF rate-limiting rule with this match expression. The live rule and entitlement were not verified here:
 
 ```text
 (http.host eq "eiricha.com" and http.request.uri.path eq "/api/analytics" and http.request.method eq "POST")
@@ -38,7 +52,7 @@ In the `eiricha.com` zone, add a WAF rate-limiting rule with this match expressi
 
 Start with **30 requests per 10 seconds per IP**, action **Block**, and a **10-second mitigation timeout** where the plan offers those controls. This leaves room for the browser's 20-event document limit. Use a block response, preferably HTTP 429 if configurable, since an analytics fetch cannot solve an interactive challenge. Review Security Events and adjust for shared-IP false positives and observed bursts. The edge uses IP for enforcement in Cloudflare infrastructure. The application dataset still contains no IP. Per-IP limits do not prevent distributed traffic or enforce a global quota.
 
-Clicks measure contact intent. Form success means FormSubmit confirmed the submission. It does not confirm inbox delivery, a qualified lead, or a sale. Form errors and campaign landings provide context for the conversion counts.
+Clicks measure contact intent. Form success means FormSubmit confirmed the submission in legacy mode, or Cloudflare Email Sending reported the fixed recipient as queued or delivered in first-party mode. Provider acceptance does not confirm Gmail inbox placement, a qualified lead, or a sale. Form errors and campaign landings provide context for the conversion counts.
 
 ## Dataset schema and retention
 
@@ -124,15 +138,21 @@ GROUP BY day, outcome, service ORDER BY day, outcome, service;
 
 ### Before activation
 
-- With Node.js 24 and Python 3.10 or newer, run `node --test .github/scripts/test_analytics.mjs` and `PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover -s .github/scripts -v`. Run `python3 .github/scripts/build_pages.py` and `python3 .github/scripts/validate_pages.py`. Pull-request CI validates both disabled and enabled build output.
-- In the temporary preview and the initial disabled production deployment, check both languages, the calculator, menu and contact links. Confirm the HTML contains no custom analytics loader and a POST to `/api/analytics` produces no dataset row. Check CSS, JavaScript, images, sitemap, robots and the IndexNow key. Confirm an unknown route returns the custom page with HTTP 404 and repository tests or configuration outside the public allowlist return 404. Check canonical redirects and confirm Cloudflare Web Analytics continues reporting. Record baseline mobile and desktop PageSpeed Insights results for the homepages and a representative service page.
+- With Node.js 24 and Python 3.10 or newer, run `node --test .github/scripts/test_analytics.mjs .github/scripts/test_consent.mjs` and `PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover -s .github/scripts -v`. Run `python3 .github/scripts/build_pages.py` and `python3 .github/scripts/validate_pages.py`. Pull-request CI validates both disabled and enabled build output.
+- In the temporary preview and the initial disabled production deployment, check both languages, the calculator, menu and contact links. Confirm the HTML contains no custom analytics loader and a POST to `/api/analytics` produces no dataset row. Check CSS, JavaScript, images, sitemap, robots and the IndexNow key. Confirm an unknown route returns the custom page with HTTP 404 and repository tests or configuration outside the public allowlist return 404. Check canonical redirects and confirm there is no automatic Web Analytics injection. Record baseline mobile and desktop PageSpeed Insights results for the homepages and a representative service page.
 
-### After approved activation
+### After approved Web Analytics activation, with conversions still disabled
 
-1. In an ordinary browser session with GPC and DNT off, open DevTools Network and enable **Preserve log**. Visit `https://eiricha.com/en/wifi-support-zurich/?utm_source=google&utm_medium=organic&utm_campaign=zurich_it_support`. Verify `/analytics.js` and `/analytics-schema.mjs` return HTTP 200 with a JavaScript MIME type such as `text/javascript` or `application/javascript`, and check for module errors in the console.
+1. In a fresh browser with DevTools Network open, visit a German and an English page. Before making a choice, there should be no request for `beacon.min.js`, `/cdn-cgi/rum` or `/api/analytics`. Choose **Necessary only** and navigate across languages. Repeat the network check.
+2. Reopen **Privacy settings** in the footer and choose **Allow analytics**. With conversions disabled, the current page still makes no analytics request. Navigate to another page. Expect one Web Analytics script initialization and a RUM request. Verify data arrives in the existing Web Analytics site. The custom module and endpoint should still be unused.
+3. Withdraw via **Necessary only** and verify a clean page reloads without the beacon. With unsent or in-flight contact data, verify that it waits for an explicit reload and displays the submission outcome first. Test a second open tab, GPC, DNT and a preview URL. Check for duplicates in the browser and verify the baseline PageSpeed measurements. Submit a controlled enquiry and verify actual Gmail delivery independently of the choice.
+
+### After separate approval and activation of custom conversions
+
+1. In a browser with prior analytics consent and GPC and DNT off, open DevTools Network and enable **Preserve log**. Visit `https://eiricha.com/en/wifi-support-zurich/?utm_source=google&utm_medium=organic&utm_campaign=zurich_it_support`. Verify `/analytics.js` and `/analytics-schema.mjs` return HTTP 200 with a JavaScript MIME type such as `text/javascript` or `application/javascript`, and check for module errors in the console.
 2. Expect one `utm_landing` POST to the same-origin `/api/analytics` with a 204 response and `service: "wifi"`. Check Request Headers for the canonical Origin and absence of Cookie and Referer. Inspect the JSON for exactly the seven documented event fields. Do not copy personal data or form request bodies into logs or screenshots. Click one actual contact link and check that it produces one matching click event while normal navigation proceeds.
-3. Follow the Wi-Fi service link to the form. Verify the topic is preselected, then switch to a different preset service and submit with a controlled test inbox and an identifiable test message. In Network, inspect the real FormSubmit response and verify HTTP success with JSON `success: true` or `success: "true"`. Confirm the enquiry email arrives in the site's configured recipient inbox. Check for a single `contact_form_success` posted after FormSubmit responds and verify its `service` reflects the selected preset. Block the FormSubmit request in DevTools and verify the form shows its error state and posts `contact_form_error`.
-4. Repeat in a browser with GPC or DNT enabled and confirm it sends zero custom analytics POSTs. Confirm Cloudflare Web Analytics remains present.
+3. Follow the Wi-Fi service link to the form. Verify the topic is preselected, then switch to a different preset service and submit with a controlled test inbox and an identifiable test message. In Network, inspect the active provider response. Legacy FormSubmit returns HTTP success with JSON `success: true` or `success: "true"`. In first-party mode, `/api/contact` returns HTTP 200 and `success: true` only when the Email Sending response confirms the fixed recipient as queued or delivered. Confirm actual Gmail inbox arrival separately. Verify a single `contact_form_success` after the response and check its preset `service`. Block the active form request in DevTools and verify the error state and `contact_form_error`.
+4. With an existing saved grant, enable GPC or DNT before opening a fresh document. Test each signal separately. Neither product should initialize. Confirm there is no `beacon.min.js` request, no `/cdn-cgi/rum` request, and no `/api/analytics` POST.
 5. Using authorized Analytics Engine tooling, verify ingestion against the test time, page and service. The endpoint's 204 acknowledges the write call and does not by itself prove the row is queryable. Use this query alongside the weighted reports above:
 
    ```sql
@@ -147,4 +167,16 @@ GROUP BY day, outcome, service ORDER BY day, outcome, service;
 
 6. Rerun PageSpeed Insights on the same URLs for mobile and desktop and compare against the baseline. Check Lighthouse diagnostics for new JavaScript or network regressions if scores or metrics move.
 
-To stop collection, unset the Production activation variable and redeploy. Verify the loader disappears and valid POSTs return 404. For an urgent stop before redeployment completes, block `/api/analytics` at the edge if available. Existing rows age out under Analytics Engine retention. To roll back application changes, redeploy a known-good build or revert the commit and coordinate the build settings if the restored version predates the staging script.
+To stop collection, unset the Production activation variable and redeploy. Verify the conversion module is no longer staged and valid POSTs return 404. For an urgent stop before redeployment completes, block `/api/analytics` at the edge if available. Existing rows age out under Analytics Engine retention. To roll back application changes, redeploy a known-good build or revert the commit and coordinate the build settings if the restored version predates the staging script.
+
+### Browser regression suite
+
+The browser job pins Node.js and installs Playwright from the lockfile under `.github/scripts/browser-deps`. Playwright installs its matching Chromium revision. The production Pages build uses neither dependency. To run the same suite locally from the repository root:
+
+```bash
+npm ci --ignore-scripts --prefix .github/scripts/browser-deps
+.github/scripts/browser-deps/node_modules/.bin/playwright install --only-shell chromium
+PLAYWRIGHT_MODULE="$PWD/.github/scripts/browser-deps/node_modules/playwright" node --test .github/scripts/test_browser.cjs
+```
+
+Set `CHROMIUM_EXECUTABLE` if using an existing system Chromium. The suite rebuilds the local staged output and restores the default build on exit. It intercepts browser requests and mocks Turnstile, Email Sending, FormSubmit and the Web Analytics beacon. It exercises the actual Pages Function handlers locally and sends no email.
